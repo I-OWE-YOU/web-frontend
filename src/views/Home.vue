@@ -22,7 +22,7 @@
       text="consectetur adipiscing elit"
       aligndigit="left"
     />
-    <ButtonLink link="ineedhelp" linktext="Ja, dit wil ik ook" />
+    <ButtonLink link="/voor-de-ondernemer" linktext="Ja, dit wil ik ook" />
     <ButtonLink link="iwillhelp" linktext="Ja, ik wil helpen" />
   </div>
 </template>

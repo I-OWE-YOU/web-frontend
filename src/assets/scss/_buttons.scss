@@ -1,0 +1,10 @@
+@mixin buttonstyle() {
+	background-color: $color_accent;
+	color: white;
+	padding: 12px 24px;
+	text-decoration: none;
+	border-radius: 6px;
+	min-width: 322px;
+	display: inline-block;
+	@include font-size(2.6);
+}

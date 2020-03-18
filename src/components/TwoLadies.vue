@@ -18,17 +18,19 @@ export default {
 <style scoped lang="scss">
 .twoladies {
   height: 729px;
+  position: relative;
+  background-color: $color_blue_light;
 
   #logo {
     position: absolute;
-    bottom: 17%;
+    bottom: 21%;
     left: 50%;
     margin-left: -147px;
   }
 
   p {
     position: absolute;
-    bottom: 4%;
+    bottom: 5%;
     left: 0;
     right: 0;
     padding-bottom: 16px;

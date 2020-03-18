@@ -12,17 +12,18 @@ body {
 }
 
 body {
-  background-color: $color_blue_light;
+  background-color: white;
   color: white;
   font-weight: 600;
 }
 
 #app {
+  background-color: $color_blue_dark;
   font-family: "Work Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  max-width: 1024px;
+  max-width: 768px;
   position: relative;
   margin: 0 auto;
 }

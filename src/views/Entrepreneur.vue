@@ -9,86 +9,88 @@
 
     <p v-show="errorState" class="error">{{ errorMessage }}</p>
 
-    <FormField
-      v-if="step === 1"
-      fieldName="companyName"
-      :fieldValue="customer.companyName"
-      fieldLabel="Bedrijfsnaam"
-      v-on:update:companyName="customer.companyName = $event"
-      v-on:change:companyName="errorState=false"
-    />
+    <form action="#">
+      <FormField
+        v-if="step === 1"
+        fieldName="companyName"
+        :fieldValue="customer.companyName"
+        fieldLabel="Bedrijfsnaam"
+        v-on:update:companyName="customer.companyName = $event"
+        v-on:change:companyName="errorState=false"
+      />
 
-    <FormField
-      v-if="step === 2"
-      fieldName="cocNumber"
-      :fieldValue="customer.cocNumber"
-      fieldLabel="KvK nummer"
-      v-on:update:cocNumber="customer.cocNumber = $event"
-    />
+      <FormField
+        v-if="step === 2"
+        fieldName="cocNumber"
+        :fieldValue="customer.cocNumber"
+        fieldLabel="KvK nummer"
+        v-on:update:cocNumber="customer.cocNumber = $event"
+      />
 
-    <FormField
-      v-if="step === 3"
-      fieldName="firstName"
-      :fieldValue="customer.firstName"
-      fieldLabel="Voornaam"
-      v-on:update:firstName="customer.firstName = $event"
-    />
+      <FormField
+        v-if="step === 3"
+        fieldName="firstName"
+        :fieldValue="customer.firstName"
+        fieldLabel="Voornaam"
+        v-on:update:firstName="customer.firstName = $event"
+      />
 
-    <FormField
-      v-if="step === 3"
-      fieldName="lastName"
-      :fieldValue="customer.lastName"
-      fieldLabel="Achternaam"
-      v-on:update:lastName="customer.lastName = $event"
-    />
+      <FormField
+        v-if="step === 3"
+        fieldName="lastName"
+        :fieldValue="customer.lastName"
+        fieldLabel="Achternaam"
+        v-on:update:lastName="customer.lastName = $event"
+      />
 
-    <FormField
-      v-if="step === 4"
-      fieldName="postalCode"
-      :fieldValue="customer.postalCode"
-      fieldLabel="Postcode"
-      v-on:update:postalCode="customer.postalCode = $event"
-    />
+      <FormField
+        v-if="step === 4"
+        fieldName="postalCode"
+        :fieldValue="customer.postalCode"
+        fieldLabel="Postcode"
+        v-on:update:postalCode="customer.postalCode = $event"
+      />
 
-    <FormField
-      v-if="step === 4"
-      fieldName="streetNumber"
-      :fieldValue="customer.streetNumber"
-      fieldLabel="Huisnummer"
-      v-on:update:streetNumber="customer.streetNumber = $event"
-    />
+      <FormField
+        v-if="step === 4"
+        fieldName="streetNumber"
+        :fieldValue="customer.streetNumber"
+        fieldLabel="Huisnummer"
+        v-on:update:streetNumber="customer.streetNumber = $event"
+      />
 
-    <div id="address" v-show="addressLoaded">
-      <p>We hebben je adres gevonden. Klopt dit niet? Pas dan hierboven je postcode en huisnummer aan.</p>
-      <br />
-      {{customer.streetName}}&nbsp;{{customer.streetNumber}}
-      <br />
-      {{customer.postalCode}}&nbsp;{{customer.city}}
-    </div>
+      <div id="address" v-show="addressLoaded">
+        <p>We hebben je adres gevonden. Klopt dit niet? Pas dan hierboven je postcode en huisnummer aan.</p>
+        <br />
+        {{customer.streetName}}&nbsp;{{customer.streetNumber}}
+        <br />
+        {{customer.postalCode}}&nbsp;{{customer.city}}
+      </div>
 
-    <FormField
-      v-if="step === 5"
-      fieldName="email"
-      :fieldValue="customer.email"
-      fieldLabel="E-mail"
-      description="don't worry, we spammen je niet"
-      v-on:update:email="customer.email = $event"
-    />
+      <FormField
+        v-if="step === 5"
+        fieldName="email"
+        :fieldValue="customer.email"
+        fieldLabel="E-mail"
+        description="don't worry, we spammen je niet"
+        v-on:update:email="customer.email = $event"
+      />
 
-    <FormField
-      v-if="step === 6"
-      fieldName="IBAN"
-      :fieldValue="customer.IBAN"
-      fieldLabel="IBAN nummer"
-      v-on:update:IBAN="customer.IBAN = $event"
-    />
+      <FormField
+        v-if="step === 6"
+        fieldName="IBAN"
+        :fieldValue="customer.IBAN"
+        fieldLabel="IBAN nummer"
+        v-on:update:IBAN="customer.IBAN = $event"
+      />
 
-    <div v-if="step === 6">
-      <p>checkbox hier</p>
-      <h3>Hier komt API call</h3>
-    </div>
+      <div v-if="step === 6">
+        <p>checkbox hier</p>
+        <h3>Hier komt API call</h3>
+      </div>
 
-    <button @click="buttonClicked">{{ buttonText }}</button>
+      <button @click.prevent="buttonClicked">{{ buttonText }}</button>
+    </form>
   </div>
 </template>
 

@@ -44,23 +44,25 @@ export default {
 
   &.focused label {
     transition: all 0.2s linear;
-    left: 70px;
+    top: -40px;
+    color: white;
   }
 
   label {
-    position: relative;
     white-space: nowrap;
     overflow: hidden;
     font-size: 1em;
     position: absolute;
-    top: -40px;
-    left: 90px;
+    pointer-events: none;
+    top: 8px;
+    left: 0;
+    right: 0;
     display: inline-block;
-    margin: 8px 5px;
+    margin: 8px 5px 8px -180px;
     line-height: 1.4em;
     padding: 0 10px;
     transition: all 0.2s linear;
-    color: white;
+    color: $color_blue_dark;
     background-color: transparent;
   }
 

@@ -233,7 +233,7 @@ export default {
     loadAddress() {
       axios
         .get(
-          "http://tegoedje-api.azurewebsites.net/api/address/" +
+          "https://tegoedje-api.azurewebsites.net/api/address/" +
             this.customer.postalCode +
             "/" +
             this.customer.streetNumber
@@ -246,7 +246,10 @@ export default {
           this.addressLoaded = true;
         })
         .catch(e => {
-          console.log(e);
+          var message = e.reponse ? e.response.data : e.message;
+          this.showError(
+            "Je adresgegevens kunnen niet gevonden worden. (" + message + ")"
+          );
         });
     },
     isValidEmail(email) {

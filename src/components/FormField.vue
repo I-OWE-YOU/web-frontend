@@ -25,7 +25,6 @@ export default {
   },
   watch: {
     fieldValue: function(e) {
-      console.log(e);
       this.$emit("change:" + this.fieldName, true);
     }
   },
@@ -41,11 +40,9 @@ export default {
     },
     fieldFocused() {
       this.focused = "focused";
-      console.log("focus: " + this.fieldName);
     },
     fieldBlurred() {
       this.focused = this.fieldValue ? "focused" : "";
-      console.log("blur: " + this.fieldName);
     }
   }
 };

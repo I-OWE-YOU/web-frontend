@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "@microsoft/applicationinsights-web": "^2.5.2",
+    "axios": "^0.19.2",
     "core-js": "^3.6.4",
+    "iban": "0.0.14",
     "vue": "^2.6.11",
     "vue-router": "^3.1.5",
     "vuex": "^3.1.3"

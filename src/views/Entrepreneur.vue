@@ -15,6 +15,7 @@
       :fieldValue="customer.companyName"
       fieldLabel="Bedrijfsnaam"
       v-on:update:companyName="customer.companyName = $event"
+      v-on:change:companyName="errorState=false"
     />
 
     <FormField

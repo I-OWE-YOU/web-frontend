@@ -23,6 +23,11 @@ export default {
       focused: ""
     };
   },
+  watch: {
+    fieldValue: function() {
+      this.$emit("change:" + this.fieldName, true);
+    }
+  },
   props: {
     fieldName: String,
     fieldValue: String,

@@ -6,28 +6,63 @@
 
     <h1 v-html="questionText"></h1>
 
-    <div v-if="step === 1">
-      <input type="text" v-model="customer.companyName" placeholder="Bedrijfsnaam" />
-    </div>
+    <FormField
+      v-if="step === 1"
+      fieldName="companyName"
+      :fieldValue="customer.companyName"
+      fieldDescription="Bedrijfsnaam"
+    />
 
-    <div v-if="step === 2">
-      <input type="text" v-model="customer.firstName" placeholder="Voornaam" />
-      <input type="text" v-model="customer.lastName" placeholder="Achternaam" />
-    </div>
+    <FormField
+      v-if="step === 2"
+      fieldName="cocNumber"
+      :fieldValue="customer.cocNumber"
+      fieldDescription="KvK nummer"
+    />
 
-    <div v-if="step === 3">
-      <input type="text" v-model="customer.street" placeholder="Straatnaam" />
-      <input type="text" v-model="customer.postalCode" placeholder="Postcode" />
-      <input type="text" v-model="customer.city" placeholder="Plaats" />
-    </div>
+    <FormField
+      v-if="step === 3"
+      fieldName="firstName"
+      :fieldValue="customer.firstName"
+      fieldDescription="Voornaam"
+    />
 
-    <div v-if="step === 4">
-      <input type="text" v-model="customer.email" placeholder="E-mail" />
-      <p>don't worry, we spammen je niet</p>
-    </div>
+    <FormField
+      v-if="step === 3"
+      fieldName="lastName"
+      :fieldValue="customer.lastName"
+      fieldDescription="Achternaam"
+    />
 
-    <div v-if="step === 5">
-      <input type="text" v-model="customer.IBAN" placeholder="IBAN" />
+    <FormField
+      v-if="step === 4"
+      fieldName="postalCode"
+      :fieldValue="customer.postalCode"
+      fieldDescription="Postcode"
+    />
+
+    <FormField
+      v-if="step === 4"
+      fieldName="streetNumber"
+      :fieldValue="customer.streetNumber"
+      fieldDescription="Huisnummer"
+    />
+
+    <FormField
+      v-if="step === 5"
+      fieldName="email"
+      :fieldValue="customer.email"
+      fieldDescription="E-mail"
+    />
+
+    <FormField
+      v-if="step === 6"
+      fieldName="IBAN"
+      :fieldValue="customer.IBAN"
+      fieldDescription="IBAN nummer"
+    />
+
+    <div v-if="step === 6">
       <p>checkbox hier</p>
       <h3>Hier komt API call</h3>
     </div>
@@ -37,8 +72,13 @@
 </template>
 
 <script>
+import FormField from "@/components/FormField.vue";
+
 export default {
   name: "Entrepreneur",
+  components: {
+    FormField
+  },
   data: function() {
     return {
       step: 0,
@@ -46,17 +86,18 @@ export default {
       texts: [
         "Geweldig!<br />Goed dat je er bent. Laten we eerst je account personaliseren zowat we je makkelijker kunnen helpen.",
         "Om te beginnen: hoe heet je bedrijf?",
+        "Goede naam! We willen graag weten wat je Kamer van Koophandel nummer is, om misbruik tegen te gaan.",
         "Hoe heet je?",
         "Leuk je te leren kennen, FIRSTNAME! Waar zit je bedrijf?",
         "Bijna klaar. Hoe kunnen we je bereiken?",
         "En tot slot, waar mag het geld naartoe FIRSTNAME?"
       ],
       customer: {
-        companyName: "",
+        companyName: null,
         firstName: "",
         lastName: "",
-        street: "",
-        number: "",
+        streetName: "",
+        streetNumbernumber: "",
         postalCode: "",
         city: "",
         email: "",
@@ -114,11 +155,6 @@ export default {
   button {
     @include buttonstyle();
     border: none;
-  }
-
-  input[type="text"] {
-    @include inputtextstyle();
-    margin-bottom: 2em;
   }
 }
 </style>

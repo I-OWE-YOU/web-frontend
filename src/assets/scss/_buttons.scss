@@ -1,6 +1,7 @@
 @mixin buttonstyle() {
 	background-color: $color_accent;
 	color: white;
+	font-weight: bold;
 	padding: 12px 24px;
 	text-decoration: none;
 	border-radius: 6px;

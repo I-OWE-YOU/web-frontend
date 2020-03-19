@@ -4,7 +4,9 @@
       <img id="ladyleft" alt role="presentation" src="../assets/img/lady_left.svg" />
       <img id="ladyright" alt role="presentation" src="../assets/img/lady_right.svg" />
     </div>
-    <img id="logo" alt="Tegoedje, voor nu - voor straks" src="../assets/img/logo.svg" />
+    <h1>
+      <img id="logo" alt="Tegoedje, voor nu - voor straks" src="../assets/img/logo.svg" />
+    </h1>
     <p>Hoe werkt het?</p>
   </div>
 </template>

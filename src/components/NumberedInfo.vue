@@ -2,7 +2,7 @@
   <div class="numberedinfo" :class="aligndigit">
     <div class="circle" :class="color">{{ digit }}</div>
     <div class="texts">
-      <h3>{{ title }}</h3>
+      <h2>{{ title }}</h2>
       <p>{{ text }}</p>
     </div>
   </div>
@@ -32,7 +32,7 @@ export default {
   justify-content: center;
 
   .texts {
-    h3 {
+    h2 {
       @include font-size(2.6);
       font-weight: bold;
       margin: 6px 0 0;

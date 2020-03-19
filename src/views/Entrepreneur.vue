@@ -13,7 +13,7 @@
       v-if="step === 1"
       fieldName="companyName"
       :fieldValue="customer.companyName"
-      fieldDescription="Bedrijfsnaam"
+      fieldLabel="Bedrijfsnaam"
       v-on:update:companyName="customer.companyName = $event"
     />
 
@@ -21,7 +21,7 @@
       v-if="step === 2"
       fieldName="cocNumber"
       :fieldValue="customer.cocNumber"
-      fieldDescription="KvK nummer"
+      fieldLabel="KvK nummer"
       v-on:update:cocNumber="customer.cocNumber = $event"
     />
 
@@ -29,7 +29,7 @@
       v-if="step === 3"
       fieldName="firstName"
       :fieldValue="customer.firstName"
-      fieldDescription="Voornaam"
+      fieldLabel="Voornaam"
       v-on:update:firstName="customer.firstName = $event"
     />
 
@@ -37,7 +37,7 @@
       v-if="step === 3"
       fieldName="lastName"
       :fieldValue="customer.lastName"
-      fieldDescription="Achternaam"
+      fieldLabel="Achternaam"
       v-on:update:lastName="customer.lastName = $event"
     />
 
@@ -45,7 +45,7 @@
       v-if="step === 4"
       fieldName="postalCode"
       :fieldValue="customer.postalCode"
-      fieldDescription="Postcode"
+      fieldLabel="Postcode"
       v-on:update:postalCode="customer.postalCode = $event"
     />
 
@@ -53,7 +53,7 @@
       v-if="step === 4"
       fieldName="streetNumber"
       :fieldValue="customer.streetNumber"
-      fieldDescription="Huisnummer"
+      fieldLabel="Huisnummer"
       v-on:update:streetNumber="customer.streetNumber = $event"
     />
 
@@ -69,7 +69,8 @@
       v-if="step === 5"
       fieldName="email"
       :fieldValue="customer.email"
-      fieldDescription="E-mail"
+      fieldLabel="E-mail"
+      description="don't worry, we spammen je niet"
       v-on:update:email="customer.email = $event"
     />
 
@@ -77,7 +78,7 @@
       v-if="step === 6"
       fieldName="IBAN"
       :fieldValue="customer.IBAN"
-      fieldDescription="IBAN nummer"
+      fieldLabel="IBAN nummer"
       v-on:update:IBAN="customer.IBAN = $event"
     />
 
@@ -114,7 +115,8 @@ export default {
         "Hoe heet je?",
         "Leuk je te leren kennen, FIRSTNAME! Waar zit je bedrijf?",
         "Bijna klaar. Hoe kunnen we je bereiken?",
-        "En tot slot, waar mag het geld naartoe FIRSTNAME?"
+        "En tot slot, waar mag het geld naartoe FIRSTNAME?",
+        ""
       ],
       customer: {
         companyName: "",

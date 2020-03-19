@@ -1,15 +1,17 @@
 <template>
   <div class="field-wrapper" :class="focused">
-    <label :for="fieldName">{{ fieldDescription }}</label>
+    <label :for="fieldName">{{ fieldLabel }}</label>
     <input
       type="text"
       :name="fieldName"
       :value="fieldValue"
       @input="storeValue"
       @focus="focused = 'focused'"
-      @blur="focused = ''"
+      @blur="focused = fieldValue ? 'focused' : ''"
       class="text-field-input"
+      :aria-describedby="description ? fieldName+'Desc' : ''"
     />
+    <p :id="fieldName+'Desc'">{{description}}</p>
   </div>
 </template>
 
@@ -24,7 +26,8 @@ export default {
   props: {
     fieldName: String,
     fieldValue: String,
-    fieldDescription: String
+    fieldLabel: String,
+    description: String
   },
   methods: {
     storeValue(e) {
@@ -72,7 +75,11 @@ export default {
     margin: 0;
     padding: 10px;
     max-width: 303px;
-    border: 1px solid #b5b5b5;
+    border: 2px solid transparent;
+
+    &:focus {
+      border: 2px solid $color_blue_dark;
+    }
   }
 
   &.multiple2 input[type="text"],

@@ -261,7 +261,9 @@ export default {
         .catch(e => {
           var message = e.reponse ? e.response.data : e.message;
           this.showError(
-            "Je adresgegevens kunnen niet gevonden worden. (" + message + ")"
+            "Er is iets misgegaan bij het opslaan van je gegevens: '" +
+              message +
+              "'"
           );
         });
     },
@@ -319,9 +321,10 @@ export default {
 #questions {
   background-color: $color_blue_light;
   min-height: 100vh;
+  position: relative;
 
   #backbtn {
-    position: fixed;
+    position: absolute;
     top: 16px;
     left: 16px;
   }

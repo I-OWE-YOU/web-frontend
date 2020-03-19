@@ -6,8 +6,8 @@
       :name="fieldName"
       :value="fieldValue"
       @input="storeValue"
-      @focus="focused = 'focused'"
-      @blur="focused = fieldValue ? 'focused' : ''"
+      @focus="fieldFocused"
+      @blur="fieldBlurred"
       class="text-field-input"
       :aria-describedby="description ? fieldName+'Desc' : ''"
     />
@@ -20,11 +20,12 @@ export default {
   name: "FormField",
   data: function() {
     return {
-      focused: ""
+      focused: this.fieldValue ? "focused" : ""
     };
   },
   watch: {
-    fieldValue: function() {
+    fieldValue: function(e) {
+      console.log(e);
       this.$emit("change:" + this.fieldName, true);
     }
   },
@@ -37,6 +38,14 @@ export default {
   methods: {
     storeValue(e) {
       this.$emit("update:" + this.fieldName, e.target.value);
+    },
+    fieldFocused() {
+      this.focused = "focused";
+      console.log("focus: " + this.fieldName);
+    },
+    fieldBlurred() {
+      this.focused = this.fieldValue ? "focused" : "";
+      console.log("blur: " + this.fieldName);
     }
   }
 };
@@ -74,8 +83,7 @@ export default {
     background-color: transparent;
   }
 
-  input[type="text"],
-  input[type="email"] {
+  input[type="text"] {
     @include inputtextstyle();
     margin: 0;
     padding: 10px;
@@ -85,11 +93,6 @@ export default {
     &:focus {
       border: 2px solid $color_blue_dark;
     }
-  }
-
-  &.multiple2 input[type="text"],
-  &.multiple2 input[type="email"] {
-    max-width: 140px;
   }
 }
 </style>

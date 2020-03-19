@@ -9,6 +9,8 @@
 
     <p v-show="errorState" class="error">{{ errorMessage }}</p>
 
+    <p v-show="accountCreated" class="success">Je aanmelding is compleet!</p>
+
     <form action="#">
       <FormField
         v-if="step === 1"
@@ -25,6 +27,7 @@
         :fieldValue="customer.cocNumber"
         fieldLabel="KvK nummer"
         v-on:update:cocNumber="customer.cocNumber = $event"
+        v-on:change:cocNumber="errorState=false"
       />
 
       <FormField
@@ -33,6 +36,7 @@
         :fieldValue="customer.firstName"
         fieldLabel="Voornaam"
         v-on:update:firstName="customer.firstName = $event"
+        v-on:change:firstName="errorState=false"
       />
 
       <FormField
@@ -41,6 +45,7 @@
         :fieldValue="customer.lastName"
         fieldLabel="Achternaam"
         v-on:update:lastName="customer.lastName = $event"
+        v-on:change:lastName="errorState=false"
       />
 
       <FormField
@@ -49,6 +54,7 @@
         :fieldValue="customer.postalCode"
         fieldLabel="Postcode"
         v-on:update:postalCode="customer.postalCode = $event"
+        v-on:change:postalCode="errorState=false;resetAddress();"
       />
 
       <FormField
@@ -57,6 +63,7 @@
         :fieldValue="customer.streetNumber"
         fieldLabel="Huisnummer"
         v-on:update:streetNumber="customer.streetNumber = $event"
+        v-on:change:streetNumber="errorState=false;resetAddress();"
       />
 
       <div id="address" v-show="addressLoaded">
@@ -74,6 +81,7 @@
         fieldLabel="E-mail"
         description="don't worry, we spammen je niet"
         v-on:update:email="customer.email = $event"
+        v-on:change:email="errorState=false"
       />
 
       <FormField
@@ -82,11 +90,11 @@
         :fieldValue="customer.IBAN"
         fieldLabel="IBAN nummer"
         v-on:update:IBAN="customer.IBAN = $event"
+        v-on:change:IBAN="errorState=false"
       />
 
       <div v-if="step === 6">
         <p>checkbox hier</p>
-        <h3>Hier komt API call</h3>
       </div>
 
       <button @click.prevent="buttonClicked">{{ buttonText }}</button>
@@ -109,6 +117,7 @@ export default {
       step: 0,
       maxSteps: 6,
       addressLoaded: false,
+      accountCreated: false,
       errorState: false,
       errorMessage: "",
       texts: [
@@ -140,7 +149,7 @@ export default {
   computed: {
     buttonText: function() {
       if (this.addressLoaded) {
-        return "Ga verder als het adres klopt";
+        return "Ja! Det adres klopt.";
       } else if (0 === this.step) {
         return "Ga verder";
       } else if (4 === this.step) {
@@ -165,10 +174,14 @@ export default {
       }
     },
     buttonClicked() {
+      if (this.accountCreated) {
+        // goto result page
+      }
       if (this.step === this.maxSteps) {
         this.removeError();
         // Call API to process data
-        // On success, proceed to next page
+        this.postData();
+        return;
       }
 
       if (this.checkInput()) {
@@ -235,6 +248,23 @@ export default {
           return true;
       }
     },
+    postData() {
+      axios
+        .post("https://tegoedje-api.azurewebsites.net/api/companies", {
+          body: this.customer
+        })
+        .then(response => {
+          this.accountCreated = true;
+          console.log(response);
+          this.buttonText = "Fijn.En nu door!";
+        })
+        .catch(e => {
+          var message = e.reponse ? e.response.data : e.message;
+          this.showError(
+            "Je adresgegevens kunnen niet gevonden worden. (" + message + ")"
+          );
+        });
+    },
     loadAddress() {
       axios
         .get(
@@ -256,6 +286,13 @@ export default {
             "Je adresgegevens kunnen niet gevonden worden. (" + message + ")"
           );
         });
+    },
+    resetAddress() {
+      this.customer.streetName = "";
+      this.customer.city = "";
+      this.customer.latitude = "";
+      this.customer.longitude = "";
+      this.addressLoaded = false;
     },
     isValidEmail(email) {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

@@ -12,7 +12,7 @@
 export default {
   name: "NumberedInfo",
   props: {
-    digit: Number,
+    digit: String,
     color: String,
     title: String,
     text: String,

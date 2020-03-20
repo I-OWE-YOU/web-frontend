@@ -1,5 +1,7 @@
 <template>
-  <div id="app"> <RouterView :key="$route.fullPath" /> </div>
+  <div id="app">
+    <RouterView :key="$route.fullPath" />
+  </div>
 </template>
 
 <!-- This should generally be the only global CSS in the app. -->
@@ -26,7 +28,7 @@
 body {
   font-weight: 600;
   color: white;
-  background-color: $color_blue_light;
+  background-color: $color-blue-light;
 }
 
 #app {
@@ -36,11 +38,10 @@ body {
   max-width: 768px;
   margin: 0 auto;
   font-family: 'Work Sans', sans-serif;
-  font-family: 'Work Sans', sans-serif;
   color: $color-text;
   text-align: center;
   background: $color-body-bg;
-  background-color: $color_blue_dark;
+  background-color: $color-blue-dark;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

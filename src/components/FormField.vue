@@ -5,19 +5,33 @@
       type="text"
       :name="fieldName"
       :value="fieldValue"
+      class="text-field-input"
+      :aria-describedby="description ? fieldName + 'Desc' : ''"
       @input="storeValue"
       @focus="fieldFocused"
       @blur="fieldBlurred"
-      class="text-field-input"
-      :aria-describedby="description ? fieldName + 'Desc' : ''"
     />
-    <p :id="fieldName + 'Desc'">{{ description }}</p>
+    <p :id="fieldName + 'Desc'">
+      {{ description }}
+    </p>
   </div>
 </template>
 
 <script>
 export default {
   name: 'FormField',
+  props: {
+    fieldName: {
+      type: String,
+      default: '',
+    },
+    fieldValue: {
+      type: String,
+      default: '',
+    },
+    fieldLabel: { type: String, default: '' },
+    description: { type: String, default: '' },
+  },
   data: function() {
     return {
       focused: this.fieldValue ? 'focused' : '',
@@ -27,12 +41,6 @@ export default {
     fieldValue: function() {
       this.$emit('change:' + this.fieldName, true)
     },
-  },
-  props: {
-    fieldName: String,
-    fieldValue: String,
-    fieldLabel: String,
-    description: String,
   },
   methods: {
     storeValue(e) {
@@ -49,6 +57,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '@design';
+
 .field-wrapper {
   position: relative;
   display: block;
@@ -67,7 +77,7 @@ export default {
     overflow: hidden;
     font-size: 1em;
     line-height: 1.4em;
-    color: $color_blue_dark;
+    color: $color-blue-dark;
     white-space: nowrap;
     pointer-events: none;
     background-color: transparent;
@@ -88,7 +98,7 @@ export default {
     border: 2px solid transparent;
 
     &:focus {
-      border: 2px solid $color_blue_dark;
+      border: 2px solid $color-blue-dark;
     }
   }
 }

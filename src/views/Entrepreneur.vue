@@ -4,7 +4,7 @@
       id="backbtn"
       alt="back to homepage"
       src="../assets/img/backbtn.svg"
-      v-on:click="goBack"
+      @click="goBack"
     />
 
     <img
@@ -22,78 +22,82 @@
       src="../assets/img/tegoedje.svg"
     />
 
-    <h1 v-html="questionText"></h1>
+    <h1 v-text="questionText" />
 
-    <p v-show="errorState" class="error">{{ errorMessage }}</p>
+    <p v-show="errorState" class="error">
+      {{ errorMessage }}
+    </p>
 
-    <p v-show="accountCreated" class="success">Je aanmelding is compleet!</p>
+    <p v-show="accountCreated" class="success">
+      Je aanmelding is compleet!
+    </p>
 
     <form action="#">
       <FormField
         v-if="step === 1"
-        fieldName="companyName"
-        :fieldValue="customer.companyName"
-        fieldLabel="Bedrijfsnaam"
-        v-on:update:companyName="customer.companyName = $event"
-        v-on:change:companyName="errorState = false"
+        field-name="companyName"
+        :field-value="customer.companyName"
+        field-label="Bedrijfsnaam"
+        @update:companyName="customer.companyName = $event"
+        @change:companyName="errorState = false"
       />
 
       <FormField
         v-if="step === 2"
-        fieldName="cocNumber"
-        :fieldValue="customer.cocNumber"
-        fieldLabel="KvK nummer"
-        v-on:update:cocNumber="customer.cocNumber = $event"
-        v-on:change:cocNumber="errorState = false"
+        field-name="cocNumber"
+        :field-value="customer.cocNumber"
+        field-label="KvK nummer"
+        @update:cocNumber="customer.cocNumber = $event"
+        @change:cocNumber="errorState = false"
       />
 
       <FormField
         v-if="step === 3"
-        fieldName="firstName"
-        :fieldValue="customer.contactFirstName"
-        fieldLabel="Voornaam"
-        v-on:update:firstName="customer.firstName = $event"
-        v-on:change:firstName="errorState = false"
+        field-name="firstName"
+        :field-value="customer.contactFirstName"
+        field-label="Voornaam"
+        @update:firstName="customer.firstName = $event"
+        @change:firstName="errorState = false"
       />
 
       <FormField
         v-if="step === 3"
-        fieldName="lastName"
-        :fieldValue="customer.contactLastName"
-        fieldLabel="Achternaam"
-        v-on:update:lastName="customer.lastName = $event"
-        v-on:change:lastName="errorState = false"
+        field-name="lastName"
+        :field-value="customer.contactLastName"
+        field-label="Achternaam"
+        @update:lastName="customer.lastName = $event"
+        @change:lastName="errorState = false"
       />
 
       <FormField
         v-if="step === 4"
-        fieldName="zipCode"
-        :fieldValue="zipCode"
-        fieldLabel="Postcode"
-        v-on:update:postalCode="customer.postalCode = $event"
-        v-on:change:postalCode="
+        field-name="zipCode"
+        :field-value="zipCode"
+        field-label="Postcode"
+        @update:postalCode="customer.postalCode = $event"
+        @change:postalCode="
           errorState = false
-          resetAddress()
+          resetAddress
         "
       />
 
       <FormField
         v-if="step === 4"
-        fieldName="houseNumber"
-        :fieldValue="houseNumber"
-        fieldLabel="Huisnummer"
-        v-on:update:streetNumber="customer.streetNumber = $event"
-        v-on:change:streetNumber="
+        field-name="houseNumber"
+        :field-value="houseNumber"
+        field-label="Huisnummer"
+        @update:streetNumber="customer.streetNumber = $event"
+        @change:streetNumber="
           errorState = false
-          resetAddress()
+          resetAddress
         "
       />
 
-      <div id="address" v-show="addressLoaded">
-        <p
-          >We hebben je adres gevonden. Klopt dit niet? Pas dan hierboven je
-          postcode en huisnummer aan.</p
-        >
+      <div v-show="addressLoaded" id="address">
+        <p>
+          We hebben je adres gevonden. Klopt dit niet? Pas dan hierboven je
+          postcode en huisnummer aan.
+        </p>
         <br />
         {{ customer.streetName }}&nbsp;{{ customer.streetNumber }}
         <br />
@@ -102,28 +106,30 @@
 
       <FormField
         v-if="step === 5"
-        fieldName="email"
-        :fieldValue="customer.email"
-        fieldLabel="E-mail"
+        field-name="email"
+        :field-value="customer.email"
+        field-label="E-mail"
         description="don't worry, we spammen je niet"
-        v-on:update:email="customer.email = $event"
-        v-on:change:email="errorState = false"
+        @update:email="customer.email = $event"
+        @change:email="errorState = false"
       />
 
       <FormField
         v-if="step === 6"
-        fieldName="IBAN"
-        :fieldValue="customer.iban"
-        fieldLabel="IBAN nummer"
-        v-on:update:IBAN="customer.IBAN = $event"
-        v-on:change:IBAN="errorState = false"
+        field-name="IBAN"
+        :field-value="customer.iban"
+        field-label="IBAN nummer"
+        @update:IBAN="customer.IBAN = $event"
+        @change:IBAN="errorState = false"
       />
 
       <div v-if="step === 6">
         <p>checkbox here to accept terms</p>
       </div>
 
-      <button @click.prevent="buttonClicked">{{ buttonText }}</button>
+      <button @click.prevent="buttonClicked">
+        {{ buttonText }}
+      </button>
     </form>
   </div>
 </template>
@@ -131,7 +137,7 @@
 <script>
 import axios from 'axios'
 import IBAN from 'iban'
-import FormField from '@/components/FormField.vue'
+import FormField from '@components/FormField.vue'
 
 export default {
   name: 'Entrepreneur',
@@ -176,9 +182,9 @@ export default {
     buttonText: function() {
       if (this.addressLoaded) {
         return 'Ja! Dit adres klopt.'
-      } else if (0 === this.step) {
+      } else if (this.step === 0) {
         return 'Ga verder'
-      } else if (4 === this.step) {
+      } else if (this.step === 4) {
         return 'Check postcode'
       } else if (this.maxSteps === this.step) {
         return 'Afronden'
@@ -193,7 +199,7 @@ export default {
   },
   methods: {
     goBack() {
-      if (0 === this.step) {
+      if (this.step === 0) {
         this.$router.go(-1)
       } else {
         this.step--
@@ -281,7 +287,6 @@ export default {
         })
         .then((response) => {
           this.accountCreated = true
-          console.log(response)
           this.buttonText = 'Fijn.En nu door!'
         })
         .catch((e) => {
@@ -323,10 +328,10 @@ export default {
       return re.test(email)
     },
     isStringEmpty(s) {
-      return !s || 0 === s.length
+      return !s || s.length === 0
     },
     isValidCocNumber(s) {
-      return 8 === s.length
+      return s.length === 8
     },
     showError(errorMessage) {
       this.errorState = true
@@ -340,10 +345,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '@design';
+
 #questions {
   position: relative;
   min-height: 100vh;
-  background-color: $color_blue_light;
+  background-color: $color-blue-light;
 
   #backbtn {
     position: absolute;
@@ -376,7 +383,7 @@ export default {
     margin: 0 auto;
     line-height: 1.6;
     color: white;
-    background-color: $color_blue_dark;
+    background-color: $color-blue-dark;
     border-radius: 6px;
   }
 

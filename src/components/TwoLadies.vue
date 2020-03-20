@@ -28,10 +28,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '@design';
 .twoladies {
   position: relative;
   height: 729px;
-  background-color: $color_blue_light;
+  background-color: $color-blue-light;
 
   #logo {
     position: absolute;

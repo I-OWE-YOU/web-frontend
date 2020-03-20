@@ -1,13 +1,7 @@
-const appConfig = require('./src/app.config')
-
 /** @type import('@vue/cli-service').ProjectOptions */
 module.exports = {
   // https://github.com/neutrinojs/webpack-chain/tree/v4#getting-started
   chainWebpack(config) {
-    // We provide the app's title in Webpack's name field, so that
-    // it can be accessed in index.html to inject the correct title.
-    config.set('name', appConfig.title)
-
     // Set up all the aliases we use in our app.
     config.resolve.alias.clear().merge(require('./aliases.config').webpack)
 

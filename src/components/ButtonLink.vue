@@ -1,6 +1,8 @@
 <template>
   <div class="buttonlink">
-    <router-link class="buttonlink" :to="link">{{ linktext }}</router-link>
+    <router-link class="buttonlink" :to="link">
+      {{ linktext }}
+    </router-link>
   </div>
 </template>
 
@@ -8,16 +10,23 @@
 export default {
   name: 'ButtonLink',
   props: {
-    link: String,
-    linktext: String,
+    link: {
+      type: String,
+      default: '',
+    },
+    linktext: {
+      type: String,
+      default: '',
+    },
   },
 }
 </script>
 
 <style scoped lang="scss">
+@import '@design';
 .buttonlink {
   padding: 0 0 24px;
-  background-color: $color_blue_darker;
+  background-color: $color-blue-darker;
 
   a {
     @include buttonstyle();

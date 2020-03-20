@@ -1,13 +1,12 @@
 import Vue from 'vue'
-import App from './App.vue'
+import { ApplicationInsights } from '@microsoft/applicationinsights-web'
 import router from './router'
 
+import App from './App.vue'
 // Globally register all `_base`-prefixed components
 import '@components/_globals'
 
 Vue.config.productionTip = false
-
-import { ApplicationInsights } from '@microsoft/applicationinsights-web'
 
 const appInsights = new ApplicationInsights({
   config: {

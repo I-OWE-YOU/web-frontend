@@ -66,41 +66,47 @@ export default {
 
 <style scoped lang="scss">
 .field-wrapper {
+  position: relative;
   display: block;
-  margin: 50px 0 20px;
+  margin: 50px auto 20px;
   position: relative;
   outline: none;
-  width: 100%;
+  width: 300px;
 
   &.focused label {
     transition: all 0.2s linear;
     top: -40px;
     color: white;
   }
+  
+  label, input[type="text"] {
+    display: block;
+    margin: 0;
+    line-height: 2.6rem;
+  }
 
   label {
+    position: absolute;
+    top: 0;
+    left: 0;
     white-space: nowrap;
     overflow: hidden;
-    font-size: 1em;
-    position: absolute;
     pointer-events: none;
-    top: 8px;
-    left: 0;
-    right: 0;
-    display: inline-block;
-    margin: 8px 5px 8px -180px;
-    line-height: 1.4em;
-    padding: 0 10px;
-    transition: all 0.2s linear;
+    font-size: 1em;
+    padding: 14px; // 4px for the border
     color: $color_blue_dark;
     background-color: transparent;
+    transition: all 0.2s linear;
   }
 
   input[type="text"] {
-    @include inputtextstyle();
-    margin: 0;
+    background-color: $color_white;
+    color: $color_black;
+    border-radius: 6px;
+    font-size: 2.6rem;
+    
     padding: 10px;
-    max-width: 303px;
+    width: calc( 100% - 20px - 4px ); // 20px for padding - 4px for borders (this should be solved better by border-box and all)
     border: 2px solid transparent;
 
     &:focus {

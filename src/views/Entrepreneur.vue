@@ -12,6 +12,7 @@
     <p v-show="accountCreated" class="success">Je aanmelding is compleet!</p>
 
     <form action="#">
+      
       <FormField
         v-if="step === 1"
         fieldName="companyName"

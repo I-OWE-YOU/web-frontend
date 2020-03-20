@@ -9,9 +9,11 @@
     "lint:eslint": "eslint --fix",
     "lint:stylelint": "stylelint --fix",
     "lint:prettier": "prettier --write --loglevel warn",
+    "lint:markdownlint": "markdownlint",
     "lint:all:eslint": "yarn lint:eslint --ext .js,.vue .",
     "lint:all:stylelint": "yarn lint:stylelint \"src/**/*.{vue,scss}\"",
-    "lint:all:prettier": "yarn lint:prettier \"**/*.{js,json,css,scss,vue,html,md}\""
+    "lint:all:prettier": "yarn lint:prettier \"**/*.{js,json,css,scss,vue,html,md}\"",
+    "lint:all:markdownlint": "yarn lint:markdownlint \"docs/*.md\" \"*.md\""
   },
   "gitHooks": {
     "pre-commit": "cross-env PRE_COMMIT=true lint-staged"

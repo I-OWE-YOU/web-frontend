@@ -35,62 +35,44 @@
     <form action="#">
       <FormField
         v-if="step === 1"
+        v-model="customer.companyName"
         field-name="companyName"
-        :field-value="customer.companyName"
         field-label="Bedrijfsnaam"
-        @update:companyName="customer.companyName = $event"
-        @change:companyName="errorState = false"
       />
 
       <FormField
         v-if="step === 2"
+        v-model="customer.cocNumber"
         field-name="cocNumber"
-        :field-value="customer.cocNumber"
         field-label="KvK nummer"
-        @update:cocNumber="customer.cocNumber = $event"
-        @change:cocNumber="errorState = false"
       />
 
       <FormField
         v-if="step === 3"
+        v-model="customer.contactFirstName"
         field-name="firstName"
-        :field-value="customer.contactFirstName"
         field-label="Voornaam"
-        @update:firstName="customer.firstName = $event"
-        @change:firstName="errorState = false"
       />
 
       <FormField
         v-if="step === 3"
+        v-model="customer.contactLastName"
         field-name="lastName"
-        :field-value="customer.contactLastName"
         field-label="Achternaam"
-        @update:lastName="customer.lastName = $event"
-        @change:lastName="errorState = false"
       />
 
       <FormField
         v-if="step === 4"
-        field-name="zipCode"
-        :field-value="zipCode"
+        v-model="zipCode"
+        field-name="postalCode"
         field-label="Postcode"
-        @update:postalCode="customer.postalCode = $event"
-        @change:postalCode="
-          errorState = false
-          resetAddress
-        "
       />
 
       <FormField
         v-if="step === 4"
-        field-name="houseNumber"
-        :field-value="houseNumber"
+        v-model="houseNumber"
+        field-name="streetNumber"
         field-label="Huisnummer"
-        @update:streetNumber="customer.streetNumber = $event"
-        @change:streetNumber="
-          errorState = false
-          resetAddress
-        "
       />
 
       <div v-show="addressLoaded" id="address">
@@ -99,28 +81,24 @@
           postcode en huisnummer aan.
         </p>
         <br />
-        {{ customer.streetName }}&nbsp;{{ customer.streetNumber }}
+        {{ customer.address.street }}&nbsp;{{ houseNumber }}
         <br />
-        {{ customer.postalCode }}&nbsp;{{ customer.city }}
+        {{ zipCode }}&nbsp;{{ customer.address.city }}
       </div>
 
       <FormField
         v-if="step === 5"
+        v-model="customer.email"
         field-name="email"
-        :field-value="customer.email"
         field-label="E-mail"
         description="don't worry, we spammen je niet"
-        @update:email="customer.email = $event"
-        @change:email="errorState = false"
       />
 
       <FormField
         v-if="step === 6"
+        v-model="customer.iban"
         field-name="IBAN"
-        :field-value="customer.iban"
         field-label="IBAN nummer"
-        @update:IBAN="customer.IBAN = $event"
-        @change:IBAN="errorState = false"
       />
 
       <div v-if="step === 6">
@@ -138,6 +116,7 @@
 import axios from 'axios'
 import IBAN from 'iban'
 import FormField from '@components/FormField.vue'
+import { EventBus } from '@plugins/event-bus.js'
 
 export default {
   name: 'Entrepreneur',
@@ -162,19 +141,20 @@ export default {
         'En tot slot, waar mag het geld naartoe FIRSTNAME?',
         '',
       ],
+      houseNumber: '',
+      zipCode: '',
       customer: {
         companyName: '',
         cocNumber: '',
-        firstName: '',
-        lastName: '',
+        contactFirstName: '',
+        contactLastName: '',
         streetName: '',
-        streetNumber: '',
-        postalCode: '',
         city: '',
         longitude: 0.0,
         latitude: 0.0,
         email: '',
-        IBAN: '',
+        iban: '',
+        address: {},
       },
     }
   },
@@ -194,8 +174,17 @@ export default {
     },
     questionText: function() {
       var text = this.texts[this.step]
-      return text.replace('FIRSTNAME', this.customer.firstName)
+      return text.replace('FIRSTNAME', this.customer.contactFirstName)
     },
+  },
+  mounted() {
+    const self = this
+    EventBus.$on('valueChange', function() {
+      self.removeError()
+      if (self.step === 4) {
+        self.resetAddress()
+      }
+    })
   },
   methods: {
     goBack() {
@@ -302,15 +291,12 @@ export default {
       axios
         .get(
           'https://tegoedje-api.azurewebsites.net/api/address/' +
-            this.customer.postalCode +
+            this.zipCode +
             '/' +
-            this.customer.streetNumber
+            this.houseNumber
         )
         .then((response) => {
-          this.customer.streetName = response.data.street
-          this.customer.city = response.data.city
-          this.customer.latitude = response.data.latitude
-          this.customer.longitude = response.data.longitude
+          this.customer.address = response.data
           this.addressLoaded = true
         })
         .catch((e) => {

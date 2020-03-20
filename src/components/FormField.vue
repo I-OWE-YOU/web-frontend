@@ -2,12 +2,11 @@
   <div class="field-wrapper" :class="focused">
     <label :for="fieldName">{{ fieldLabel }}</label>
     <input
+      v-model="modelValue"
       type="text"
       :name="fieldName"
-      :value="fieldValue"
-      class="text-field-input"
       :aria-describedby="description ? fieldName + 'Desc' : ''"
-      @input="storeValue"
+      class="text-field-input"
       @focus="fieldFocused"
       @blur="fieldBlurred"
     />
@@ -18,39 +17,53 @@
 </template>
 
 <script>
+import { EventBus } from '@plugins/event-bus.js'
+
 export default {
   name: 'FormField',
   props: {
+    value: {
+      type: String,
+      default: '',
+    },
     fieldName: {
       type: String,
       default: '',
     },
-    fieldValue: {
+    fieldLabel: {
       type: String,
       default: '',
     },
-    fieldLabel: { type: String, default: '' },
-    description: { type: String, default: '' },
+    description: {
+      type: String,
+      default: '',
+    },
   },
-  data: function() {
+  data() {
     return {
-      focused: this.fieldValue ? 'focused' : '',
+      state: 'idle',
     }
   },
-  watch: {
-    fieldValue: function() {
-      this.$emit('change:' + this.fieldName, true)
+  computed: {
+    focused() {
+      return this.value || this.state === 'focus' ? 'focused' : ''
+    },
+    modelValue: {
+      get() {
+        return this.value
+      },
+      set(val) {
+        EventBus.$emit('valueChange')
+        this.$emit('input', val)
+      },
     },
   },
   methods: {
-    storeValue(e) {
-      this.$emit('update:' + this.fieldName, e.target.value)
-    },
     fieldFocused() {
-      this.focused = 'focused'
+      this.state = 'focus'
     },
     fieldBlurred() {
-      this.focused = this.fieldValue ? 'focused' : ''
+      this.state = 'blur'
     },
   },
 }
@@ -62,27 +75,31 @@ export default {
 .field-wrapper {
   position: relative;
   display: block;
-  width: 100%;
-  margin: 50px 0 20px;
+  width: 300px;
+  margin: 50px auto 20px;
   outline: none;
+
+  label,
+  input[type='text'] {
+    display: block;
+    margin: 0;
+    line-height: 2.6rem;
+  }
 
   label {
     position: absolute;
-    top: 8px;
-    right: 0;
+    top: 0;
     left: 0;
-    display: inline-block;
-    padding: 0 10px;
-    margin: 8px 5px 8px -180px;
+    padding: 14px; // 4px for the border
     overflow: hidden;
-    font-size: 1em;
-    line-height: 1.4em;
-    color: $color-blue-dark;
+    font-size: 1.4rem;
+    color: $color_blue_dark;
     white-space: nowrap;
     pointer-events: none;
     background-color: transparent;
     transition: all 0.2s linear;
   }
+
   &.focused label {
     top: -40px;
     color: white;
@@ -90,12 +107,12 @@ export default {
   }
 
   input[type='text'] {
-    @include inputtextstyle();
-
-    max-width: 303px;
     padding: 10px;
-    margin: 0;
+    font-size: 2.6rem;
+    color: #000;
+    background-color: #fff;
     border: 2px solid transparent;
+    border-radius: 6px;
 
     &:focus {
       border: 2px solid $color-blue-dark;

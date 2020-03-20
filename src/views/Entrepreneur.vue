@@ -1,101 +1,126 @@
 <template>
   <div id="questions">
-    <img id="backbtn" alt="back to homepage" src="../assets/img/backbtn.svg" v-on:click="goBack" />
+    <img
+      id="backbtn"
+      alt="back to homepage"
+      src="../assets/img/backbtn.svg"
+      @click="goBack"
+    />
 
-    <img v-if="errorState" id="tegoedje" alt role="presentation" src="../assets/img/bijnagoed.svg" />
-    <img v-else id="tegoedje" alt role="presentation" src="../assets/img/tegoedje.svg" />
+    <img
+      v-if="errorState"
+      id="tegoedje"
+      alt
+      role="presentation"
+      src="../assets/img/bijnagoed.svg"
+    />
+    <img
+      v-else
+      id="tegoedje"
+      alt
+      role="presentation"
+      src="../assets/img/tegoedje.svg"
+    />
 
-    <h1 v-html="questionText"></h1>
+    <h1 v-text="questionText" />
 
-    <p v-show="errorState" class="error">{{ errorMessage }}</p>
+    <p v-show="errorState" class="error">
+      {{ errorMessage }}
+    </p>
 
-    <p v-show="accountCreated" class="success">Je aanmelding is compleet!</p>
+    <p v-show="accountCreated" class="success">
+      Je aanmelding is compleet!
+    </p>
 
     <form action="#">
-      
       <FormField
         v-if="step === 1"
-        fieldName="companyName"
         v-model="customer.companyName"
-        fieldLabel="Bedrijfsnaam"
+        field-name="companyName"
+        field-label="Bedrijfsnaam"
       />
 
       <FormField
         v-if="step === 2"
-        fieldName="cocNumber"
         v-model="customer.cocNumber"
-        fieldLabel="KvK nummer"
+        field-name="cocNumber"
+        field-label="KvK nummer"
       />
 
       <FormField
         v-if="step === 3"
-        fieldName="firstName"
         v-model="customer.firstName"
-        fieldLabel="Voornaam"
+        field-name="firstName"
+        field-label="Voornaam"
       />
 
       <FormField
         v-if="step === 3"
-        fieldName="lastName"
         v-model="customer.lastName"
-        fieldLabel="Achternaam"
+        field-name="lastName"
+        field-label="Achternaam"
       />
 
       <FormField
         v-if="step === 4"
-        fieldName="postalCode"
         v-model="customer.postalCode"
-        fieldLabel="Postcode"
+        field-name="postalCode"
+        field-label="Postcode"
       />
 
       <FormField
         v-if="step === 4"
-        fieldName="streetNumber"
         v-model="customer.streetNumber"
-        fieldLabel="Huisnummer"
+        field-name="streetNumber"
+        field-label="Huisnummer"
       />
 
-      <div id="address" v-show="addressLoaded">
-        <p>We hebben je adres gevonden. Klopt dit niet? Pas dan hierboven je postcode en huisnummer aan.</p>
+      <div v-show="addressLoaded" id="address">
+        <p>
+          We hebben je adres gevonden. Klopt dit niet? Pas dan hierboven je
+          postcode en huisnummer aan.
+        </p>
         <br />
-        {{customer.streetName}}&nbsp;{{customer.streetNumber}}
+        {{ customer.streetName }}&nbsp;{{ customer.streetNumber }}
         <br />
-        {{customer.postalCode}}&nbsp;{{customer.city}}
+        {{ customer.postalCode }}&nbsp;{{ customer.city }}
       </div>
 
       <FormField
         v-if="step === 5"
-        fieldName="email"
         v-model="customer.email"
-        fieldLabel="E-mail"
+        field-name="email"
+        field-label="E-mail"
         description="don't worry, we spammen je niet"
       />
 
       <FormField
         v-if="step === 6"
-        fieldName="IBAN"
         v-model="customer.IBAN"
-        fieldLabel="IBAN nummer"
+        field-name="IBAN"
+        field-label="IBAN nummer"
       />
 
       <div v-if="step === 6">
-        <p>checkbox hier</p>
+        <p>checkbox here to accept terms</p>
       </div>
 
-      <button @click.prevent="buttonClicked">{{ buttonText }}</button>
+      <button @click.prevent="buttonClicked">
+        {{ buttonText }}
+      </button>
     </form>
   </div>
 </template>
 
 <script>
-import axios from "axios";
-import IBAN from "iban";
-import FormField from "@/components/FormField.vue";
+import axios from 'axios'
+import IBAN from 'iban'
+import FormField from '@components/FormField.vue'
 
 export default {
-  name: "Entrepreneur",
+  name: 'Entrepreneur',
   components: {
-    FormField
+    FormField,
   },
   data: function() {
     return {
@@ -104,58 +129,58 @@ export default {
       addressLoaded: false,
       accountCreated: false,
       errorState: false,
-      errorMessage: "",
+      errorMessage: '',
       texts: [
-        "Geweldig!<br />Goed dat je er bent. Laten we eerst je account personaliseren zowat we je makkelijker kunnen helpen.",
-        "Om te beginnen: hoe heet je bedrijf?",
-        "Goede naam! We willen graag weten wat je Kamer van Koophandel nummer is, om misbruik tegen te gaan.",
-        "Hoe heet je?",
-        "Leuk je te leren kennen, FIRSTNAME! Waar zit je bedrijf?",
-        "Bijna klaar. Hoe kunnen we je bereiken?",
-        "En tot slot, waar mag het geld naartoe FIRSTNAME?",
-        ""
+        'Geweldig! Goed dat je er bent. Laten we eerst je account personaliseren zowat we je makkelijker kunnen helpen.',
+        'Om te beginnen: hoe heet je bedrijf?',
+        'Goede naam! We willen graag weten wat je Kamer van Koophandel nummer is, om misbruik tegen te gaan.',
+        'Hoe heet je?',
+        'Leuk je te leren kennen, FIRSTNAME! Waar zit je bedrijf?',
+        'Bijna klaar. Hoe kunnen we je bereiken?',
+        'En tot slot, waar mag het geld naartoe FIRSTNAME?',
+        '',
       ],
       customer: {
-        companyName: "",
-        cocNumber: "",
-        firstName: "",
-        lastName: "",
-        streetName: "",
-        streetNumber: "",
-        postalCode: "",
-        city: "",
+        companyName: '',
+        cocNumber: '',
+        firstName: '',
+        lastName: '',
+        streetName: '',
+        streetNumber: '',
+        postalCode: '',
+        city: '',
         longitude: 0.0,
         latitude: 0.0,
-        email: "",
-        IBAN: ""
-      }
-    };
+        email: '',
+        IBAN: '',
+      },
+    }
   },
   computed: {
     buttonText: function() {
       if (this.addressLoaded) {
-        return "Ja! Dit adres klopt.";
-      } else if (0 === this.step) {
-        return "Ga verder";
-      } else if (4 === this.step) {
-        return "Check postcode";
+        return 'Ja! Dit adres klopt.'
+      } else if (this.step === 0) {
+        return 'Ga verder'
+      } else if (this.step === 4) {
+        return 'Check postcode'
       } else if (this.maxSteps === this.step) {
-        return "Afronden";
+        return 'Afronden'
       } else {
-        return "Volgende";
+        return 'Volgende'
       }
     },
     questionText: function() {
-      var text = this.texts[this.step];
-      return text.replace("FIRSTNAME", this.customer.firstName);
-    }
+      var text = this.texts[this.step]
+      return text.replace('FIRSTNAME', this.customer.firstName)
+    },
   },
   methods: {
     goBack() {
-      if (0 === this.step) {
-        this.$router.go(-1);
+      if (this.step === 0) {
+        this.$router.go(-1)
       } else {
-        this.step--;
+        this.step--
       }
     },
     buttonClicked() {
@@ -163,150 +188,147 @@ export default {
         // goto result page
       }
       if (this.step === this.maxSteps) {
-        this.removeError();
+        this.removeError()
         // Call API to process data
-        this.postData();
-        return;
+        this.postData()
+        return
       }
 
       if (this.checkInput()) {
-        this.removeError();
-        this.step += 1;
+        this.removeError()
+        this.step += 1
       }
     },
     checkInput() {
       switch (this.step) {
         case 0:
-          return true;
+          return true
         case 1:
           if (this.isStringEmpty(this.customer.companyName)) {
-            this.showError("Wil je je bedrijfsnaam alsjeblieft invullen?");
-            return false;
+            this.showError('Wil je je bedrijfsnaam alsjeblieft invullen?')
+            return false
           }
-          return true;
+          return true
         case 2:
           if (!this.isValidCocNumber(this.customer.cocNumber)) {
-            this.showError("Wil je een geldig KvK nummer invullen?");
-            return false;
+            this.showError('Wil je een geldig KvK nummer invullen?')
+            return false
           }
-          return true;
+          return true
         case 3:
           if (
-            this.isStringEmpty(this.customer.firstName) ||
-            this.isStringEmpty(this.customer.lastName)
+            this.isStringEmpty(this.customer.contactFirstName) ||
+            this.isStringEmpty(this.customer.contactLastName)
           ) {
-            this.showError("We willen graag weten hoe je heet! Ah toe?");
-            return false;
+            this.showError('We willen graag weten hoe je heet! Ah toe?')
+            return false
           }
-          return true;
+          return true
         case 4:
           if (
-            this.isStringEmpty(this.customer.postalCode) ||
-            this.isStringEmpty(this.customer.streetNumber)
+            this.isStringEmpty(this.zipCode) ||
+            this.isStringEmpty(this.houseNumber)
           ) {
             this.showError(
-              "Met je postcode en huisnummer zoeken we je locatie op."
-            );
-            return false;
+              'Met je postcode en huisnummer zoeken we je locatie op.'
+            )
+            return false
           }
           if (this.addressLoaded) {
-            this.addressLoaded = false;
-            return true;
+            this.addressLoaded = false
+            return true
           }
-          this.loadAddress();
-          return false;
+          this.loadAddress()
+          return false
         case 5:
           if (!this.isValidEmail(this.customer.email)) {
             this.showError(
-              "Dit e-mail adres ziet er onbruikbaar uit. Wil je het checken?"
-            );
-            return false;
+              'Dit e-mail adres ziet er onbruikbaar uit. Wil je het checken?'
+            )
+            return false
           }
-          return true;
+          return true
         case 6:
-          if (!IBAN.isValid(this.customer.IBAN)) {
+          if (!IBAN.isValid(this.customer.iban)) {
             this.showError(
-              "Dit IBAN nummer is niet geldig. Sorry dat we even streng zijn, we willen graag dat je je geld krijgt."
-            );
-            return false;
+              'Dit IBAN nummer is niet geldig. Sorry dat we even streng zijn, we willen graag dat je je geld krijgt.'
+            )
+            return false
           }
-          return true;
+          return true
       }
     },
     postData() {
       axios
-        .post("https://tegoedje-api.azurewebsites.net/api/companies", {
-          body: this.customer
+        .post('https://tegoedje-api.azurewebsites.net/api/companies', {
+          body: this.customer,
         })
-        .then(response => {
-          this.accountCreated = true;
-          console.log(response);
-          this.buttonText = "Fijn.En nu door!";
+        .then((response) => {
+          this.accountCreated = true
+          this.buttonText = 'Fijn.En nu door!'
         })
-        .catch(e => {
-          var message = e.reponse ? e.response.data : e.message;
+        .catch((e) => {
+          var message = e.reponse ? e.response.data : e.message
           this.showError(
             "Er is iets misgegaan bij het opslaan van je gegevens: '" +
               message +
               "'"
-          );
-        });
+          )
+        })
     },
     loadAddress() {
       axios
         .get(
-          "https://tegoedje-api.azurewebsites.net/api/address/" +
+          'https://tegoedje-api.azurewebsites.net/api/address/' +
             this.customer.postalCode +
-            "/" +
+            '/' +
             this.customer.streetNumber
         )
-        .then(response => {
-          this.customer.streetName = response.data.street;
-          this.customer.city = response.data.city;
-          this.customer.latitude = response.data.latitude;
-          this.customer.longitude = response.data.longitude;
-          this.addressLoaded = true;
+        .then((response) => {
+          this.customer.streetName = response.data.street
+          this.customer.city = response.data.city
+          this.customer.latitude = response.data.latitude
+          this.customer.longitude = response.data.longitude
+          this.addressLoaded = true
         })
-        .catch(e => {
-          var message = e.reponse ? e.response.data : e.message;
+        .catch((e) => {
+          var message = e.reponse ? e.response.data : e.message
           this.showError(
-            "Je adresgegevens kunnen niet gevonden worden. (" + message + ")"
-          );
-        });
+            'Je adresgegevens kunnen niet gevonden worden. (' + message + ')'
+          )
+        })
     },
     resetAddress() {
-      this.customer.streetName = "";
-      this.customer.city = "";
-      this.customer.latitude = "";
-      this.customer.longitude = "";
-      this.addressLoaded = false;
+      this.addressLoaded = false
     },
     isValidEmail(email) {
-      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      return re.test(email)
     },
     isStringEmpty(s) {
-      return !s || 0 === s.length;
+      return !s || s.length === 0
     },
     isValidCocNumber(s) {
-      return 8 === s.length;
+      return s.length === 8
     },
     showError(errorMessage) {
-      this.errorState = true;
-      this.errorMessage = errorMessage;
+      this.errorState = true
+      this.errorMessage = errorMessage
     },
     removeError() {
-      this.errorState = false;
-    }
-  }
-};
+      this.errorState = false
+    },
+  },
+}
 </script>
 
 <style scoped lang="scss">
+@import '@design';
+
 #questions {
-  background-color: $color_blue_light;
-  min-height: 100vh;
   position: relative;
+  min-height: 100vh;
+  background-color: $color-blue-light;
 
   #backbtn {
     position: absolute;
@@ -315,13 +337,13 @@ export default {
   }
 
   #tegoedje {
-    margin: 2em 0 3em;
     max-height: 65px;
+    margin: 2em 0 3em;
   }
 
   h1 {
-    margin: 1em auto 2em;
     max-width: 260px;
+    margin: 1em auto 2em;
   }
 
   #address {
@@ -334,17 +356,18 @@ export default {
   }
 
   p.error {
-    background-color: $color_blue_dark;
-    color: white;
-    border-radius: 6px;
     max-width: 275px;
-    margin: 0 auto;
     padding: 12px 24px;
+    margin: 0 auto;
     line-height: 1.6;
+    color: white;
+    background-color: $color-blue-dark;
+    border-radius: 6px;
   }
 
   button {
     @include buttonstyle();
+
     border: none;
   }
 }

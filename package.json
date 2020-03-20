@@ -5,7 +5,18 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "run-s lint:all:*",
+    "lint:eslint": "eslint --fix",
+    "lint:stylelint": "stylelint --fix",
+    "lint:prettier": "prettier --write --loglevel warn",
+    "lint:markdownlint": "markdownlint",
+    "lint:all:eslint": "yarn lint:eslint --ext .js,.vue .",
+    "lint:all:stylelint": "yarn lint:stylelint \"src/**/*.{vue,scss}\"",
+    "lint:all:prettier": "yarn lint:prettier \"**/*.{js,json,css,scss,vue,html,md}\"",
+    "lint:all:markdownlint": "yarn lint:markdownlint \"docs/*.md\" \"*.md\""
+  },
+  "gitHooks": {
+    "pre-commit": "cross-env PRE_COMMIT=true lint-staged"
   },
   "dependencies": {
     "@microsoft/applicationinsights-web": "^2.5.2",
@@ -15,9 +26,29 @@
     "vue-router": "^3.1.5"
   },
   "devDependencies": {
+    "@vue/eslint-config-standard": "5.1.x",
+    "@web-types/vue": "^2.5.0-3",
+    "babel-core": "7.0.0-bridge.0",
+    "cross-env": "7.0.x",
+    "eslint-plugin-import": "2.20.x",
+    "eslint-plugin-node": "11.0.x",
+    "eslint-plugin-promise": "4.2.x",
+    "eslint-plugin-standard": "4.0.x",
+    "hygen": "4.0.x",
+    "lint-staged": "10.0.x",
+    "markdownlint-cli": "0.22.x",
+    "npm-run-all": "4.1.x",
+    "nprogress": "0.2.0",
+    "sass": "^1.26.2",
+    "stylelint": "13.2.x",
+    "stylelint-config-css-modules": "2.2.x",
+    "stylelint-config-prettier": "8.0.x",
+    "stylelint-config-recess-order": "2.0.x",
+    "stylelint-config-standard": "20.0.x",
+    "stylelint-scss": "3.14.x",
     "@vue/cli-plugin-babel": "~4.2.0",
     "@vue/cli-plugin-eslint": "~4.2.0",
-    "@vue/cli-plugin-router": "~4.2.0",
+    "@vue/cli-plugin-router": "~4.2.3",
     "@vue/cli-service": "~4.2.0",
     "@vue/eslint-config-prettier": "^6.0.0",
     "babel-eslint": "^10.0.3",
@@ -25,8 +56,13 @@
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-vue": "^6.1.2",
     "node-sass": "^4.12.0",
+    "normalize.css": "8.0.1",
     "prettier": "^1.19.1",
     "sass-loader": "^8.0.2",
     "vue-template-compiler": "^2.6.11"
+  },
+  "engines": {
+    "node": ">=10.13.3",
+    "yarn": ">=1.0.0"
   }
 }

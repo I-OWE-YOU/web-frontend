@@ -1,0 +1,25 @@
+// GENERIC COLORS
+$color-blue-light: #357cff;
+$color-blue-medium: #3855df;
+$color-blue-dark: #120d73;
+$color-blue-darker: #14043f;
+
+/* Signal Orange */
+$color-accent: #ff5334;
+
+// CONTENT
+$color-body-bg: #f9f7f5;
+$color-text: #fff;
+$color-heading-text: #35495e;
+
+// LINKS
+$color-link-text: #39a275;
+$color-link-text-active: $color-text;
+
+// INPUTS
+$color-input-border: lighten($color-heading-text, 50%);
+
+// BUTTONS
+$color-button-bg: $color-link-text;
+$color-button-disabled-bg: darken(desaturate($color-button-bg, 20%), 10%);
+$color-button-text: white;

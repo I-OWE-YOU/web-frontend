@@ -1,0 +1,27 @@
+@mixin buttonstyle() {
+  display: inline-block;
+  min-width: 322px;
+  padding: 12px 24px;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+  background-color: $color-accent;
+  border-radius: 6px;
+  @include font-size(2.6);
+
+  &:hover {
+    cursor: pointer;
+    background-color: $color-blue-medium;
+  }
+}
+@mixin inputtextstyle() {
+  display: inline-block;
+  color: black;
+  background-color: white;
+  border-radius: 6px;
+  @include font-size(2.6);
+}
+@mixin font-size($sizeValue: 1.6) {
+  font-size: ($sizeValue * 10) + px;
+  font-size: $sizeValue + rem;
+}

@@ -6,12 +6,13 @@
 
 <script>
 export default {
-  name: "LetMeHelp"
-};
+  name: 'LetMeHelp',
+}
 </script>
 
 <style scoped lang="scss">
+@import '@design';
 .questions {
-  background-color: $color_blue_light;
+  background-color: $color-blue-light;
 }
 </style>

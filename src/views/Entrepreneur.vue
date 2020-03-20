@@ -49,28 +49,28 @@
 
       <FormField
         v-if="step === 3"
-        v-model="customer.firstName"
+        v-model="customer.contactFirstName"
         field-name="firstName"
         field-label="Voornaam"
       />
 
       <FormField
         v-if="step === 3"
-        v-model="customer.lastName"
+        v-model="customer.contactLastName"
         field-name="lastName"
         field-label="Achternaam"
       />
 
       <FormField
         v-if="step === 4"
-        v-model="customer.postalCode"
+        v-model="zipCode"
         field-name="postalCode"
         field-label="Postcode"
       />
 
       <FormField
         v-if="step === 4"
-        v-model="customer.streetNumber"
+        v-model="houseNumber"
         field-name="streetNumber"
         field-label="Huisnummer"
       />
@@ -81,9 +81,9 @@
           postcode en huisnummer aan.
         </p>
         <br />
-        {{ customer.streetName }}&nbsp;{{ customer.streetNumber }}
+        {{ customer.address.street }}&nbsp;{{ houseNumber }}
         <br />
-        {{ customer.postalCode }}&nbsp;{{ customer.city }}
+        {{ zipCode }}&nbsp;{{ customer.address.city }}
       </div>
 
       <FormField
@@ -96,7 +96,7 @@
 
       <FormField
         v-if="step === 6"
-        v-model="customer.IBAN"
+        v-model="customer.iban"
         field-name="IBAN"
         field-label="IBAN nummer"
       />
@@ -140,19 +140,20 @@ export default {
         'En tot slot, waar mag het geld naartoe FIRSTNAME?',
         '',
       ],
+      houseNumber: '',
+      zipCode: '',
       customer: {
         companyName: '',
         cocNumber: '',
-        firstName: '',
-        lastName: '',
+        contactFirstName: '',
+        contactLastName: '',
         streetName: '',
-        streetNumber: '',
-        postalCode: '',
         city: '',
         longitude: 0.0,
         latitude: 0.0,
         email: '',
-        IBAN: '',
+        iban: '',
+        address: {},
       },
     }
   },
@@ -172,7 +173,7 @@ export default {
     },
     questionText: function() {
       var text = this.texts[this.step]
-      return text.replace('FIRSTNAME', this.customer.firstName)
+      return text.replace('FIRSTNAME', this.customer.contactFirstName)
     },
   },
   methods: {
@@ -280,15 +281,12 @@ export default {
       axios
         .get(
           'https://tegoedje-api.azurewebsites.net/api/address/' +
-            this.customer.postalCode +
+            this.zipCode +
             '/' +
-            this.customer.streetNumber
+            this.houseNumber
         )
         .then((response) => {
-          this.customer.streetName = response.data.street
-          this.customer.city = response.data.city
-          this.customer.latitude = response.data.latitude
-          this.customer.longitude = response.data.longitude
+          this.customer.address = response.data
           this.addressLoaded = true
         })
         .catch((e) => {

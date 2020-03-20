@@ -33,45 +33,45 @@
       <FormField
         v-if="step === 3"
         fieldName="firstName"
-        :fieldValue="customer.firstName"
+        :fieldValue="customer.contactFirstName"
         fieldLabel="Voornaam"
-        v-on:update:firstName="customer.firstName = $event"
+        v-on:update:firstName="customer.contactFirstName = $event"
         v-on:change:firstName="errorState=false"
       />
 
       <FormField
         v-if="step === 3"
         fieldName="lastName"
-        :fieldValue="customer.lastName"
+        :fieldValue="customer.contactLastName"
         fieldLabel="Achternaam"
-        v-on:update:lastName="customer.lastName = $event"
+        v-on:update:lastName="customer.contactLastName = $event"
         v-on:change:lastName="errorState=false"
       />
 
       <FormField
         v-if="step === 4"
-        fieldName="postalCode"
-        :fieldValue="customer.postalCode"
+        fieldName="zipCode"
+        :fieldValue="zipCode"
         fieldLabel="Postcode"
-        v-on:update:postalCode="customer.postalCode = $event"
-        v-on:change:postalCode="errorState=false;resetAddress();"
+        v-on:update:zipCode="zipCode = $event"
+        v-on:change:zipCode="errorState=false;resetAddress();"
       />
 
       <FormField
         v-if="step === 4"
-        fieldName="streetNumber"
-        :fieldValue="customer.streetNumber"
+        fieldName="houseNumber"
+        :fieldValue="houseNumber"
         fieldLabel="Huisnummer"
-        v-on:update:streetNumber="customer.streetNumber = $event"
-        v-on:change:streetNumber="errorState=false;resetAddress();"
+        v-on:update:houseNumber="houseNumber = $event"
+        v-on:change:houseNumber="errorState=false;resetAddress();"
       />
 
       <div id="address" v-show="addressLoaded">
         <p>We hebben je adres gevonden. Klopt dit niet? Pas dan hierboven je postcode en huisnummer aan.</p>
         <br />
-        {{customer.streetName}}&nbsp;{{customer.streetNumber}}
+        {{customer.address.street}}&nbsp;{{houseNumber}}
         <br />
-        {{customer.postalCode}}&nbsp;{{customer.city}}
+        {{zipCode}}&nbsp;{{customer.address.city}}
       </div>
 
       <FormField
@@ -87,14 +87,14 @@
       <FormField
         v-if="step === 6"
         fieldName="IBAN"
-        :fieldValue="customer.IBAN"
+        :fieldValue="customer.iban"
         fieldLabel="IBAN nummer"
-        v-on:update:IBAN="customer.IBAN = $event"
+        v-on:update:IBAN="customer.iban = $event"
         v-on:change:IBAN="errorState=false"
       />
 
       <div v-if="step === 6">
-        <p>checkbox hier</p>
+        <p>checkbox here to accept terms</p>
       </div>
 
       <button @click.prevent="buttonClicked">{{ buttonText }}</button>
@@ -120,6 +120,8 @@ export default {
       accountCreated: false,
       errorState: false,
       errorMessage: "",
+      zipCode: "",
+      houseNumber: "",
       texts: [
         "Geweldig!<br />Goed dat je er bent. Laten we eerst je account personaliseren zowat we je makkelijker kunnen helpen.",
         "Om te beginnen: hoe heet je bedrijf?",
@@ -133,16 +135,13 @@ export default {
       customer: {
         companyName: "",
         cocNumber: "",
-        firstName: "",
-        lastName: "",
-        streetName: "",
-        streetNumber: "",
-        postalCode: "",
-        city: "",
-        longitude: 0.0,
-        latitude: 0.0,
+        contactFirstName: "",
+        contactLastName: "",
         email: "",
-        IBAN: ""
+        iban: "",
+        acceptedTerms: false,
+        copyAcceptedTerms: "",
+        address: {}
       }
     };
   },
@@ -162,7 +161,7 @@ export default {
     },
     questionText: function() {
       var text = this.texts[this.step];
-      return text.replace("FIRSTNAME", this.customer.firstName);
+      return text.replace("FIRSTNAME", this.customer.contactFirstName);
     }
   },
   methods: {
@@ -207,8 +206,8 @@ export default {
           return true;
         case 3:
           if (
-            this.isStringEmpty(this.customer.firstName) ||
-            this.isStringEmpty(this.customer.lastName)
+            this.isStringEmpty(this.customer.contactFirstName) ||
+            this.isStringEmpty(this.customer.contactLastName)
           ) {
             this.showError("We willen graag weten hoe je heet! Ah toe?");
             return false;
@@ -216,8 +215,8 @@ export default {
           return true;
         case 4:
           if (
-            this.isStringEmpty(this.customer.postalCode) ||
-            this.isStringEmpty(this.customer.streetNumber)
+            this.isStringEmpty(this.zipCode) ||
+            this.isStringEmpty(this.houseNumber)
           ) {
             this.showError(
               "Met je postcode en huisnummer zoeken we je locatie op."
@@ -228,7 +227,7 @@ export default {
             this.addressLoaded = false;
             return true;
           }
-          this.loadAddress();
+          this.loadAddress(this.zipCode, this.houseNumber);
           return false;
         case 5:
           if (!this.isValidEmail(this.customer.email)) {
@@ -239,7 +238,7 @@ export default {
           }
           return true;
         case 6:
-          if (!IBAN.isValid(this.customer.IBAN)) {
+          if (!IBAN.isValid(this.customer.iban)) {
             this.showError(
               "Dit IBAN nummer is niet geldig. Sorry dat we even streng zijn, we willen graag dat je je geld krijgt."
             );
@@ -250,9 +249,10 @@ export default {
     },
     postData() {
       axios
-        .post("https://tegoedje-api.azurewebsites.net/api/companies", {
-          body: this.customer
-        })
+        .post(
+          "https://tegoedje-api.azurewebsites.net/api/companies",
+          this.customer
+        )
         .then(response => {
           this.accountCreated = true;
           console.log(response);
@@ -267,19 +267,16 @@ export default {
           );
         });
     },
-    loadAddress() {
+    loadAddress(zipcode, number) {
       axios
         .get(
           "https://tegoedje-api.azurewebsites.net/api/address/" +
-            this.customer.postalCode +
+            zipcode +
             "/" +
-            this.customer.streetNumber
+            number
         )
         .then(response => {
-          this.customer.streetName = response.data.street;
-          this.customer.city = response.data.city;
-          this.customer.latitude = response.data.latitude;
-          this.customer.longitude = response.data.longitude;
+          this.customer.address = response.data;
           this.addressLoaded = true;
         })
         .catch(e => {
@@ -290,10 +287,7 @@ export default {
         });
     },
     resetAddress() {
-      this.customer.streetName = "";
-      this.customer.city = "";
-      this.customer.latitude = "";
-      this.customer.longitude = "";
+      this.customer.address = {};
       this.addressLoaded = false;
     },
     isValidEmail(email) {

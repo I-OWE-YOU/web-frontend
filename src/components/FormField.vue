@@ -24,7 +24,7 @@ export default {
     };
   },
   watch: {
-    fieldValue: function(e) {
+    fieldValue: function() {
       this.$emit("change:" + this.fieldName, true);
     }
   },

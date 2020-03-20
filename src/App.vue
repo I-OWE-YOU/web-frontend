@@ -12,13 +12,12 @@ body {
 }
 
 body {
-  background-color: white;
+  background-color: $color_blue_light;
   color: white;
   font-weight: 600;
 }
 
 #app {
-  background-color: $color_blue_dark;
   font-family: "Work Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

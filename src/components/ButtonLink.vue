@@ -6,18 +6,18 @@
 
 <script>
 export default {
-  name: "ButtonLink",
+  name: 'ButtonLink',
   props: {
     link: String,
-    linktext: String
-  }
-};
+    linktext: String,
+  },
+}
 </script>
 
 <style scoped lang="scss">
 .buttonlink {
-  background-color: $color_blue_darker;
   padding: 0 0 24px;
+  background-color: $color_blue_darker;
 
   a {
     @include buttonstyle();

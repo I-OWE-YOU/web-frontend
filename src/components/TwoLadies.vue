@@ -1,8 +1,18 @@
 <template>
   <div class="twoladies">
     <div class="ladyimgs">
-      <img id="ladyleft" alt role="presentation" src="../assets/img/lady_left.svg" />
-      <img id="ladyright" alt role="presentation" src="../assets/img/lady_right.svg" />
+      <img
+        id="ladyleft"
+        alt
+        role="presentation"
+        src="../assets/img/lady_left.svg"
+      />
+      <img
+        id="ladyright"
+        alt
+        role="presentation"
+        src="../assets/img/lady_right.svg"
+      />
     </div>
     <h1 id="logo">
       <img alt="Tegoedje, voor nu - voor straks" src="../assets/img/logo.svg" />
@@ -13,14 +23,14 @@
 
 <script>
 export default {
-  name: "TwoLadies"
-};
+  name: 'TwoLadies',
+}
 </script>
 
 <style scoped lang="scss">
 .twoladies {
-  height: 729px;
   position: relative;
+  height: 729px;
   background-color: $color_blue_light;
 
   #logo {
@@ -32,11 +42,11 @@ export default {
 
   p {
     position: absolute;
+    right: 0;
     bottom: 5%;
     left: 0;
-    right: 0;
     padding-bottom: 16px;
-    background: url("../assets/img/arrowdown.svg") bottom center no-repeat;
+    background: url('../assets/img/arrowdown.svg') bottom center no-repeat;
   }
 
   .ladyimgs {

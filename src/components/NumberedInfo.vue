@@ -10,49 +10,50 @@
 
 <script>
 export default {
-  name: "NumberedInfo",
+  name: 'NumberedInfo',
   props: {
     digit: String,
     color: String,
     title: String,
     text: String,
-    aligndigit: String
-  }
-};
+    aligndigit: String,
+  },
+}
 </script>
 
 <style scoped lang="scss">
 .numberedinfo {
-  background-color: $color_blue_darker;
-  padding: 2em 0;
-  text-align: left;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: center;
+  padding: 2em 0;
+  text-align: left;
+  background-color: $color_blue_darker;
 
   .texts {
     h2 {
       @include font-size(2.6);
-      font-weight: bold;
+
       margin: 6px 0 0;
+      font-weight: bold;
     }
 
     p {
-      margin-top: 0;
       max-width: 8em;
+      margin-top: 0;
     }
   }
 
   .circle {
     width: 90px;
     height: 90px;
-    border-radius: 50%;
-    line-height: 2.1;
-    @include font-size(4);
     font-weight: bold;
+    line-height: 2.1;
     text-align: center;
+    border-radius: 50%;
     transform: translateX(-42px);
+    @include font-size(4);
 
     &.light {
       background-color: $color_blue_light;

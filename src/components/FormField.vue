@@ -9,82 +9,82 @@
       @focus="fieldFocused"
       @blur="fieldBlurred"
       class="text-field-input"
-      :aria-describedby="description ? fieldName+'Desc' : ''"
+      :aria-describedby="description ? fieldName + 'Desc' : ''"
     />
-    <p :id="fieldName+'Desc'">{{description}}</p>
+    <p :id="fieldName + 'Desc'">{{ description }}</p>
   </div>
 </template>
 
 <script>
 export default {
-  name: "FormField",
+  name: 'FormField',
   data: function() {
     return {
-      focused: this.fieldValue ? "focused" : ""
-    };
+      focused: this.fieldValue ? 'focused' : '',
+    }
   },
   watch: {
     fieldValue: function() {
-      this.$emit("change:" + this.fieldName, true);
-    }
+      this.$emit('change:' + this.fieldName, true)
+    },
   },
   props: {
     fieldName: String,
     fieldValue: String,
     fieldLabel: String,
-    description: String
+    description: String,
   },
   methods: {
     storeValue(e) {
-      this.$emit("update:" + this.fieldName, e.target.value);
+      this.$emit('update:' + this.fieldName, e.target.value)
     },
     fieldFocused() {
-      this.focused = "focused";
+      this.focused = 'focused'
     },
     fieldBlurred() {
-      this.focused = this.fieldValue ? "focused" : "";
-    }
-  }
-};
+      this.focused = this.fieldValue ? 'focused' : ''
+    },
+  },
+}
 </script>
 
 <style scoped lang="scss">
 .field-wrapper {
-  display: block;
-  margin: 50px 0 20px;
   position: relative;
-  outline: none;
+  display: block;
   width: 100%;
-
-  &.focused label {
-    transition: all 0.2s linear;
-    top: -40px;
-    color: white;
-  }
+  margin: 50px 0 20px;
+  outline: none;
 
   label {
-    white-space: nowrap;
+    position: absolute;
+    top: 8px;
+    right: 0;
+    left: 0;
+    display: inline-block;
+    padding: 0 10px;
+    margin: 8px 5px 8px -180px;
     overflow: hidden;
     font-size: 1em;
-    position: absolute;
-    pointer-events: none;
-    top: 8px;
-    left: 0;
-    right: 0;
-    display: inline-block;
-    margin: 8px 5px 8px -180px;
     line-height: 1.4em;
-    padding: 0 10px;
-    transition: all 0.2s linear;
     color: $color_blue_dark;
+    white-space: nowrap;
+    pointer-events: none;
     background-color: transparent;
+    transition: all 0.2s linear;
+  }
+  &.focused label {
+    top: -40px;
+    color: white;
+    transition: all 0.2s linear;
   }
 
-  input[type="text"] {
+  input[type='text'] {
     @include inputtextstyle();
-    margin: 0;
-    padding: 10px;
+
     max-width: 303px;
+    padding: 10px;
+    margin: 0;
     border: 2px solid transparent;
 
     &:focus {

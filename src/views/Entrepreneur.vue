@@ -24,13 +24,9 @@
 
     <h1 v-text="questionText" />
 
-    <p v-show="errorState" class="error">
-      {{ errorMessage }}
-    </p>
+    <p v-show="errorState" class="error">{{ errorMessage }}</p>
 
-    <p v-show="accountCreated" class="success">
-      Je aanmelding is compleet!
-    </p>
+    <p v-show="accountCreated" class="success">Je aanmelding is compleet!</p>
 
     <form action="#">
       <FormField
@@ -105,9 +101,7 @@
         <p>checkbox here to accept terms</p>
       </div>
 
-      <button @click.prevent="buttonClicked">
-        {{ buttonText }}
-      </button>
+      <button @click.prevent="buttonClicked">{{ buttonText }}</button>
     </form>
   </div>
 </template>
@@ -271,9 +265,10 @@ export default {
     },
     postData() {
       axios
-        .post('https://tegoedje-api.azurewebsites.net/api/companies', {
-          body: this.customer,
-        })
+        .post(
+          'https://tegoedje-api.azurewebsites.net/api/companies',
+          this.customer
+        )
         .then((response) => {
           this.accountCreated = true
           this.buttonText = 'Fijn.En nu door!'

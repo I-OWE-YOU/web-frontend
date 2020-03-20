@@ -142,7 +142,8 @@ export default {
         acceptedTerms: false,
         copyAcceptedTerms: "",
         address: {}
-      }
+      },
+      customerSlug: ""
     };
   },
   computed: {
@@ -254,8 +255,8 @@ export default {
           this.customer
         )
         .then(response => {
+          this.customerSlug = response.data.slug;
           this.accountCreated = true;
-          console.log(response);
           this.buttonText = "Fijn.En nu door!";
         })
         .catch(e => {

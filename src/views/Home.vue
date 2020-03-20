@@ -28,16 +28,16 @@
 </template>
 
 <script>
-import TwoLadies from "@/components/TwoLadies.vue";
-import NumberedInfo from "@/components/NumberedInfo.vue";
-import ButtonLink from "@/components/ButtonLink.vue";
+import TwoLadies from '@/components/TwoLadies.vue'
+import NumberedInfo from '@/components/NumberedInfo.vue'
+import ButtonLink from '@/components/ButtonLink.vue'
 
 export default {
-  name: "Home",
+  name: 'Home',
   components: {
     TwoLadies,
     NumberedInfo,
-    ButtonLink
-  }
-};
+    ButtonLink,
+  },
+}
 </script>

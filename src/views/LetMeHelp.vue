@@ -6,8 +6,8 @@
 
 <script>
 export default {
-  name: "LetMeHelp"
-};
+  name: 'LetMeHelp',
+}
 </script>
 
 <style scoped lang="scss">

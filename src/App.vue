@@ -1,29 +1,101 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <RouterView :key="$route.fullPath" />
   </div>
 </template>
 
+<!-- This should generally be the only global CSS in the app. -->
 <style lang="scss">
-html,
-body {
-  margin: 0;
-  padding: 0;
+// Allow element/type selectors, because this is global CSS.
+// stylelint-disable selector-max-type, selector-class-pattern
+
+// Normalize default styles across browsers,
+// https://necolas.github.io/normalize.css/
+@import '~normalize.css/normalize.css';
+// Style loading bar between pages.
+// https://github.com/rstacruz/nprogress
+@import '~nprogress/nprogress.css';
+
+// Design variables and utilities from src/design.
+@import '@design';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
 }
 
 body {
-  background-color: $color_blue_light;
-  color: white;
+  @include font-size(1.6);
+
   font-weight: 600;
+  background-color: $color-blue-light;
 }
 
 #app {
-  font-family: "Work Sans", sans-serif;
+  @extend %typography-small;
+
+  position: relative;
+  max-width: 768px;
+  margin: 0 auto;
+  font-family: 'Work Sans', sans-serif;
+  color: $color-text;
+  text-align: center;
+  background: $color-body-bg;
+  background-color: $color-blue-dark;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  max-width: 768px;
-  position: relative;
-  margin: 0 auto;
+}
+
+// ===
+// Base element styles
+// ===
+
+a,
+a:visited {
+  color: $color-link-text;
+}
+
+h1 {
+  @extend %typography-xxlarge;
+  @include font-size(2.6);
+
+  color: white;
+}
+
+h2 {
+  @extend %typography-xlarge;
+  @include font-size(2);
+
+  color: white;
+}
+
+h3 {
+  @extend %typography-large;
+}
+
+h4 {
+  @extend %typography-medium;
+}
+
+h5,
+h6 {
+  @extend %typography-small;
+}
+
+p {
+  @include font-size(1.6);
+}
+
+// ===
+// Vendor
+// ===
+
+#nprogress .bar {
+  background: $color-link-text;
 }
 </style>

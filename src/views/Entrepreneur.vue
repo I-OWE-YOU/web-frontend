@@ -148,7 +148,7 @@ export default {
   computed: {
     buttonText: function() {
       if (this.addressLoaded) {
-        return "Ja! Det adres klopt.";
+        return "Ja! Dit adres klopt.";
       } else if (0 === this.step) {
         return "Ga verder";
       } else if (4 === this.step) {

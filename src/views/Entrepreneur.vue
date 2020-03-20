@@ -116,6 +116,7 @@
 import axios from 'axios'
 import IBAN from 'iban'
 import FormField from '@components/FormField.vue'
+import { EventBus } from '@plugins/event-bus.js'
 
 export default {
   name: 'Entrepreneur',
@@ -175,6 +176,15 @@ export default {
       var text = this.texts[this.step]
       return text.replace('FIRSTNAME', this.customer.contactFirstName)
     },
+  },
+  mounted() {
+    const self = this
+    EventBus.$on('valueChange', function() {
+      self.removeError()
+      if (self.step === 4) {
+        self.resetAddress()
+      }
+    })
   },
   methods: {
     goBack() {

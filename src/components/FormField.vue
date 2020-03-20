@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import { EventBus } from '@plugins/event-bus.js'
+
 export default {
   name: 'FormField',
   props: {
@@ -51,6 +53,7 @@ export default {
         return this.value
       },
       set(val) {
+        EventBus.$emit('valueChange')
         this.$emit('input', val)
       },
     },
@@ -104,10 +107,6 @@ export default {
   }
 
   input[type='text'] {
-    width: calc(
-      100% - 20px - 4px
-    ); // 20px for padding - 4px for borders (this should be solved better by border-box and all)
-
     padding: 10px;
     font-size: 2.6rem;
     color: #000;

@@ -3,13 +3,11 @@
     <label :for="fieldName">{{ fieldLabel }}</label>
     <input
       type="text"
-      :name="fieldName"
-      :value="fieldValue"
-      @input="storeValue"
+      v-model="modelValue"
       @focus="fieldFocused"
       @blur="fieldBlurred"
-      class="text-field-input"
       :aria-describedby="description ? fieldName+'Desc' : ''"
+      class="text-field-input"
     />
     <p :id="fieldName+'Desc'">{{description}}</p>
   </div>
@@ -18,31 +16,48 @@
 <script>
 export default {
   name: "FormField",
-  data: function() {
-    return {
-      focused: this.fieldValue ? "focused" : ""
-    };
-  },
-  watch: {
-    fieldValue: function() {
-      this.$emit("change:" + this.fieldName, true);
+  data() {
+    return { 
+      state: 'idle'
     }
   },
   props: {
-    fieldName: String,
-    fieldValue: String,
-    fieldLabel: String,
-    description: String
+    value:  {
+      type: String,
+      default: ''
+    },
+    fieldName: {
+      type: String,
+      default: ''
+    },
+    fieldLabel: {
+      type: String,
+      default: ''
+    },
+    description: {
+      type: String,
+      default: ''
+    },
+  },
+  computed: {
+    focused () {
+      return this.value || this.state === 'focus' ? "focused" : ""
+    },
+    modelValue: {
+      get() { 
+        return this.value; 
+      },
+      set(val) { 
+        this.$emit("input", val ) 
+      }
+    }
   },
   methods: {
-    storeValue(e) {
-      this.$emit("update:" + this.fieldName, e.target.value);
-    },
     fieldFocused() {
-      this.focused = "focused";
+      this.state = "focus";
     },
     fieldBlurred() {
-      this.focused = this.fieldValue ? "focused" : "";
+      this.state = "blur";
     }
   }
 };

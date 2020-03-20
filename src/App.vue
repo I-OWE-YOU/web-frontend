@@ -25,9 +25,14 @@
   box-sizing: border-box;
 }
 
+html {
+  font-size: 62.5%;
+}
+
 body {
+  @include font-size(1.6);
+
   font-weight: 600;
-  color: white;
   background-color: $color-blue-light;
 }
 
@@ -57,10 +62,16 @@ a:visited {
 
 h1 {
   @extend %typography-xxlarge;
+  @include font-size(2.6);
+
+  color: white;
 }
 
 h2 {
   @extend %typography-xlarge;
+  @include font-size(2);
+
+  color: white;
 }
 
 h3 {
@@ -74,6 +85,10 @@ h4 {
 h5,
 h6 {
   @extend %typography-small;
+}
+
+p {
+  @include font-size(1.6);
 }
 
 // ===

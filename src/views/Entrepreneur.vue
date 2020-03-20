@@ -153,7 +153,7 @@ export default {
       errorState: false,
       errorMessage: '',
       texts: [
-        'Geweldig!<br />Goed dat je er bent. Laten we eerst je account personaliseren zowat we je makkelijker kunnen helpen.',
+        'Geweldig! Goed dat je er bent. Laten we eerst je account personaliseren zowat we je makkelijker kunnen helpen.',
         'Om te beginnen: hoe heet je bedrijf?',
         'Goede naam! We willen graag weten wat je Kamer van Koophandel nummer is, om misbruik tegen te gaan.',
         'Hoe heet je?',

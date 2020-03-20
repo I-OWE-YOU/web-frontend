@@ -3,6 +3,7 @@
     <label :for="fieldName">{{ fieldLabel }}</label>
     <input
       type="text"
+      :name="fieldName"
       v-model="modelValue"
       @focus="fieldFocused"
       @blur="fieldBlurred"

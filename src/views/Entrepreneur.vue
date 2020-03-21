@@ -13,7 +13,7 @@
       id="tegoedje"
       alt
       role="presentation"
-      src="../assets/img/bijnagoed.svg"
+      src="../assets/img/crisp_logo.svg"
     />
     <img
       v-else
@@ -100,11 +100,11 @@
       />
 
       <div v-if="step === 6" class="avw">
-        <input id="checkbox" v-model="checked" type="checkbox" />
+        <!-- <input id="checkbox" v-model="checked" type="checkbox" />
         <label for="checkbox"
-          >Ik ga akkoord met de <a :href="url">Algemene Voorwaarden</a>
-          {{ checked }}</label
-        >
+          >Ik ga akkoord met de </label>
+          <a :target="_blank" :href="'../assets/algemenevoorwaarden.pdf'">Algemene Voorwaarden</a>
+          {{ checked }} -->
       </div>
 
       <button @click.prevent="buttonClicked">{{ buttonText }}</button>
@@ -293,7 +293,7 @@ export default {
         )
         .then((response) => {
           this.accountCreated = true
-          this.buttonText = 'Fijn.En nu door!'
+          this.buttonText = 'Fijn. En nu door!'
         })
         .catch((e) => {
           var message = e.reponse ? e.response.data : e.message
@@ -354,21 +354,8 @@ export default {
 #questions {
   position: relative;
   min-height: 100vh;
-  // background-color: $color-blue-light;
+  background-color: $color-blue-light;
 
-  background: #357cff;
-  background: -moz-linear-gradient(top, #357cff 0%, #004f99 100%);
-  background: -webkit-gradient(
-    left top,
-    left bottom,
-    color-stop(0%, #357cff),
-    color-stop(100%, #004f99)
-  );
-  background: -webkit-linear-gradient(top, #357cff 0%, #004f99 100%);
-  background: -o-linear-gradient(top, #357cff 0%, #004f99 100%);
-  background: -ms-linear-gradient(top, #357cff 0%, #004f99 100%);
-  background: linear-gradient(to bottom, #357cff 0%, #004f99 100%);
-  filter: progid:dximagetransform.microsoft.gradient( startColorstr='#357cff', endColorstr='#004f99', GradientType=0 );
   #backbtn {
     position: absolute;
     top: 60px;

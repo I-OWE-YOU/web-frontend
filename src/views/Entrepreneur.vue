@@ -71,7 +71,7 @@
         field-label="Huisnummer"
       />
 
-      <div v-show="addressLoaded" id="address">
+      <div v-if="step === 4" v-show="addressLoaded" id="address">
         <p>
           We hebben je adres gevonden. Klopt dit niet? Pas dan hierboven je
           postcode en huisnummer aan.
@@ -103,6 +103,15 @@
 
       <button @click.prevent="buttonClicked">{{ buttonText }}</button>
     </form>
+
+    <div
+      v-if="step === 4 || step === 6"
+      v-show="showSpinner"
+      id="spinner"
+      role="presentation"
+    >
+      <img src="../assets/img/timer.svg" />
+    </div>
   </div>
 </template>
 
@@ -124,6 +133,7 @@ export default {
       addressLoaded: false,
       accountCreated: false,
       errorState: false,
+      showSpinner: false,
       errorMessage: '',
       texts: [
         'Geweldig! Goed dat je er bent. Laten we eerst je account personaliseren zowat we je makkelijker kunnen helpen.',
@@ -264,11 +274,13 @@ export default {
       }
     },
     postData() {
+      this.showSpinner = true
       axios
         .post(`${process.env.VUE_APP_BACKEND_URL}/api/companies`, this.customer)
         .then((response) => {
           this.accountCreated = true
           this.buttonText = 'Fijn.En nu door!'
+          this.showSpinner = false
         })
         .catch((e) => {
           var message = e.reponse ? e.response.data : e.message
@@ -277,9 +289,11 @@ export default {
               message +
               "'"
           )
+          this.showSpinner = false
         })
     },
     loadAddress() {
+      this.showSpinner = true
       axios
         .get(
           `${process.env.VUE_APP_BACKEND_URL}/api/address/${this.zipCode}/${this.houseNumber}`
@@ -287,12 +301,14 @@ export default {
         .then((response) => {
           this.customer.address = response.data
           this.addressLoaded = true
+          this.showSpinner = false
         })
         .catch((e) => {
           var message = e.reponse ? e.response.data : e.message
           this.showError(
             'Je adresgegevens kunnen niet gevonden worden. (' + message + ')'
           )
+          this.showSpinner = false
         })
     },
     resetAddress() {
@@ -343,6 +359,11 @@ export default {
     margin: 1em auto 2em;
   }
 
+  #spinner {
+    margin: 3em 0;
+    animation: rotation 2s infinite linear;
+  }
+
   #address {
     max-width: 323px;
     margin: 24px auto;
@@ -366,6 +387,15 @@ export default {
     @include buttonstyle();
 
     border: none;
+  }
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
   }
 }
 </style>

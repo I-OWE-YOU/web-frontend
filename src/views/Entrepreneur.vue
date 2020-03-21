@@ -3,6 +3,7 @@
     <img
       id="backbtn"
       alt="back to homepage"
+      title="terug"
       src="../assets/img/backbtn.svg"
       @click="goBack"
     />
@@ -77,9 +78,11 @@
           postcode en huisnummer aan.
         </p>
         <br />
-        {{ customer.address.street }}&nbsp;{{ houseNumber }}
-        <br />
-        {{ zipCode }}&nbsp;{{ customer.address.city }}
+        <p>
+          {{ customer.address.street }}&nbsp;{{ houseNumber }}
+          <br />
+          {{ zipCode }}&nbsp;{{ customer.address.city }}
+        </p>
       </div>
 
       <FormField
@@ -97,7 +100,26 @@
         field-label="IBAN nummer"
       />
 
-      <div v-if="step === 6">
+      <!-- <FormField
+        v-if="step === 7"
+        v-model="customer.avw"
+        v-type = checkbox
+        field-name="AVW"
+        field-label="Algemene Voorwaarden"
+        field-value="Accept"
+        description="Klik hier"
+        @click="select"
+      /> -->
+
+      <!-- <FormField
+        v-if="step === 7"
+        v-model="avw"
+        field-name="Ag  "
+        field-label="WD"
+      /> -->
+
+      <div v-if="step === 7">
+        v-model="avw" field-name="Ag " field-label="WD"
         <p>checkbox here to accept terms</p>
       </div>
 
@@ -119,6 +141,7 @@ export default {
   },
   data: function() {
     return {
+      checkedNames: [],
       step: 0,
       maxSteps: 6,
       addressLoaded: false,
@@ -149,17 +172,23 @@ export default {
         email: '',
         iban: '',
         address: {},
+        avw: '',
       },
+      selectAVW: '',
     }
   },
   computed: {
+    checkedComputed() {
+      return this.checkedNames
+    },
+
     buttonText: function() {
       if (this.addressLoaded) {
         return 'Ja! Dit adres klopt.'
       } else if (this.step === 0) {
         return 'Ga verder'
       } else if (this.step === 4) {
-        return 'Check postcode'
+        return 'Controleer je postcode'
       } else if (this.maxSteps === this.step) {
         return 'Afronden'
       } else {
@@ -261,8 +290,18 @@ export default {
             return false
           }
           return true
+
+        // case 7:
+        //   if (!AVW.isTrue(this.customer.avw)) {
+        //     this.showError(
+        //       'Klik nog wel even de Algemene Voorwaarden aan om verder te kunnen.'
+        //     )
+        //     return false
+        //   }
+        //   return true
       }
     },
+
     postData() {
       axios
         .post(
@@ -314,6 +353,9 @@ export default {
     isValidCocNumber(s) {
       return s.length === 8
     },
+    isTrue() {
+      this.avw = false
+    },
     showError(errorMessage) {
       this.errorState = true
       this.errorMessage = errorMessage
@@ -337,6 +379,24 @@ export default {
     position: absolute;
     top: 16px;
     left: 16px;
+
+    &:hover {
+      cursor: pointer;
+
+      &::after {
+        position: absolute;
+        bottom: 1.35em;
+        left: 1em;
+        z-index: 98;
+        display: block;
+        padding: 0.3em 1em;
+        font-size: 12px;
+        color: #fff;
+        white-space: nowrap;
+        content: attr(title);
+        border-radius: 0.5em;
+      }
+    }
   }
 
   #tegoedje {
@@ -359,7 +419,7 @@ export default {
   }
 
   p.error {
-    max-width: 275px;
+    max-width: 328px;
     padding: 12px 24px;
     margin: 0 auto;
     line-height: 1.6;

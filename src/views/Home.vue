@@ -23,7 +23,12 @@
       aligndigit="left"
     />
     <ButtonLink link="/voor-de-ondernemer" linktext="Ja, dit wil ik ook" />
-    <ButtonLink link="iwillhelp" linktext="Ja, ik wil helpen" />
+    <ButtonLink
+      link="iwillhelp"
+      class="|disabled"
+      disabled
+      linktext="Ja, ik wil helpen"
+    />
   </div>
 </template>
 

@@ -75,7 +75,7 @@ export default {
 .field-wrapper {
   position: relative;
   display: block;
-  width: 300px;
+  width: 317px;
   margin: 50px auto 20px;
   outline: none;
 

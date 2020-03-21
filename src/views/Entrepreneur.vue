@@ -20,7 +20,7 @@
       id="tegoedje"
       alt
       role="presentation"
-      src="../assets/img/tegoedje.svg"
+      src="../assets/img/crisp_logo.svg"
     />
 
     <h1 v-text="questionText" />
@@ -130,7 +130,7 @@ export default {
       errorState: false,
       errorMessage: '',
       texts: [
-        'Geweldig! Goed dat je er bent. Laten we eerst je account personaliseren zowat we je makkelijker kunnen helpen.',
+        'Geweldig! Top dat je er bij bent. Laten we eerst je account personaliseren. Dan kunnen we je makkelijker helpen.',
         'Om te beginnen: hoe heet je bedrijf?',
         'Goede naam! We willen graag weten wat je Kamer van Koophandel nummer is, om misbruik tegen te gaan.',
         'Hoe heet je?',
@@ -351,12 +351,25 @@ export default {
 #questions {
   position: relative;
   min-height: 100vh;
-  background-color: $color-blue-light;
+  // background-color: $color-blue-light;
 
+  background: #357cff;
+  background: -moz-linear-gradient(top, #357cff 0%, #004f99 100%);
+  background: -webkit-gradient(
+    left top,
+    left bottom,
+    color-stop(0%, #357cff),
+    color-stop(100%, #004f99)
+  );
+  background: -webkit-linear-gradient(top, #357cff 0%, #004f99 100%);
+  background: -o-linear-gradient(top, #357cff 0%, #004f99 100%);
+  background: -ms-linear-gradient(top, #357cff 0%, #004f99 100%);
+  background: linear-gradient(to bottom, #357cff 0%, #004f99 100%);
+  filter: progid:dximagetransform.microsoft.gradient( startColorstr='#357cff', endColorstr='#004f99', GradientType=0 );
   #backbtn {
     position: absolute;
-    top: 16px;
-    left: 16px;
+    top: 60px;
+    left: 46px;
 
     &:hover {
       cursor: pointer;
@@ -378,8 +391,9 @@ export default {
   }
 
   #tegoedje {
-    max-height: 65px;
-    margin: 2em 0 3em;
+    width: 30%;
+    // max-height: 65px;
+    margin: 3em 0 3em;
   }
 
   h1 {

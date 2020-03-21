@@ -34,8 +34,6 @@ export default {
   height: 700px;
   overflow: hidden;
   background-color: $color-blue-light;
-  // #0075ff;
-  // $color-blue-light;
 
   #logo {
     position: absolute;

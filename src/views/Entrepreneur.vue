@@ -265,10 +265,7 @@ export default {
     },
     postData() {
       axios
-        .post(
-          'https://tegoedje-api.azurewebsites.net/api/companies',
-          this.customer
-        )
+        .post(`${process.env.VUE_APP_BACKEND_URL}/api/companies`, this.customer)
         .then((response) => {
           this.accountCreated = true
           this.buttonText = 'Fijn.En nu door!'
@@ -285,10 +282,7 @@ export default {
     loadAddress() {
       axios
         .get(
-          'https://tegoedje-api.azurewebsites.net/api/address/' +
-            this.zipCode +
-            '/' +
-            this.houseNumber
+          `${process.env.VUE_APP_BACKEND_URL}/api/address/${this.zipCode}/${this.houseNumber}`
         )
         .then((response) => {
           this.customer.address = response.data

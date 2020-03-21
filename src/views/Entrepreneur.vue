@@ -73,12 +73,11 @@
       />
 
       <div v-show="addressLoaded" id="address">
-        <p>
+        <p class="adres_update">
           We hebben je adres gevonden. Klopt dit niet? Pas dan hierboven je
           postcode en huisnummer aan.
-        </p>
-        <br />
-        <p>
+          <br />
+          <br />
           {{ customer.address.street }}&nbsp;{{ houseNumber }}
           <br />
           {{ zipCode }}&nbsp;{{ customer.address.city }}
@@ -100,8 +99,12 @@
         field-label="IBAN nummer"
       />
 
-      <div v-if="step === 7">
-        <p>checkbox here to accept terms</p>
+      <div v-if="step === 6" class="avw">
+        <input id="checkbox" v-model="checked" type="checkbox" />
+        <label for="checkbox"
+          >Ik ga akkoord met de <a :href="url">Algemene Voorwaarden</a>
+          {{ checked }}</label
+        >
       </div>
 
       <button @click.prevent="buttonClicked">{{ buttonText }}</button>
@@ -132,7 +135,7 @@ export default {
       texts: [
         'Geweldig! Top dat je er bij bent. Laten we eerst je account personaliseren. Dan kunnen we je makkelijker helpen.',
         'Om te beginnen: hoe heet je bedrijf?',
-        'Goede naam! We willen graag weten wat je Kamer van Koophandel nummer is, om misbruik tegen te gaan.',
+        'We willen graag weten wat je Kamer van Koophandel nummer is. Zo kunnen we misbruik tegengaan.',
         'Hoe heet je?',
         'Leuk je te leren kennen, FIRSTNAME! Waar zit je bedrijf?',
         'Bijna klaar. Hoe kunnen we je bereiken?',
@@ -168,11 +171,11 @@ export default {
       } else if (this.step === 0) {
         return 'Ga verder'
       } else if (this.step === 4) {
-        return 'Controleer je postcode'
+        return 'Controleer postcode'
       } else if (this.maxSteps === this.step) {
         return 'Afronden'
       } else {
-        return 'Volgende'
+        return 'Volgende stap'
       }
     },
     questionText: function() {
@@ -409,6 +412,20 @@ export default {
     p {
       margin-bottom: 0;
     }
+  }
+
+  p.adres_update {
+    width: 85%;
+    margin: 0 auto;
+    font-size: 1.9rem;
+    line-height: 1.05;
+  }
+
+  .avw {
+    width: 75%;
+    margin: 0 auto 2em auto;
+    font-size: 1.8rem;
+    line-height: 1.05;
   }
 
   p.error {

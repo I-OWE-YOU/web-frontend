@@ -17,7 +17,7 @@
     <h1 id="logo">
       <img alt="Tegoedje, voor nu - voor straks" src="../assets/img/logo.svg" />
     </h1>
-    <p>Hoe werkt het?</p>
+    <h2>Hoe werkt het?</h2>
   </div>
 </template>
 
@@ -31,22 +31,33 @@ export default {
 @import '@design';
 .twoladies {
   position: relative;
-  height: 729px;
+  height: 700px;
+  overflow: hidden;
   background-color: $color-blue-light;
+  // #0075ff;
+  // $color-blue-light;
 
   #logo {
     position: absolute;
-    bottom: 21%;
+    bottom: 31%;
     left: 50%;
-    margin-left: -147px;
+    margin-left: -144px;
+
+    img {
+      width: 60%;
+    }
   }
 
-  p {
+  h2 {
     position: absolute;
     right: 0;
     bottom: 5%;
     left: 0;
     padding-bottom: 16px;
+    font-size: 3em;
+    font-weight: 700;
+    line-height: 1.1;
+    text-align: center;
     background: url('../assets/img/arrowdown.svg') bottom center no-repeat;
   }
 

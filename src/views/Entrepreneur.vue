@@ -100,26 +100,7 @@
         field-label="IBAN nummer"
       />
 
-      <!-- <FormField
-        v-if="step === 7"
-        v-model="customer.avw"
-        v-type = checkbox
-        field-name="AVW"
-        field-label="Algemene Voorwaarden"
-        field-value="Accept"
-        description="Klik hier"
-        @click="select"
-      /> -->
-
-      <!-- <FormField
-        v-if="step === 7"
-        v-model="avw"
-        field-name="Ag  "
-        field-label="WD"
-      /> -->
-
       <div v-if="step === 7">
-        v-model="avw" field-name="Ag " field-label="WD"
         <p>checkbox here to accept terms</p>
       </div>
 
@@ -174,7 +155,6 @@ export default {
         address: {},
         avw: '',
       },
-      selectAVW: '',
     }
   },
   computed: {
@@ -353,9 +333,7 @@ export default {
     isValidCocNumber(s) {
       return s.length === 8
     },
-    isTrue() {
-      this.avw = false
-    },
+
     showError(errorMessage) {
       this.errorState = true
       this.errorMessage = errorMessage
@@ -407,6 +385,7 @@ export default {
   h1 {
     max-width: 260px;
     margin: 1em auto 2em;
+    line-height: 1.1;
   }
 
   #address {

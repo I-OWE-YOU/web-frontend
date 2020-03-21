@@ -4,31 +4,36 @@
     <NumberedInfo
       digit="1"
       color="light"
-      title="Lorem"
-      text="consectetur adipiscing elit"
+      title="Begin"
+      text="en meld je aan met je shop"
       aligndigit="left"
     />
     <NumberedInfo
       digit="2"
       color="medium"
-      title="Lorem"
-      text="consectetur adipiscing elit"
+      title="Daarna"
+      text="maak jij je vouchers aan"
       aligndigit="right"
     />
     <NumberedInfo
       digit="3"
       color="dark"
-      title="Lorem"
-      text="consectetur adipiscing elit"
+      title="Tenslotte"
+      text="zetten wij jou op de map"
       aligndigit="left"
     />
-    <ButtonLink link="/voor-de-ondernemer" linktext="Ja, dit wil ik ook" />
     <ButtonLink
-      link="iwillhelp"
-      class="|disabled"
-      disabled
-      linktext="Ja, ik wil helpen"
+      link="/voor-de-ondernemer"
+      class="start_btn"
+      linktext="Ja, dit wil ik ook"
     />
+
+    <!-- <ButtonLink
+      link="iwillhelp"
+      class="disabled "
+      disabled="validated == 1"
+      linktext="Ja, ik wil helpen"
+    /> -->
   </div>
 </template>
 
@@ -46,3 +51,9 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+#app > div > div.buttonlink.start_btn > a {
+  padding: 0.75em 1em !important;
+}
+</style>

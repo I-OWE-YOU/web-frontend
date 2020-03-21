@@ -39,13 +39,14 @@ export default {
     h2 {
       @include font-size(2.6);
 
-      margin: 6px 0 0;
+      margin: 0.75em 0 0.15em 0;
       font-weight: bold;
     }
 
     p {
       max-width: 8em;
-      margin-top: 0;
+      margin: 0;
+      line-height: 1.1em;
     }
   }
 
@@ -78,6 +79,14 @@ export default {
     .circle {
       transform: translateX(42px);
     }
+  }
+
+  button:disabled {
+    background-color: #cecece;
+  }
+
+  &:nth-child(4) {
+    padding-bottom: 3.75em;
   }
 }
 </style>

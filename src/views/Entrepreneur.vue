@@ -73,7 +73,7 @@
       />
 
       <div v-show="addressLoaded" id="address">
-        <p class="adres_update">
+        <p class="adres--update">
           We hebben je adres gevonden. Klopt dit niet? Pas dan hierboven je
           postcode en huisnummer aan.
           <br />
@@ -100,11 +100,13 @@
       />
 
       <div v-if="step === 6" class="avw">
-        <!-- <input id="checkbox" v-model="checked" type="checkbox" />
+        <input id="checkbox" v-model="customer.checked" type="checkbox" />
         <label for="checkbox"
-          >Ik ga akkoord met de </label>
-          <a :target="_blank" :href="'../assets/algemenevoorwaarden.pdf'">Algemene Voorwaarden</a>
-          {{ checked }} -->
+          >Ik ga akkoord met de
+          <a :target="_blank" :href="'../assets/algemenevoorwaarden.pdf'"
+            >algemene voorwwarden</a
+          ></label
+        >
       </div>
 
       <button @click.prevent="buttonClicked">{{ buttonText }}</button>
@@ -156,7 +158,7 @@ export default {
         email: '',
         iban: '',
         address: {},
-        avw: '',
+        checked: false,
       },
     }
   },
@@ -401,7 +403,7 @@ export default {
     }
   }
 
-  p.adres_update {
+  p.adres--update {
     width: 85%;
     margin: 0 auto;
     font-size: 1.9rem;

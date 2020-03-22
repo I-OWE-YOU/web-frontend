@@ -1,14 +1,13 @@
 @mixin buttonstyle() {
+  @include responsive-in-small-screens();
+
   display: inline-block;
-  width: 90%;
-  min-width: 260px;
-  max-width: 322px;
-  padding: 12px 24px;
+  padding: $size-button-padding;
   font-weight: bold;
   color: white;
   text-decoration: none;
   background-color: $color-accent;
-  border-radius: 6px;
+  border-radius: $size-button-border-radius;
   @include font-size(2.6);
 
   &:hover {
@@ -17,11 +16,26 @@
   }
 }
 @mixin inputtextstyle() {
+  @include responsive-in-small-screens();
+
   display: inline-block;
+  padding: $size-input-padding;
+  line-height: $size-content-font-xl + rem;
   color: black;
   background-color: white;
-  border-radius: 6px;
-  @include font-size(2.6);
+  border: $size-input-border solid transparent;
+  border-color: white;
+  border-radius: $size-input-border-radius;
+  @include font-size($size-content-font-xl);
+
+  &:focus {
+    border-color: $color-blue-dark;
+  }
+}
+@mixin responsive-in-small-screens() {
+  width: 90%;
+  min-width: 260px;
+  max-width: 322px;
 }
 @mixin font-size($sizeValue: 1.6) {
   font-size: ($sizeValue * 10) + px;

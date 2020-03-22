@@ -4,16 +4,24 @@ $size-grid-padding: 1.3rem;
 // CONTENT
 $size-content-width-max: 50rem;
 $size-content-width-min: 25rem;
+$size-content-font: 1.6;
+$size-content-font-l: 2;
+$size-content-font-xl: 2.6;
 
 // INPUTS
-$size-input-padding-vertical: 0.75em;
-$size-input-padding-horizontal: 1em;
+$size-input-padding-vertical: 1rem;
+$size-input-padding-horizontal: 1rem;
 $size-input-padding: $size-input-padding-vertical $size-input-padding-horizontal;
-$size-input-border: 1px;
-$size-input-border-radius: (1em + $size-input-padding-vertical * 2) / 10;
+$size-input-border: 0.2rem;
+$size-input-border-radius: $size-input-padding-vertical * 0.6;
+$size-input-wrapper-margin: 50px auto 20px;
+
+// INPUT LABELS
+$size-input-font: 1.4rem;
 
 // BUTTONS
-$size-button-padding-vertical: $size-grid-padding / 2;
-$size-button-padding-horizontal: $size-grid-padding / 1.5;
+$size-button-padding-vertical: $size-grid-padding * 1.2;
+$size-button-padding-horizontal: $size-grid-padding * 1.9;
 $size-button-padding: $size-button-padding-vertical
   $size-button-padding-horizontal;
+$size-button-border-radius: 0.6rem;

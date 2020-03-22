@@ -30,7 +30,7 @@ html {
 }
 
 body {
-  @include font-size(1.6);
+  @include font-size($size-content-font);
 
   font-weight: 600;
   background-color: $color-blue-light;
@@ -62,14 +62,14 @@ a:visited {
 
 h1 {
   @extend %typography-xxlarge;
-  @include font-size(2.6);
+  @include font-size($size-content-font-xl);
 
   color: white;
 }
 
 h2 {
   @extend %typography-xlarge;
-  @include font-size(2);
+  @include font-size($size-content-font-l);
 
   color: white;
 }
@@ -88,7 +88,7 @@ h6 {
 }
 
 p {
-  @include font-size(1.6);
+  @include font-size($size-content-font);
 }
 
 // ===

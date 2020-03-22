@@ -297,7 +297,7 @@ export default {
               "'"
           )
         })
-        .finaly(() => {
+        .finally(() => {
           this.isWaitingForApiResponse = false
         })
     },
@@ -317,7 +317,7 @@ export default {
             'Je adresgegevens kunnen niet gevonden worden. (' + message + ')'
           )
         })
-        .finaly(() => {
+        .finally(() => {
           this.isWaitingForApiResponse = false
         })
     },

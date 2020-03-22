@@ -71,7 +71,7 @@
         field-label="Huisnummer"
       />
 
-      <div v-show="addressLoaded" id="address">
+      <div v-if="step === 4" v-show="addressLoaded" id="address">
         <p>
           We hebben je adres gevonden. Klopt dit niet? Pas dan hierboven je
           postcode en huisnummer aan.
@@ -103,6 +103,15 @@
 
       <button @click.prevent="buttonClicked">{{ buttonText }}</button>
     </form>
+
+    <div
+      v-if="step === 4 || step === 6"
+      v-show="isWaitingForApiResponse"
+      id="spinner"
+      role="presentation"
+    >
+      <img src="../assets/img/timer.svg" />
+    </div>
   </div>
 </template>
 
@@ -124,6 +133,7 @@ export default {
       addressLoaded: false,
       accountCreated: false,
       errorState: false,
+      isWaitingForApiResponse: false,
       errorMessage: '',
       texts: [
         'Geweldig! Goed dat je er bent. Laten we eerst je account personaliseren zowat we je makkelijker kunnen helpen.',
@@ -230,6 +240,12 @@ export default {
           }
           return true
         case 4:
+          if (!this.isValidZipCode(this.zipCode)) {
+            this.showError(
+              'Je postcode bestaat niet uit 4 letters en 2 cijfers.'
+            )
+            return false
+          }
           if (
             this.isStringEmpty(this.zipCode) ||
             this.isStringEmpty(this.houseNumber)
@@ -264,6 +280,7 @@ export default {
       }
     },
     postData() {
+      this.isWaitingForApiResponse = true
       axios
         .post(`${process.env.VUE_APP_BACKEND_URL}/api/companies`, this.customer)
         .then((response) => {
@@ -278,8 +295,12 @@ export default {
               "'"
           )
         })
+        .finaly(() => {
+          this.isWaitingForApiResponse = false
+        })
     },
     loadAddress() {
+      this.isWaitingForApiResponse = true
       axios
         .get(
           `${process.env.VUE_APP_BACKEND_URL}/api/address/${this.zipCode}/${this.houseNumber}`
@@ -294,6 +315,9 @@ export default {
             'Je adresgegevens kunnen niet gevonden worden. (' + message + ')'
           )
         })
+        .finaly(() => {
+          this.isWaitingForApiResponse = false
+        })
     },
     resetAddress() {
       this.addressLoaded = false
@@ -307,6 +331,10 @@ export default {
     },
     isValidCocNumber(s) {
       return s.length === 8
+    },
+    isValidZipCode(z) {
+      var ze = /^[1-9][0-9]{3} ?(?!sa|sd|ss)[a-z]{2}$/i
+      return ze.test(z)
     },
     showError(errorMessage) {
       this.errorState = true
@@ -343,6 +371,11 @@ export default {
     margin: 1em auto 2em;
   }
 
+  #spinner {
+    margin: 3em 0;
+    animation: rotation 2s infinite linear;
+  }
+
   #address {
     max-width: 323px;
     margin: 24px auto;
@@ -366,6 +399,15 @@ export default {
     @include buttonstyle();
 
     border: none;
+  }
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
   }
 }
 </style>

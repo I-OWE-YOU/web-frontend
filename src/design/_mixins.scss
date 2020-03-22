@@ -1,6 +1,8 @@
 @mixin buttonstyle() {
   display: inline-block;
-  min-width: 322px;
+  width: 90%;
+  min-width: 260px;
+  max-width: 322px;
   padding: 12px 24px;
   font-weight: bold;
   color: white;

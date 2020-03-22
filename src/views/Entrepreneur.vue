@@ -1,11 +1,13 @@
 <template>
   <div id="questions">
-    <img
-      id="backbtn"
-      alt="back to homepage"
-      src="../assets/img/backbtn.svg"
-      @click="goBack"
-    />
+    <a href="javascript:void(0);">
+      <img
+        id="backbtn"
+        alt="terug naar de startpagina"
+        src="../assets/img/backbtn.svg"
+        @click="goBack"
+      />
+    </a>
 
     <img
       v-if="errorState"

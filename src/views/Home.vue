@@ -27,13 +27,6 @@
       class="start_btn"
       linktext="Ja, dit wil ik ook"
     />
-
-    <!-- <ButtonLink
-      link="iwillhelp"
-      class="disabled "
-      disabled="validated == 1"
-      linktext="Ja, ik wil helpen"
-    /> -->
   </div>
 </template>
 

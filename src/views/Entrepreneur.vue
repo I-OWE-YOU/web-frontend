@@ -101,12 +101,12 @@
 
       <div v-if="step === 6" class="avw">
         <input id="checkbox" v-model="customer.checked" type="checkbox" />
-        <label for="checkbox"
-          >Ik ga akkoord met de
-          <a :target="_blank" :href="'../assets/algemenevoorwaarden.pdf'"
-            >algemene voorwwarden</a
-          ></label
-        >
+        <label for="checkbox">
+          Ik ga akkoord met de
+          <a :href="'../assets/algemenevoorwaarden.pdf'" download=""
+            >Algemene Voorwaarden</a
+          >
+        </label>
       </div>
 
       <button @click.prevent="buttonClicked">{{ buttonText }}</button>
@@ -275,15 +275,6 @@ export default {
             return false
           }
           return true
-
-        // case 7:
-        //   if (!AVW.isTrue(this.customer.avw)) {
-        //     this.showError(
-        //       'Klik nog wel even de Algemene Voorwaarden aan om verder te kunnen.'
-        //     )
-        //     return false
-        //   }
-        //   return true
       }
     },
 

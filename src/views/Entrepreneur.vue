@@ -12,8 +12,7 @@
     <TikkieUrlInstruction
       v-if="showHowToDoTikkieUrl"
       @dialog-closed="showHowToDoTikkieUrl = false"
-    >
-    </TikkieUrlInstruction>
+    ></TikkieUrlInstruction>
 
     <img
       v-if="errorState"
@@ -99,9 +98,9 @@
         description="don't worry, we spammen je niet"
       />
 
-      <h2 v-if="step === steps.doYouHaveTikkie">
-        Dit doen here met Tikkie, heb je dat?
-      </h2>
+      <h2 v-if="step === steps.doYouHaveTikkie"
+        >Dit doen here met Tikkie, heb je dat?</h2
+      >
 
       <template v-if="step === steps.tikkieUrl">
         <div>
@@ -114,13 +113,12 @@
           href="https://tikkie.me/open/"
           class="open-tikkie-link"
           rel="noopener"
+          >Open Tikkie</a
         >
-          Open Tikkie
-        </a>
 
-        <div id="howToDoTikkieUrl" @click="showHowToDoTikkieUrl = true">
-          Zo doe je dat
-        </div>
+        <div id="howToDoTikkieUrl" @click="showHowToDoTikkieUrl = true"
+          >Zo doe je dat</div
+        >
 
         <FormField
           v-model="customer.tikkieUrl"
@@ -133,9 +131,7 @@
         </div>
       </template>
 
-      <button @click.prevent="buttonClicked">
-        {{ buttonText }}
-      </button>
+      <button @click.prevent="buttonClicked">{{ buttonText }}</button>
 
       <div v-if="step === steps.doYouHaveTikkie" class="no-tikkie-sign">
         Geen Tikkie? Helemaal niet erg. Installer het nu.
@@ -144,16 +140,14 @@
             target="_blank"
             href="https://itunes.apple.com/nl/app/tikkie/id1112935685"
             rel="noopener"
+            >App Store</a
           >
-            App Store
-          </a>
           <a
             target="_blank"
             href="https://play.google.com/store/apps/details?id=com.abnamro.nl.tikkie"
             rel="noopener"
+            >Google play</a
           >
-            Google play
-          </a>
         </div>
       </div>
     </form>
@@ -203,7 +197,7 @@ export default {
       isWaitingForApiResponse: false,
       errorMessage: '',
       texts: [
-        'Geweldig! Top dat je er bij bent. Laten we eerst je account personaliseren. Dan kunnen we je makkelijker helpen.',
+        'Geweldig! Top dat je erbij bent. Laten we eerst je account personaliseren. Dan kunnen we je makkelijker helpen.',
         'Om te beginnen: hoe heet je bedrijf?',
         'We willen graag weten wat je Kamer van Koophandel nummer is. Zo kunnen we misbruik tegengaan.',
         'Hoe heet je?',

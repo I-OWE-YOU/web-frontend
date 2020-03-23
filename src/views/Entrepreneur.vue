@@ -479,11 +479,15 @@ export default {
   }
 
   #address {
-    max-width: 323px;
-    margin: 24px auto;
+    @include responsive-in-small-screens();
+
+    margin: 3em auto;
 
     p {
-      margin-bottom: 0;
+      @include font-size(1.9);
+
+      padding: 0 1em;
+      line-height: 1.2;
     }
   }
 

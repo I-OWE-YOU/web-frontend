@@ -6,12 +6,17 @@
   font-weight: bold;
   color: white;
   text-decoration: none;
+  cursor: pointer;
   background-color: $color-accent;
+  border: $size-button-border solid transparent;
   border-radius: $size-button-border-radius;
   @include font-size(2.6);
 
+  &:focus {
+    border-color: $color-blue-dark;
+  }
+
   &:hover {
-    cursor: pointer;
     background-color: $color-blue-medium;
   }
 }
@@ -30,6 +35,10 @@
 
   &:focus {
     border-color: $color-blue-dark;
+  }
+
+  &:hover {
+    background-color: $color-body-bg;
   }
 }
 @mixin responsive-in-small-screens() {

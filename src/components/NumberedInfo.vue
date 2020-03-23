@@ -1,8 +1,6 @@
 <template>
   <div class="numberedinfo" :class="aligndigit">
-    <div :class="`circle ${color}`">
-      {{ digit }}
-    </div>
+    <div :class="`circle ${color}`">{{ digit }}</div>
     <div class="texts">
       <h2>{{ title }}</h2>
       <p>{{ text }}</p>

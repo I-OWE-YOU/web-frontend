@@ -1,12 +1,19 @@
 <template>
   <div id="questions">
-    <img
-      id="backbtn"
-      alt="back to homepage"
-      title="terug"
-      src="../assets/img/backbtn.svg"
-      @click="goBack"
-    />
+    <a href="javascript:void(0);">
+      <img
+        id="backbtn"
+        alt="terug naar de startpagina"
+        src="../assets/img/backbtn.svg"
+        @click="goBack"
+      />
+    </a>
+
+    <TikkieUrlInstruction
+      v-if="showHowToDoTikkieUrl"
+      @dialog-closed="showHowToDoTikkieUrl = false"
+    >
+    </TikkieUrlInstruction>
 
     <img
       v-if="errorState"
@@ -31,49 +38,49 @@
 
     <form action="#">
       <FormField
-        v-if="step === 1"
+        v-if="step === steps.companyName"
         v-model="customer.companyName"
         field-name="companyName"
         field-label="Bedrijfsnaam"
       />
 
       <FormField
-        v-if="step === 2"
+        v-if="step === steps.kvkNumber"
         v-model="customer.cocNumber"
         field-name="cocNumber"
         field-label="KvK nummer"
       />
 
       <FormField
-        v-if="step === 3"
+        v-if="step === steps.personName"
         v-model="customer.contactFirstName"
         field-name="firstName"
         field-label="Voornaam"
       />
 
       <FormField
-        v-if="step === 3"
+        v-if="step === steps.personName"
         v-model="customer.contactLastName"
         field-name="lastName"
         field-label="Achternaam"
       />
 
       <FormField
-        v-if="step === 4"
+        v-if="step === steps.address"
         v-model="zipCode"
         field-name="postalCode"
         field-label="Postcode"
       />
 
       <FormField
-        v-if="step === 4"
+        v-if="step === steps.address"
         v-model="houseNumber"
         field-name="streetNumber"
         field-label="Huisnummer"
       />
 
-      <div v-show="addressLoaded" id="address">
-        <p class="adres--update">
+      <div v-if="step === 4" v-show="addressLoaded" id="address">
+        <p>
           We hebben je adres gevonden. Klopt dit niet? Pas dan hierboven je
           postcode en huisnummer aan.
           <br />
@@ -85,54 +92,115 @@
       </div>
 
       <FormField
-        v-if="step === 5"
+        v-if="step === steps.email"
         v-model="customer.email"
         field-name="email"
         field-label="E-mail"
         description="don't worry, we spammen je niet"
       />
 
-      <FormField
-        v-if="step === 6"
-        v-model="customer.iban"
-        field-name="IBAN"
-        field-label="IBAN nummer"
-      />
+      <h2 v-if="step === steps.doYouHaveTikkie">
+        Dit doen here met Tikkie, heb je dat?
+      </h2>
 
-      <div v-if="step === 6" class="avw">
-        <input id="checkbox" v-model="customer.checked" type="checkbox" />
-        <label for="checkbox">
-          Ik ga akkoord met de
-          <a :href="'../assets/algemenevoorwaarden.pdf'" download=""
-            >Algemene Voorwaarden</a
+      <template v-if="step === steps.tikkieUrl">
+        <div>
+          Maak een Tikkie en selecteer de optie "Laat je vrienden het bedrag
+          bepalen".
+        </div>
+
+        <a
+          target="_blank"
+          href="https://tikkie.me/open/"
+          class="open-tikkie-link"
+          rel="noopener"
+        >
+          Open Tikkie
+        </a>
+
+        <div id="howToDoTikkieUrl" @click="showHowToDoTikkieUrl = true">
+          Zo doe je dat
+        </div>
+
+        <FormField
+          v-model="customer.tikkieUrl"
+          field-name="tikkieUrl"
+          field-label="Tikkie URL"
+        />
+
+        <div>
+          <p>checkbox here to accept terms</p>
+        </div>
+      </template>
+
+      <button @click.prevent="buttonClicked">
+        {{ buttonText }}
+      </button>
+
+      <div v-if="step === steps.doYouHaveTikkie" class="no-tikkie-sign">
+        Geen Tikkie? Helemaal niet erg. Installer het nu.
+        <div id="appLinks">
+          <a
+            target="_blank"
+            href="https://itunes.apple.com/nl/app/tikkie/id1112935685"
+            rel="noopener"
           >
-        </label>
+            App Store
+          </a>
+          <a
+            target="_blank"
+            href="https://play.google.com/store/apps/details?id=com.abnamro.nl.tikkie"
+            rel="noopener"
+          >
+            Google play
+          </a>
+        </div>
       </div>
-
-      <button @click.prevent="buttonClicked">{{ buttonText }}</button>
     </form>
+
+    <div
+      v-if="step === 4 || step === 6"
+      v-show="isWaitingForApiResponse"
+      id="spinner"
+      role="presentation"
+    >
+      <img src="../assets/img/timer.svg" />
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import IBAN from 'iban'
 import FormField from '@components/FormField.vue'
+import TikkieUrlInstruction from '@components/TikkieUrlInstruction.vue'
 import { EventBus } from '@plugins/event-bus.js'
 
 export default {
   name: 'Entrepreneur',
   components: {
     FormField,
+    TikkieUrlInstruction,
   },
   data: function() {
     return {
       checkedNames: [],
       step: 0,
-      maxSteps: 6,
+      steps: {
+        intro: 0,
+        companyName: 1,
+        kvkNumber: 2,
+        personName: 3,
+        address: 4,
+        email: 5,
+        doYouHaveTikkie: 6,
+        tikkieUrl: 7,
+        finished: 8,
+      },
+      showHowToDoTikkieUrl: false,
       addressLoaded: false,
       accountCreated: false,
       errorState: false,
+      isWaitingForApiResponse: false,
       errorMessage: '',
       texts: [
         'Geweldig! Top dat je er bij bent. Laten we eerst je account personaliseren. Dan kunnen we je makkelijker helpen.',
@@ -142,7 +210,8 @@ export default {
         'Leuk je te leren kennen, FIRSTNAME! Waar zit je bedrijf?',
         'Bijna klaar. Hoe kunnen we je bereiken?',
         'En tot slot, waar mag het geld naartoe FIRSTNAME?',
-        '',
+        'Super belangrijk',
+        'Goed gedaan',
       ],
       houseNumber: '',
       zipCode: '',
@@ -168,16 +237,23 @@ export default {
     },
 
     buttonText: function() {
+      if (this.accountCreated) {
+        return 'Fijn. En nu door!'
+      }
+
       if (this.addressLoaded) {
         return 'Ja! Dit adres klopt.'
-      } else if (this.step === 0) {
-        return 'Ga verder'
-      } else if (this.step === 4) {
-        return 'Controleer postcode'
-      } else if (this.maxSteps === this.step) {
-        return 'Afronden'
-      } else {
-        return 'Volgende stap'
+      }
+
+      switch (this.step) {
+        case this.steps.intro:
+          return 'Ga verder'
+        case this.steps.address:
+          return 'Check postcode'
+        case this.steps.doYouHaveTikkie:
+          return 'Ja, ik heb Tikkie'
+        default:
+          return 'Volgende'
       }
     },
     questionText: function() {
@@ -196,7 +272,7 @@ export default {
   },
   methods: {
     goBack() {
-      if (this.step === 0) {
+      if (this.step === this.steps.intro) {
         this.$router.go(-1)
       } else {
         this.step--
@@ -204,37 +280,36 @@ export default {
     },
     buttonClicked() {
       if (this.accountCreated) {
-        // goto result page
-      }
-      if (this.step === this.maxSteps) {
-        this.removeError()
-        // Call API to process data
-        this.postData()
-        return
+        // TODO goto result page
       }
 
       if (this.checkInput()) {
         this.removeError()
-        this.step += 1
+
+        if (this.step === this.steps.tikkieUrl) {
+          this.postData()
+        } else {
+          this.step += 1
+        }
       }
     },
     checkInput() {
       switch (this.step) {
-        case 0:
+        case this.steps.intro:
           return true
-        case 1:
+        case this.steps.companyName:
           if (this.isStringEmpty(this.customer.companyName)) {
             this.showError('Wil je je bedrijfsnaam alsjeblieft invullen?')
             return false
           }
           return true
-        case 2:
+        case this.steps.kvkNumber:
           if (!this.isValidCocNumber(this.customer.cocNumber)) {
             this.showError('Wil je een geldig KvK nummer invullen?')
             return false
           }
           return true
-        case 3:
+        case this.steps.personName:
           if (
             this.isStringEmpty(this.customer.contactFirstName) ||
             this.isStringEmpty(this.customer.contactLastName)
@@ -243,7 +318,13 @@ export default {
             return false
           }
           return true
-        case 4:
+        case this.steps.address:
+          if (!this.isValidZipCode(this.zipCode)) {
+            this.showError(
+              'Je postcode bestaat niet uit 4 letters en 2 cijfers.'
+            )
+            return false
+          }
           if (
             this.isStringEmpty(this.zipCode) ||
             this.isStringEmpty(this.houseNumber)
@@ -259,7 +340,7 @@ export default {
           }
           this.loadAddress()
           return false
-        case 5:
+        case this.steps.email:
           if (!this.isValidEmail(this.customer.email)) {
             this.showError(
               'Dit e-mail adres ziet er onbruikbaar uit. Wil je het checken?'
@@ -267,10 +348,12 @@ export default {
             return false
           }
           return true
-        case 6:
-          if (!IBAN.isValid(this.customer.iban)) {
+        case this.steps.doYouHaveTikkie:
+          return true
+        case this.steps.tikkieUrl:
+          if (!this.isValidTiikieUrl(this.customer.tikkieUrl)) {
             this.showError(
-              'Dit IBAN nummer is niet geldig. Sorry dat we even streng zijn, we willen graag dat je je geld krijgt.'
+              'Dit tikkie url ziet er onbruikbaar uit. Wil je het checken?'
             )
             return false
           }
@@ -279,11 +362,9 @@ export default {
     },
 
     postData() {
+      this.isWaitingForApiResponse = true
       axios
-        .post(
-          'https://tegoedje-api.azurewebsites.net/api/companies',
-          this.customer
-        )
+        .post(`${process.env.VUE_APP_BACKEND_URL}/api/companies`, this.customer)
         .then((response) => {
           this.accountCreated = true
           this.buttonText = 'Fijn. En nu door!'
@@ -296,14 +377,15 @@ export default {
               "'"
           )
         })
+        .finally(() => {
+          this.isWaitingForApiResponse = false
+        })
     },
     loadAddress() {
+      this.isWaitingForApiResponse = true
       axios
         .get(
-          'https://tegoedje-api.azurewebsites.net/api/address/' +
-            this.zipCode +
-            '/' +
-            this.houseNumber
+          `${process.env.VUE_APP_BACKEND_URL}/api/address/${this.zipCode}/${this.houseNumber}`
         )
         .then((response) => {
           this.customer.address = response.data
@@ -315,6 +397,9 @@ export default {
             'Je adresgegevens kunnen niet gevonden worden. (' + message + ')'
           )
         })
+        .finally(() => {
+          this.isWaitingForApiResponse = false
+        })
     },
     resetAddress() {
       this.addressLoaded = false
@@ -323,13 +408,22 @@ export default {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       return re.test(email)
     },
+    isValidTiikieUrl(tikkieUrl) {
+      // TODO I'm not familiar with tikkie link format. More strict check could be useful.
+      return (
+        tikkieUrl && tikkieUrl.toLowerCase().startsWith('https://tikkie.me')
+      )
+    },
     isStringEmpty(s) {
       return !s || s.length === 0
     },
     isValidCocNumber(s) {
       return s.length === 8
     },
-
+    isValidZipCode(z) {
+      var ze = /^[1-9][0-9]{3} ?(?!sa|sd|ss)[a-z]{2}$/i
+      return ze.test(z)
+    },
     showError(errorMessage) {
       this.errorState = true
       this.errorMessage = errorMessage
@@ -385,6 +479,11 @@ export default {
     line-height: 1.1;
   }
 
+  #spinner {
+    margin: 3em 0;
+    animation: rotation 2s infinite linear;
+  }
+
   #address {
     max-width: 323px;
     margin: 24px auto;
@@ -418,10 +517,38 @@ export default {
     border-radius: 6px;
   }
 
-  button {
+  button,
+  .open-tikkie-link {
     @include buttonstyle();
 
+    margin: 1rem 0;
     border: none;
+  }
+
+  .open-tikkie-link {
+    line-height: 1.15;
+  }
+
+  .no-tikkie-sign {
+    padding-top: 1rem;
+  }
+
+  #appLinks a {
+    padding: 1rem;
+  }
+
+  #howToDoTikkieUrl {
+    font-size: $size-content-font + rem;
+    text-decoration: underline;
+  }
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
   }
 }
 </style>

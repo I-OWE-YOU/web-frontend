@@ -2,6 +2,7 @@
   <div class="field-wrapper" :class="focused">
     <label :for="fieldName">{{ fieldLabel }}</label>
     <input
+      :id="fieldName"
       v-model="modelValue"
       type="text"
       :name="fieldName"

@@ -9,160 +9,153 @@
       />
     </a>
 
-    <TikkieUrlInstruction
-      v-if="showHowToDoTikkieUrl"
-      @dialog-closed="showHowToDoTikkieUrl = false"
-    >
-    </TikkieUrlInstruction>
+    <EntrepreneurFlowIntro v-if="step === steps.intro"></EntrepreneurFlowIntro>
 
-    <img
-      v-if="errorState"
-      id="tegoedje"
-      alt
-      role="presentation"
-      src="../assets/img/bijnagoed.svg"
-    />
-    <img
-      v-else
-      id="tegoedje"
-      alt
-      role="presentation"
-      src="../assets/img/tegoedje.svg"
-    />
-
-    <h1 v-text="questionText" />
-
-    <p v-show="errorState" class="error">{{ errorMessage }}</p>
-
-    <p v-show="accountCreated" class="success">Je aanmelding is compleet!</p>
-
-    <form action="#">
-      <FormField
-        v-if="step === steps.companyName"
-        v-model="customer.companyName"
-        field-name="companyName"
-        field-label="Bedrijfsnaam"
+    <template v-else>
+      <img
+        v-if="errorMessage"
+        id="tegoedje"
+        alt
+        role="presentation"
+        src="../assets/img/bijnagoed.svg"
+      />
+      <img
+        v-else
+        id="tegoedje"
+        alt
+        role="presentation"
+        src="../assets/img/tegoedje.svg"
       />
 
-      <FormField
-        v-if="step === steps.kvkNumber"
-        v-model="customer.cocNumber"
-        field-name="cocNumber"
-        field-label="KvK nummer"
-      />
+      <h1 v-text="questionText" />
 
-      <FormField
-        v-if="step === steps.personName"
-        v-model="customer.contactFirstName"
-        field-name="firstName"
-        field-label="Voornaam"
-      />
+      <p v-show="errorMessage" class="error">{{ errorMessage }}</p>
 
-      <FormField
-        v-if="step === steps.personName"
-        v-model="customer.contactLastName"
-        field-name="lastName"
-        field-label="Achternaam"
-      />
+      <p v-show="accountCreated" class="success">Je aanmelding is compleet!</p>
 
-      <FormField
-        v-if="step === steps.address"
-        v-model="zipCode"
-        field-name="postalCode"
-        field-label="Postcode"
-      />
+      <form action="#">
+        <FormField
+          v-if="step === steps.companyName"
+          v-model="customer.companyName"
+          field-name="companyName"
+          field-label="Bedrijfsnaam"
+        />
 
-      <FormField
-        v-if="step === steps.address"
-        v-model="houseNumber"
-        field-name="streetNumber"
-        field-label="Huisnummer"
-      />
+        <FormField
+          v-if="step === steps.kvkNumber"
+          v-model="customer.cocNumber"
+          field-name="cocNumber"
+          field-label="KvK nummer"
+        />
 
-      <div v-if="step === 4" v-show="addressLoaded" id="address">
-        <p>
-          We hebben je adres gevonden. Klopt dit niet? Pas dan hierboven je
-          postcode en huisnummer aan.
-        </p>
-        <br />
-        {{ customer.address.street }}&nbsp;{{ houseNumber }}
-        <br />
-        {{ zipCode }}&nbsp;{{ customer.address.city }}
-      </div>
+        <FormField
+          v-if="step === steps.personName"
+          v-model="customer.contactFirstName"
+          field-name="firstName"
+          field-label="Voornaam"
+        />
 
-      <FormField
-        v-if="step === steps.email"
-        v-model="customer.email"
-        field-name="email"
-        field-label="E-mail"
-        description="don't worry, we spammen je niet"
-      />
+        <FormField
+          v-if="step === steps.personName"
+          v-model="customer.contactLastName"
+          field-name="lastName"
+          field-label="Achternaam"
+        />
 
-      <h2 v-if="step === steps.doYouHaveTikkie">
-        Dit doen here met Tikkie, heb je dat?
-      </h2>
+        <FormField
+          v-if="step === steps.address"
+          v-model="zipCode"
+          field-name="postalCode"
+          field-label="Postcode"
+        />
 
-      <template v-if="step === steps.tikkieUrl">
-        <div>
-          Maak een Tikkie en selecteer de optie "Laat je vrienden het bedrag
-          bepalen".
-        </div>
+        <FormField
+          v-if="step === steps.address"
+          v-model="houseNumber"
+          field-name="streetNumber"
+          field-label="Huisnummer"
+        />
 
-        <a
-          target="_blank"
-          href="https://tikkie.me/open/"
-          class="open-tikkie-link"
-          rel="noopener"
-        >
-          Open Tikkie
-        </a>
-
-        <div id="howToDoTikkieUrl" @click="showHowToDoTikkieUrl = true">
-          Zo doe je dat
+        <div v-if="step === 4" v-show="addressLoaded" id="address">
+          <p>
+            We hebben je adres gevonden. Klopt dit niet? Pas dan hierboven je
+            postcode en huisnummer aan.
+          </p>
+          <br />
+          {{ customer.address.street }}&nbsp;{{ houseNumber }}
+          <br />
+          {{ zipCode }}&nbsp;{{ customer.address.city }}
         </div>
 
         <FormField
-          v-model="customer.tikkieUrl"
-          field-name="tikkieUrl"
-          field-label="Tikkie URL"
+          v-if="step === steps.email"
+          v-model="customer.email"
+          field-name="email"
+          field-label="E-mail"
+          description="don't worry, we spammen je niet"
         />
 
-        <div>
-          <p>checkbox here to accept terms</p>
-        </div>
-      </template>
+        <h2 v-if="step === steps.doYouHaveTikkie"
+          >Dit doen here met Tikkie, heb je dat?</h2
+        >
 
-      <button @click.prevent="buttonClicked">
-        {{ buttonText }}
-      </button>
+        <template v-if="step === steps.tikkieUrl">
+          <TikkieUrlInstruction
+            v-if="showHowToDoTikkieUrl"
+            @dialog-closed="showHowToDoTikkieUrl = false"
+          ></TikkieUrlInstruction>
 
-      <div v-if="step === steps.doYouHaveTikkie" class="no-tikkie-sign">
-        Geen Tikkie? Helemaal niet erg. Installer het nu.
-        <div id="appLinks">
+          <div>
+            Maak een Tikkie en selecteer de optie "Laat je vrienden het bedrag
+            bepalen".
+          </div>
+
           <a
             target="_blank"
-            href="https://itunes.apple.com/nl/app/tikkie/id1112935685"
+            href="https://tikkie.me/open/"
+            class="open-tikkie-link"
             rel="noopener"
+            >Open Tikkie</a
           >
-            App Store
-          </a>
-          <a
-            target="_blank"
-            href="https://play.google.com/store/apps/details?id=com.abnamro.nl.tikkie"
-            rel="noopener"
-          >
-            Google play
-          </a>
-        </div>
-      </div>
-    </form>
 
-    <div
-      v-if="step === 4 || step === 6"
-      v-show="isWaitingForApiResponse"
-      id="spinner"
-      role="presentation"
-    >
+          <div id="howToDoTikkieUrl" @click="showHowToDoTikkieUrl = true"
+            >Zo doe je dat</div
+          >
+
+          <FormField
+            v-model="customer.tikkieUrl"
+            field-name="tikkieUrl"
+            field-label="Tikkie URL"
+          />
+
+          <div>
+            <p>checkbox here to accept terms</p>
+          </div>
+        </template>
+
+        <button @click.prevent="buttonClicked">{{ buttonText }}</button>
+
+        <div v-if="step === steps.doYouHaveTikkie" class="no-tikkie-sign">
+          Geen Tikkie? Helemaal niet erg. Installer het nu.
+          <div id="appLinks">
+            <a
+              target="_blank"
+              href="https://itunes.apple.com/nl/app/tikkie/id1112935685"
+              rel="noopener"
+              >App Store</a
+            >
+            <a
+              target="_blank"
+              href="https://play.google.com/store/apps/details?id=com.abnamro.nl.tikkie"
+              rel="noopener"
+              >Google play</a
+            >
+          </div>
+        </div>
+      </form>
+    </template>
+
+    <div v-show="isWaitingForApiResponse" id="spinner" role="presentation">
       <img src="../assets/img/timer.svg" />
     </div>
   </div>
@@ -172,11 +165,13 @@
 import axios from 'axios'
 import FormField from '@components/FormField.vue'
 import TikkieUrlInstruction from '@components/TikkieUrlInstruction.vue'
+import EntrepreneurFlowIntro from '@components/entrepreneur-flow/EntrepreneurFlowIntro.vue'
 import { EventBus } from '@plugins/event-bus.js'
 
 export default {
   name: 'Entrepreneur',
   components: {
+    EntrepreneurFlowIntro,
     FormField,
     TikkieUrlInstruction,
   },
@@ -197,7 +192,6 @@ export default {
       showHowToDoTikkieUrl: false,
       addressLoaded: false,
       accountCreated: false,
-      errorState: false,
       isWaitingForApiResponse: false,
       errorMessage: '',
       texts: [
@@ -261,6 +255,18 @@ export default {
       if (self.step === 4) {
         self.resetAddress()
       }
+    })
+
+    EventBus.$on('goBack', () => {
+      if (this.step === this.steps.intro) {
+        this.$router.go(-1)
+      } else {
+        this.step--
+      }
+    })
+
+    EventBus.$on('EntrepreneurFlow.next', () => {
+      this.step++
     })
   },
   methods: {
@@ -417,11 +423,10 @@ export default {
       return ze.test(z)
     },
     showError(errorMessage) {
-      this.errorState = true
       this.errorMessage = errorMessage
     },
     removeError() {
-      this.errorState = false
+      this.errorMessage = null
     },
   },
 }

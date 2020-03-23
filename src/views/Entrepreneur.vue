@@ -20,14 +20,14 @@
       id="tegoedje"
       alt
       role="presentation"
-      src="../assets/img/bijnagoed.svg"
+      src="../assets/img/crisp_logo.svg"
     />
     <img
       v-else
       id="tegoedje"
       alt
       role="presentation"
-      src="../assets/img/tegoedje.svg"
+      src="../assets/img/crisp_logo.svg"
     />
 
     <h1 v-text="questionText" />
@@ -83,11 +83,12 @@
         <p>
           We hebben je adres gevonden. Klopt dit niet? Pas dan hierboven je
           postcode en huisnummer aan.
+          <br />
+          <br />
+          {{ customer.address.street }}&nbsp;{{ houseNumber }}
+          <br />
+          {{ zipCode }}&nbsp;{{ customer.address.city }}
         </p>
-        <br />
-        {{ customer.address.street }}&nbsp;{{ houseNumber }}
-        <br />
-        {{ zipCode }}&nbsp;{{ customer.address.city }}
       </div>
 
       <FormField
@@ -182,6 +183,7 @@ export default {
   },
   data: function() {
     return {
+      checkedNames: [],
       step: 0,
       steps: {
         intro: 0,
@@ -201,9 +203,9 @@ export default {
       isWaitingForApiResponse: false,
       errorMessage: '',
       texts: [
-        'Geweldig! Goed dat je er bent. Laten we eerst je account personaliseren zowat we je makkelijker kunnen helpen.',
+        'Geweldig! Top dat je er bij bent. Laten we eerst je account personaliseren. Dan kunnen we je makkelijker helpen.',
         'Om te beginnen: hoe heet je bedrijf?',
-        'Goede naam! We willen graag weten wat je Kamer van Koophandel nummer is, om misbruik tegen te gaan.',
+        'We willen graag weten wat je Kamer van Koophandel nummer is. Zo kunnen we misbruik tegengaan.',
         'Hoe heet je?',
         'Leuk je te leren kennen, FIRSTNAME! Waar zit je bedrijf?',
         'Bijna klaar. Hoe kunnen we je bereiken?',
@@ -225,10 +227,15 @@ export default {
         email: '',
         iban: '',
         address: {},
+        checked: false,
       },
     }
   },
   computed: {
+    checkedComputed() {
+      return this.checkedNames
+    },
+
     buttonText: function() {
       if (this.accountCreated) {
         return 'Fijn. En nu door!'
@@ -353,13 +360,14 @@ export default {
           return true
       }
     },
+
     postData() {
       this.isWaitingForApiResponse = true
       axios
         .post(`${process.env.VUE_APP_BACKEND_URL}/api/companies`, this.customer)
         .then((response) => {
           this.accountCreated = true
-          this.step += 1
+          this.buttonText = 'Fijn. En nu door!'
         })
         .catch((e) => {
           var message = e.reponse ? e.response.data : e.message
@@ -437,18 +445,38 @@ export default {
 
   #backbtn {
     position: absolute;
-    top: 16px;
-    left: 16px;
+    top: 60px;
+    left: 46px;
+
+    &:hover {
+      cursor: pointer;
+
+      &::after {
+        position: absolute;
+        bottom: 1.35em;
+        left: 1em;
+        z-index: 98;
+        display: block;
+        padding: 0.3em 1em;
+        font-size: 12px;
+        color: #fff;
+        white-space: nowrap;
+        content: attr(title);
+        border-radius: 0.5em;
+      }
+    }
   }
 
   #tegoedje {
-    max-height: 65px;
-    margin: 2em 0 3em;
+    width: 30%;
+    // max-height: 65px;
+    margin: 3em 0 3em;
   }
 
   h1 {
     max-width: 260px;
     margin: 1em auto 2em;
+    line-height: 1.1;
   }
 
   #spinner {
@@ -465,8 +493,22 @@ export default {
     }
   }
 
+  p.adres--update {
+    width: 85%;
+    margin: 0 auto;
+    font-size: 1.9rem;
+    line-height: 1.05;
+  }
+
+  .avw {
+    width: 75%;
+    margin: 0 auto 2em auto;
+    font-size: 1.8rem;
+    line-height: 1.05;
+  }
+
   p.error {
-    max-width: 275px;
+    max-width: 328px;
     padding: 12px 24px;
     margin: 0 auto;
     line-height: 1.6;

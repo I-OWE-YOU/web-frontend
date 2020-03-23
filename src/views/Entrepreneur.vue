@@ -44,6 +44,7 @@
         <FormField
           v-if="step === steps.kvkNumber"
           v-model="customer.cocNumber"
+          inputmode="numeric"
           field-name="cocNumber"
           field-label="KvK nummer"
         />

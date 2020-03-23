@@ -4,6 +4,7 @@
     <input
       :id="fieldName"
       v-model="modelValue"
+      :inputmode="inputmode"
       type="text"
       :name="fieldName"
       :aria-describedby="description ? fieldName + 'Desc' : ''"
@@ -38,6 +39,10 @@ export default {
     description: {
       type: String,
       default: '',
+    },
+    inputmode: {
+      type: String,
+      default: null,
     },
   },
   data() {

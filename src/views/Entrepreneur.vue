@@ -480,7 +480,6 @@ export default {
     @include buttonstyle();
 
     margin: 1rem 0;
-    border: none;
   }
 
   .open-tikkie-link {

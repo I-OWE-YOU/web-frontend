@@ -37,12 +37,12 @@ export default {
 
   #logo {
     position: absolute;
-    bottom: 31%;
+    bottom: 25%;
     left: 50%;
     margin-left: -144px;
 
     img {
-      width: 60%;
+      width: 70%;
     }
   }
 

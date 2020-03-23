@@ -37,7 +37,7 @@ export default {
     h2 {
       @include font-size(2.6);
 
-      margin: 0.75em 0 0.15em 0;
+      margin: 0.5em 0 0.15em 0;
       font-weight: bold;
     }
 

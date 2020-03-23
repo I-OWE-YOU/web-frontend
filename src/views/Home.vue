@@ -19,7 +19,7 @@
       digit="3"
       color="dark"
       title="Tenslotte"
-      text="zetten wij jou op de map"
+      text="zetten wij jou op de kaart"
       aligndigit="left"
     />
     <ButtonLink
@@ -46,7 +46,11 @@ export default {
 </script>
 
 <style lang="scss">
-#app > div > div.buttonlink.start_btn > a {
-  padding: 0.75em 1em !important;
+#app > div > div.buttonlink.start_btn {
+  padding-bottom: 6em;
+
+  > a {
+    padding: 0.75em 1em !important;
+  }
 }
 </style>

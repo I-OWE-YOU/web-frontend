@@ -1,8 +1,6 @@
 <template>
   <div class="numberedinfo" :class="aligndigit">
-    <div :class="`circle ${color}`">
-      {{ digit }}
-    </div>
+    <div :class="`circle ${color}`">{{ digit }}</div>
     <div class="texts">
       <h2>{{ title }}</h2>
       <p>{{ text }}</p>
@@ -40,7 +38,6 @@ export default {
       @include font-size(2.6);
 
       margin: 6px 0 0;
-      font-weight: bold;
     }
 
     p {

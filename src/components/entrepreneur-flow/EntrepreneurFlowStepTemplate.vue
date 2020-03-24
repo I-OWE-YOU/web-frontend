@@ -1,20 +1,5 @@
 <template>
   <div class="entrepreneur-flow-step">
-    <img
-      v-if="errorMessage"
-      id="tegoedje"
-      alt
-      role="presentation"
-      src="../../assets/img/crisp_logo.svg"
-    />
-    <img
-      v-else
-      id="tegoedje"
-      alt
-      role="presentation"
-      src="../../assets/img/crisp_logo.svg"
-    />
-
     <h1 v-text="questionText" />
 
     <p v-show="errorMessage" class="error">{{ errorMessage }}</p>

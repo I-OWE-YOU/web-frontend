@@ -171,7 +171,7 @@
 <script>
 import axios from 'axios'
 import FormField from '@components/FormField.vue'
-import TikkieUrlInstruction from '@components/TikkieUrlInstruction.vue'
+import TikkieUrlInstruction from '@components/entrepreneur-flow/TikkieUrlInstruction.vue'
 import EntrepreneurFlowIntro from '@components/entrepreneur-flow/EntrepreneurFlowIntro.vue'
 import { EventBus } from '@plugins/event-bus.js'
 
@@ -184,7 +184,7 @@ export default {
   },
   data: function() {
     return {
-      step: 0,
+      step: 7,
       steps: {
         intro: 0,
         companyName: 1,

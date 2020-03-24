@@ -453,7 +453,7 @@ export default {
         display: block;
         padding: 0.3em 1em;
         font-size: 12px;
-        color: #fff;
+        color: $color-button-text;
         white-space: nowrap;
         content: attr(title);
         border-radius: 0.5em;

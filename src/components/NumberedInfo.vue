@@ -80,7 +80,7 @@ export default {
   }
 
   button:disabled {
-    background-color: #cecece;
+    background-color: $color-input-disabled;
   }
 
   &:nth-child(4) {

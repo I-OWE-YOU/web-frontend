@@ -3,6 +3,7 @@ $color-blue-light: #357cff;
 $color-blue-medium: #3855df;
 $color-blue-dark: #120d73;
 $color-blue-darker: #14043f;
+$color-grey-light: #cecece;
 
 /* Signal Orange */
 $color-accent: #ff5334;
@@ -21,6 +22,8 @@ $color-input: black;
 $color-input-border: white;
 $color-input-bg: white;
 $color-input-hover-bg: darken($color-input-bg, 10%);
+$color-input-border: lighten($color-heading-text, 50%);
+$color-input-disabled: $color-grey-light;
 
 // BUTTONS
 $color-button-bg: $color-link-text;

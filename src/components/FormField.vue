@@ -92,9 +92,11 @@ export default {
   }
 
   label {
+    @include responsive-in-small-screens();
+
     position: absolute;
     top: 0;
-    left: 1rem;
+    left: 50%;
     padding: 1rem + 2 * $size-input-border;
     overflow: hidden;
     font-size: $size-input-font;
@@ -104,6 +106,7 @@ export default {
     pointer-events: none;
     background-color: transparent;
     transition: all 0.2s linear;
+    transform: translateX(-50%);
   }
 
   &.focused label {

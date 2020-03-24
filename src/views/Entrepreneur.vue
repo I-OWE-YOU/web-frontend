@@ -81,11 +81,12 @@
           <p>
             We hebben je adres gevonden. Klopt dit niet? Pas dan hierboven je
             postcode en huisnummer aan.
+            <br />
+            <br />
+            {{ customer.address.street }}&nbsp;{{ houseNumber }}
+            <br />
+            {{ zipCode }}&nbsp;{{ customer.address.city }}
           </p>
-          <br />
-          {{ customer.address.street }}&nbsp;{{ houseNumber }}
-          <br />
-          {{ zipCode }}&nbsp;{{ customer.address.city }}
         </div>
 
         <FormField
@@ -196,9 +197,9 @@ export default {
       isWaitingForApiResponse: false,
       errorMessage: '',
       texts: [
-        'Geweldig! Goed dat je er bent. Laten we eerst je account personaliseren zowat we je makkelijker kunnen helpen.',
+        'Geweldig! Top dat je erbij bent. Laten we eerst je account personaliseren. Dan kunnen we je makkelijker helpen.',
         'Om te beginnen: hoe heet je bedrijf?',
-        'Goede naam! We willen graag weten wat je Kamer van Koophandel nummer is, om misbruik tegen te gaan.',
+        'We willen graag weten wat je Kamer van Koophandel nummer is. Zo kunnen we misbruik tegengaan.',
         'Hoe heet je?',
         'Leuk je te leren kennen, FIRSTNAME! Waar zit je bedrijf?',
         'Bijna klaar. Hoe kunnen we je bereiken?',
@@ -443,18 +444,37 @@ export default {
 
   #backbtn {
     position: absolute;
-    top: 16px;
-    left: 16px;
+    top: 60px;
+    left: 46px;
+
+    &:hover {
+      cursor: pointer;
+
+      &::after {
+        position: absolute;
+        bottom: 1.35em;
+        left: 1em;
+        z-index: 98;
+        display: block;
+        padding: 0.3em 1em;
+        font-size: 12px;
+        color: $color-button-text;
+        white-space: nowrap;
+        content: attr(title);
+        border-radius: 0.5em;
+      }
+    }
   }
 
   #tegoedje {
-    max-height: 65px;
-    margin: 2em 0 3em;
+    width: 30%;
+    margin: 3em 0 3em;
   }
 
   h1 {
     max-width: 260px;
     margin: 1em auto 2em;
+    line-height: 1.1;
   }
 
   #spinner {
@@ -463,16 +483,20 @@ export default {
   }
 
   #address {
-    max-width: 323px;
-    margin: 24px auto;
+    @include responsive-in-small-screens();
+
+    margin: 3em auto;
 
     p {
-      margin-bottom: 0;
+      @include font-size(1.9);
+
+      padding: 0 1em;
+      line-height: 1.2;
     }
   }
 
   p.error {
-    max-width: 275px;
+    max-width: 328px;
     padding: 12px 24px;
     margin: 0 auto;
     line-height: 1.6;

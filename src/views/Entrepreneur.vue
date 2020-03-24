@@ -221,7 +221,7 @@ export default {
         email: '',
         iban: '',
         address: {},
-        checked: false,
+        acceptedTerms: false,
       },
     }
   },

@@ -5,14 +5,14 @@
       id="tegoedje"
       alt
       role="presentation"
-      src="../../assets/img/bijnagoed.svg"
+      src="../../assets/img/crisp_logo.svg"
     />
     <img
       v-else
       id="tegoedje"
       alt
       role="presentation"
-      src="../../assets/img/tegoedje.svg"
+      src="../../assets/img/crisp_logo.svg"
     />
 
     <h1 v-text="questionText" />

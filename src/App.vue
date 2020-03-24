@@ -64,6 +64,7 @@ h1 {
   @extend %typography-xxlarge;
   @include font-size($size-content-font-xl);
 
+  line-height: 1.1;
   color: white;
 }
 

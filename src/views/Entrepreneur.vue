@@ -9,29 +9,32 @@
       />
     </a>
 
+    <img
+      id="tegoedje"
+      alt
+      role="presentation"
+      src="../assets/img/crisp_logo.svg"
+    />
+
     <EntrepreneurFlowIntro v-if="step === steps.intro"></EntrepreneurFlowIntro>
 
     <template v-else>
-      <img
-        v-if="errorMessage"
-        id="tegoedje"
-        alt
-        role="presentation"
-        src="../assets/img/bijnagoed.svg"
-      />
-      <img
-        v-else
-        id="tegoedje"
-        alt
-        role="presentation"
-        src="../assets/img/tegoedje.svg"
-      />
-
       <h1 v-text="questionText" />
 
       <p v-show="errorMessage" class="error">{{ errorMessage }}</p>
 
-      <p v-show="accountCreated" class="success">Je aanmelding is compleet!</p>
+      <div v-show="step === steps.finished" class="success">
+        <p>Je bent volledig aangemeld.</p>
+
+        <p>
+          Een update van wanneer je de tegoedjes kunt aanbieden aan je (vaste)
+          klanten, komt er snel aan.
+        </p>
+        <p>
+          Nu zijn we nog even druk bezig met de laatste zaken. Hou de website
+          goed in de gaten want dan gaan onze deuren open...
+        </p>
+      </div>
 
       <form action="#">
         <FormField
@@ -135,7 +138,9 @@
           </div>
         </template>
 
-        <button @click.prevent="buttonClicked">{{ buttonText }}</button>
+        <button v-show="step !== steps.finished" @click.prevent="buttonClicked">
+          {{ buttonText }}
+        </button>
 
         <div v-if="step === steps.doYouHaveTikkie" class="no-tikkie-sign">
           Geen Tikkie? Helemaal niet erg. Installer het nu.
@@ -193,7 +198,6 @@ export default {
       },
       showHowToDoTikkieUrl: false,
       addressLoaded: false,
-      accountCreated: false,
       isWaitingForApiResponse: false,
       errorMessage: '',
       texts: [
@@ -205,7 +209,7 @@ export default {
         'Bijna klaar. Hoe kunnen we je bereiken?',
         'En tot slot, waar mag het geld naartoe FIRSTNAME?',
         'Super belangrijk',
-        'Goed gedaan',
+        'Top! Je bent klaar.',
       ],
       houseNumber: '',
       zipCode: '',
@@ -226,10 +230,6 @@ export default {
   },
   computed: {
     buttonText: function() {
-      if (this.accountCreated) {
-        return 'Fijn. En nu door!'
-      }
-
       if (this.addressLoaded) {
         return 'Ja! Dit adres klopt.'
       }
@@ -241,6 +241,8 @@ export default {
           return 'Check postcode'
         case this.steps.doYouHaveTikkie:
           return 'Ja, ik heb Tikkie'
+        case this.steps.finished:
+          return 'Fijn. En nu door!'
         default:
           return 'Volgende'
       }
@@ -280,10 +282,6 @@ export default {
       }
     },
     buttonClicked() {
-      if (this.accountCreated) {
-        // TODO goto result page
-      }
-
       if (this.checkInput()) {
         this.removeError()
 
@@ -366,7 +364,6 @@ export default {
       axios
         .post(`${process.env.VUE_APP_BACKEND_URL}/api/companies`, this.customer)
         .then((response) => {
-          this.accountCreated = true
           this.step += 1
         })
         .catch((e) => {
@@ -474,7 +471,12 @@ export default {
   h1 {
     max-width: 260px;
     margin: 1em auto 2em;
-    line-height: 1.1;
+  }
+
+  h2 {
+    @include responsive-in-small-screens();
+
+    margin: auto;
   }
 
   #spinner {
@@ -510,6 +512,12 @@ export default {
     @include buttonstyle();
 
     margin: 1rem 0;
+  }
+
+  .success {
+    padding: 0 2rem;
+    font-weight: bold;
+    line-height: 1.2;
   }
 
   .open-tikkie-link {

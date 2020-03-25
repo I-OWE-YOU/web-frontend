@@ -100,65 +100,11 @@
           description="don't worry, we spammen je niet"
         />
 
-        <h2 v-if="step === steps.doYouHaveTikkie"
-          >Dit doen here met Tikkie, heb je dat?</h2
+        <button
+          v-show="step !== steps.finished"
+          @click.prevent="buttonClicked"
+          >{{ buttonText }}</button
         >
-
-        <template v-if="step === steps.tikkieUrl">
-          <TikkieUrlInstruction
-            v-if="showHowToDoTikkieUrl"
-            @dialog-closed="showHowToDoTikkieUrl = false"
-          ></TikkieUrlInstruction>
-
-          <div>
-            Maak een Tikkie en selecteer de optie "Laat je vrienden het bedrag
-            bepalen".
-          </div>
-
-          <a
-            target="_blank"
-            href="https://tikkie.me/open/"
-            class="open-tikkie-link"
-            rel="noopener"
-            >Open Tikkie</a
-          >
-
-          <div id="howToDoTikkieUrl" @click="showHowToDoTikkieUrl = true"
-            >Zo doe je dat</div
-          >
-
-          <FormField
-            v-model="customer.tikkieUrl"
-            field-name="tikkieUrl"
-            field-label="Tikkie URL"
-          />
-
-          <div>
-            <p>checkbox here to accept terms</p>
-          </div>
-        </template>
-
-        <button v-show="step !== steps.finished" @click.prevent="buttonClicked">
-          {{ buttonText }}
-        </button>
-
-        <div v-if="step === steps.doYouHaveTikkie" class="no-tikkie-sign">
-          Geen Tikkie? Helemaal niet erg. Installer het nu.
-          <div id="appLinks">
-            <a
-              target="_blank"
-              href="https://itunes.apple.com/nl/app/tikkie/id1112935685"
-              rel="noopener"
-              >App Store</a
-            >
-            <a
-              target="_blank"
-              href="https://play.google.com/store/apps/details?id=com.abnamro.nl.tikkie"
-              rel="noopener"
-              >Google play</a
-            >
-          </div>
-        </div>
       </form>
     </template>
 
@@ -171,7 +117,6 @@
 <script>
 import axios from 'axios'
 import FormField from '@components/FormField.vue'
-import TikkieUrlInstruction from '@components/entrepreneur-flow/TikkieUrlInstruction.vue'
 import EntrepreneurFlowIntro from '@components/entrepreneur-flow/EntrepreneurFlowIntro.vue'
 import { EventBus } from '@plugins/event-bus.js'
 
@@ -180,11 +125,10 @@ export default {
   components: {
     EntrepreneurFlowIntro,
     FormField,
-    TikkieUrlInstruction,
   },
   data: function() {
     return {
-      step: 7,
+      step: 0,
       steps: {
         intro: 0,
         companyName: 1,
@@ -192,11 +136,8 @@ export default {
         personName: 3,
         address: 4,
         email: 5,
-        doYouHaveTikkie: 6,
-        tikkieUrl: 7,
-        finished: 8,
+        finished: 6,
       },
-      showHowToDoTikkieUrl: false,
       addressLoaded: false,
       isWaitingForApiResponse: false,
       errorMessage: '',
@@ -207,8 +148,6 @@ export default {
         'Hoe heet je?',
         'Leuk je te leren kennen, FIRSTNAME! Waar zit je bedrijf?',
         'Bijna klaar. Hoe kunnen we je bereiken?',
-        'En tot slot, waar mag het geld naartoe FIRSTNAME?',
-        'Super belangrijk',
         'Top! Je bent klaar.',
       ],
       houseNumber: '',
@@ -239,8 +178,6 @@ export default {
           return 'Ga verder'
         case this.steps.address:
           return 'Check postcode'
-        case this.steps.doYouHaveTikkie:
-          return 'Ja, ik heb Tikkie'
         case this.steps.finished:
           return 'Fijn. En nu door!'
         default:
@@ -248,7 +185,7 @@ export default {
       }
     },
     questionText: function() {
-      var text = this.texts[this.step]
+      var text = this.texts[this.step] ? this.texts[this.step] : ''
       return text.replace('FIRSTNAME', this.customer.contactFirstName)
     },
   },
@@ -285,7 +222,7 @@ export default {
       if (this.checkInput()) {
         this.removeError()
 
-        if (this.step === this.steps.tikkieUrl) {
+        if (this.step === this.steps.finished) {
           this.postData()
         } else {
           this.step += 1
@@ -347,16 +284,6 @@ export default {
             return false
           }
           return true
-        case this.steps.doYouHaveTikkie:
-          return true
-        case this.steps.tikkieUrl:
-          if (!this.isValidTiikieUrl(this.customer.tikkieUrl)) {
-            this.showError(
-              'Dit tikkie url ziet er onbruikbaar uit. Wil je het checken?'
-            )
-            return false
-          }
-          return true
       }
     },
     postData() {
@@ -404,12 +331,6 @@ export default {
     isValidEmail(email) {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       return re.test(email)
-    },
-    isValidTiikieUrl(tikkieUrl) {
-      // TODO I'm not familiar with tikkie link format. More strict check could be useful.
-      return (
-        tikkieUrl && tikkieUrl.toLowerCase().startsWith('https://tikkie.me')
-      )
     },
     isStringEmpty(s) {
       return !s || s.length === 0
@@ -507,8 +428,7 @@ export default {
     border-radius: 6px;
   }
 
-  button,
-  .open-tikkie-link {
+  button {
     @include buttonstyle();
 
     margin: 1rem 0;
@@ -520,21 +440,8 @@ export default {
     line-height: 1.2;
   }
 
-  .open-tikkie-link {
-    line-height: 1.15;
-  }
-
-  .no-tikkie-sign {
-    padding-top: 1rem;
-  }
-
   #appLinks a {
     padding: 1rem;
-  }
-
-  #howToDoTikkieUrl {
-    font-size: $size-content-font + rem;
-    text-decoration: underline;
   }
 }
 

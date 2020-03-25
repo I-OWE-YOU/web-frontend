@@ -17,6 +17,9 @@
     />
 
     <EntrepreneurFlowIntro v-if="step === steps.intro"></EntrepreneurFlowIntro>
+    <EntrepreneurFlowTermsAndConditions
+      v-else-if="step === steps.termsAndCondition"
+    ></EntrepreneurFlowTermsAndConditions>
 
     <template v-else>
       <h1 v-text="questionText" />
@@ -80,7 +83,7 @@
           field-label="Huisnummer"
         />
 
-        <div v-if="step === 4" v-show="addressLoaded" id="address">
+        <div v-if="step === steps.address" v-show="addressLoaded" id="address">
           <p>
             We hebben je adres gevonden. Klopt dit niet? Pas dan hierboven je
             postcode en huisnummer aan.
@@ -118,15 +121,17 @@
 import axios from 'axios'
 import FormField from '@components/FormField.vue'
 import EntrepreneurFlowIntro from '@components/entrepreneur-flow/EntrepreneurFlowIntro.vue'
+import EntrepreneurFlowTermsAndConditions from '@components/entrepreneur-flow/EntrepreneurFlowTermsAndConditions.vue'
 import { EventBus } from '@plugins/event-bus.js'
 
 export default {
   name: 'Entrepreneur',
   components: {
     EntrepreneurFlowIntro,
+    EntrepreneurFlowTermsAndConditions,
     FormField,
   },
-  data: function() {
+  data: () => {
     return {
       step: 0,
       steps: {
@@ -136,7 +141,8 @@ export default {
         personName: 3,
         address: 4,
         email: 5,
-        finished: 6,
+        termsAndCondition: 6,
+        finished: 7,
       },
       addressLoaded: false,
       isWaitingForApiResponse: false,
@@ -193,7 +199,7 @@ export default {
     const self = this
     EventBus.$on('valueChange', function() {
       self.removeError()
-      if (self.step === 4) {
+      if (self.step === self.steps.address) {
         self.resetAddress()
       }
     })
@@ -207,7 +213,7 @@ export default {
     })
 
     EventBus.$on('EntrepreneurFlow.next', () => {
-      this.step++
+      this.buttonClicked()
     })
   },
   methods: {
@@ -222,7 +228,7 @@ export default {
       if (this.checkInput()) {
         this.removeError()
 
-        if (this.step === this.steps.finished) {
+        if (this.step === this.steps.termsAndCondition) {
           this.postData()
         } else {
           this.step += 1
@@ -232,6 +238,8 @@ export default {
     checkInput() {
       switch (this.step) {
         case this.steps.intro:
+          return true
+        case this.steps.termsAndCondition:
           return true
         case this.steps.companyName:
           if (this.isStringEmpty(this.customer.companyName)) {

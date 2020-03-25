@@ -14,8 +14,7 @@ $color-text: #fff;
 $color-heading-text: #35495e;
 
 // LINKS
-$color-link-text: #39a275;
-$color-link-text-active: $color-text;
+$color-link-text: #fff;
 
 // INPUTS
 $color-input: black;
@@ -24,6 +23,9 @@ $color-input-bg: white;
 $color-input-hover-bg: darken($color-input-bg, 10%);
 $color-input-border: lighten($color-heading-text, 50%);
 $color-input-disabled: $color-grey-light;
+
+$color-input-cb: black;
+$color-input-cb-border: gray;
 
 // BUTTONS
 $color-button-bg: $color-link-text;

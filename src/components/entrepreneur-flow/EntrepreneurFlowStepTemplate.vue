@@ -7,9 +7,12 @@
     <form action="#">
       <slot></slot>
 
-      <button type="button" @click="$emit('buttonClicked')">
-        {{ buttonText }}
-      </button>
+      <button
+        :disabled="isFormInvalid"
+        type="button"
+        @click="$emit('buttonClicked')"
+        >{{ buttonText }}</button
+      >
     </form>
   </div>
 </template>
@@ -30,6 +33,10 @@ export default {
     buttonText: {
       type: String,
       default: 'Volgende',
+    },
+    isFormInvalid: {
+      type: Boolean,
+      default: false,
     },
   },
 }

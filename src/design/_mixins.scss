@@ -19,7 +19,12 @@
   &:hover {
     background-color: $color-blue-medium;
   }
+
+  &:disabled {
+    background-color: $color-button-disabled-bg;
+  }
 }
+
 @mixin inputtextstyle() {
   @include responsive-in-small-screens();
 
@@ -41,11 +46,13 @@
     background-color: $color-input-hover-bg;
   }
 }
+
 @mixin responsive-in-small-screens() {
   width: 90%;
   min-width: 260px;
   max-width: 322px;
 }
+
 @mixin font-size($sizeValue: 1.6) {
   font-size: ($sizeValue * 10) + px;
   font-size: $sizeValue + rem;

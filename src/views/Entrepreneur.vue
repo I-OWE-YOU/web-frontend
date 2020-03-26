@@ -15,7 +15,8 @@
       role="presentation"
       src="../assets/img/crisp_logo.svg"
     />
-
+    <amplify-authenticator></amplify-authenticator>
+    <amplify-sign-out></amplify-sign-out>
     <EntrepreneurFlowIntro v-if="step === steps.intro"></EntrepreneurFlowIntro>
 
     <template v-else>

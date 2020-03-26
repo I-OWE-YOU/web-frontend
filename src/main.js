@@ -1,10 +1,22 @@
 import Vue from 'vue'
 import { ApplicationInsights } from '@microsoft/applicationinsights-web'
+import Amplify, * as AmplifyModules from 'aws-amplify'
+import { AmplifyPlugin } from 'aws-amplify-vue'
 import router from './router'
 
 import App from './App.vue'
 // Globally register all `_base`-prefixed components
 import '@components/_globals'
+Amplify.configure({
+  Auth: {
+    mandatorySignIn: true,
+    region: process.env.VUE_APP_REGION,
+    userPoolId: process.env.VUE_APP_POOL_ID,
+    identityPoolId: process.env.VUE_APP_IDENTITY_POOL_ID,
+    userPoolWebClientId: process.env.VUE_APP_CLIENT_ID,
+  },
+})
+Vue.use(AmplifyPlugin, AmplifyModules)
 
 Vue.config.productionTip = false
 

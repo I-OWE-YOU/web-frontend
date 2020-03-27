@@ -17,6 +17,7 @@
     />
 
     <EntrepreneurFlowIntro v-if="step === steps.intro"></EntrepreneurFlowIntro>
+
     <EntrepreneurFlowTermsAndConditions
       v-else-if="step === steps.termsAndCondition"
     ></EntrepreneurFlowTermsAndConditions>
@@ -95,14 +96,6 @@
           </p>
         </div>
 
-        <FormField
-          v-if="step === steps.email"
-          v-model="customer.email"
-          field-name="email"
-          field-label="E-mail"
-          description="don't worry, we spammen je niet"
-        />
-
         <button
           v-show="step !== steps.finished"
           @click.prevent="buttonClicked"
@@ -122,6 +115,7 @@ import axios from 'axios'
 import FormField from '@components/FormField.vue'
 import EntrepreneurFlowIntro from '@components/entrepreneur-flow/EntrepreneurFlowIntro.vue'
 import EntrepreneurFlowTermsAndConditions from '@components/entrepreneur-flow/EntrepreneurFlowTermsAndConditions.vue'
+// import AmplifyEventBus from 'aws-amplify'
 import { EventBus } from '@plugins/event-bus.js'
 
 export default {
@@ -140,9 +134,8 @@ export default {
         kvkNumber: 2,
         personName: 3,
         address: 4,
-        email: 5,
-        termsAndCondition: 6,
-        finished: 7,
+        termsAndCondition: 5,
+        finished: 6,
       },
       addressLoaded: false,
       isWaitingForApiResponse: false,
@@ -153,7 +146,6 @@ export default {
         'We willen graag weten wat je Kamer van Koophandel nummer is. Zo kunnen we misbruik tegengaan.',
         'Hoe heet je?',
         'Leuk je te leren kennen, FIRSTNAME! Waar zit je bedrijf?',
-        'Bijna klaar. Hoe kunnen we je bereiken?',
         'Top! Je bent klaar.',
       ],
       houseNumber: '',
@@ -284,14 +276,6 @@ export default {
           }
           this.loadAddress()
           return false
-        case this.steps.email:
-          if (!this.isValidEmail(this.customer.email)) {
-            this.showError(
-              'Dit e-mail adres ziet er onbruikbaar uit. Wil je het checken?'
-            )
-            return false
-          }
-          return true
       }
     },
     postData() {
@@ -335,10 +319,6 @@ export default {
     },
     resetAddress() {
       this.addressLoaded = false
-    },
-    isValidEmail(email) {
-      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      return re.test(email)
     },
     isStringEmpty(s) {
       return !s || s.length === 0

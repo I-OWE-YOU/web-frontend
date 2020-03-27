@@ -1,13 +1,12 @@
 <template>
   <div>
-    <h1>Gelukt!</h1>
+    <h1>Alles is geregeld</h1>
 
-    <p
-      >Je e-mail staat bij ons genoteerd. Vul de rest van je gegevens in om je
-      Tegoedjes te kunnen ontvangen.</p
+    <p>Vanaf nu kan je aan de slag en officieel je Tegoedjes delen</p>
+
+    <button type="button" @click="emitFlowNavigate"
+      >Share jouw Tegoedjes</button
     >
-
-    <button type="button" @click="emitFlowNavigate">Ok</button>
   </div>
 </template>
 

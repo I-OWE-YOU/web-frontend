@@ -8,13 +8,12 @@
       type="text"
       :name="fieldName"
       :aria-describedby="description ? fieldName + 'Desc' : ''"
+      :required="required"
       class="text-field-input"
       @focus="fieldFocused"
       @blur="fieldBlurred"
     />
-    <p :id="fieldName + 'Desc'">
-      {{ description }}
-    </p>
+    <p :id="fieldName + 'Desc'">{{ description }}</p>
   </div>
 </template>
 
@@ -44,6 +43,9 @@ export default {
       type: String,
       default: null,
     },
+    required: {
+      type: Boolean,
+    },
   },
   data() {
     return {
@@ -62,6 +64,9 @@ export default {
         EventBus.$emit('valueChange')
         this.$emit('input', val)
       },
+    },
+    requiredAttrValue() {
+      return this.required ? 'required' : null
     },
   },
   methods: {

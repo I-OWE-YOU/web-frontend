@@ -2,6 +2,6 @@ export const routes = {
   home: '/',
   signup: '/signup',
   about: '/about',
-  entrepreneur: '/voor-de-ondernemer',
+  entrepreneur: '/entrepreneur',
   letMeHelp: '/ik-wil-helpen',
 }

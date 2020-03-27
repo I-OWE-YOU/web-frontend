@@ -1,108 +1,19 @@
 <template>
   <div id="questions">
-    <a href="javascript:void(0);">
-      <img
-        id="backbtn"
-        alt="terug naar de startpagina"
-        src="../assets/img/backbtn.svg"
-        @click="goBack"
-      />
-    </a>
-
-    <img
-      id="tegoedje"
-      alt
-      role="presentation"
-      src="../assets/img/crisp_logo.svg"
-    />
-
-    <EntrepreneurFlowIntro v-if="step === steps.intro"></EntrepreneurFlowIntro>
-
-    <EntrepreneurFlowTermsAndConditions
-      v-else-if="step === steps.termsAndCondition"
-    ></EntrepreneurFlowTermsAndConditions>
-
-    <template v-else>
-      <h1 v-text="questionText" />
-
-      <p v-show="errorMessage" class="error">{{ errorMessage }}</p>
-
-      <div v-show="step === steps.finished" class="success">
-        <p>Je bent volledig aangemeld.</p>
-
-        <p>
-          Een update van wanneer je de tegoedjes kunt aanbieden aan je (vaste)
-          klanten, komt er snel aan.
-        </p>
-        <p>
-          Nu zijn we nog even druk bezig met de laatste zaken. Hou de website
-          goed in de gaten want dan gaan onze deuren open...
-        </p>
-      </div>
-
-      <form action="#">
-        <FormField
-          v-if="step === steps.companyName"
-          v-model="customer.companyName"
-          field-name="companyName"
-          field-label="Bedrijfsnaam"
-        />
-
-        <FormField
-          v-if="step === steps.kvkNumber"
-          v-model="customer.cocNumber"
-          inputmode="numeric"
-          field-name="cocNumber"
-          field-label="KvK nummer"
-        />
-
-        <FormField
-          v-if="step === steps.personName"
-          v-model="customer.contactFirstName"
-          field-name="firstName"
-          field-label="Voornaam"
-        />
-
-        <FormField
-          v-if="step === steps.personName"
-          v-model="customer.contactLastName"
-          field-name="lastName"
-          field-label="Achternaam"
-        />
-
-        <FormField
-          v-if="step === steps.address"
-          v-model="zipCode"
-          field-name="postalCode"
-          field-label="Postcode"
-        />
-
-        <FormField
-          v-if="step === steps.address"
-          v-model="houseNumber"
-          field-name="streetNumber"
-          field-label="Huisnummer"
-        />
-
-        <div v-if="step === steps.address" v-show="addressLoaded" id="address">
-          <p>
-            We hebben je adres gevonden. Klopt dit niet? Pas dan hierboven je
-            postcode en huisnummer aan.
-            <br />
-            <br />
-            {{ customer.address.street }}&nbsp;{{ houseNumber }}
-            <br />
-            {{ zipCode }}&nbsp;{{ customer.address.city }}
-          </p>
-        </div>
-
-        <button
-          v-show="step !== steps.finished"
-          @click.prevent="buttonClicked"
-          >{{ buttonText }}</button
-        >
-      </form>
-    </template>
+    <EntrepreneurFlowPersonName
+      v-if="step === steps.personName"
+      :entrepreneur="entrepreneur"
+    ></EntrepreneurFlowPersonName>
+    <EntrepreneurFlowBusinessInfo
+      v-else-if="step === steps.companyName"
+      :entrepreneur="entrepreneur"
+    ></EntrepreneurFlowBusinessInfo>
+    <EntrepreneurFlowSetupPayment
+      v-else-if="step === steps.setupPayment"
+    ></EntrepreneurFlowSetupPayment>
+    <EntrepreneurFlowFinish
+      v-else-if="step === steps.finish"
+    ></EntrepreneurFlowFinish>
 
     <div v-show="isWaitingForApiResponse" id="spinner" role="presentation">
       <img src="../assets/img/timer.svg" />
@@ -112,45 +23,31 @@
 
 <script>
 import axios from 'axios'
-import FormField from '@components/FormField.vue'
-import EntrepreneurFlowIntro from '@components/entrepreneur-flow/EntrepreneurFlowIntro.vue'
-import EntrepreneurFlowTermsAndConditions from '@components/entrepreneur-flow/EntrepreneurFlowTermsAndConditions.vue'
-// import AmplifyEventBus from 'aws-amplify'
+import EntrepreneurFlowPersonName from '@components/entrepreneur-flow/EntrepreneurFlowPersonName.vue'
+import EntrepreneurFlowBusinessInfo from '@components/entrepreneur-flow/EntrepreneurFlowBusinessInfo.vue'
+import EntrepreneurFlowFinish from '@components/entrepreneur-flow/EntrepreneurFlowFinish.vue'
+import EntrepreneurFlowSetupPayment from '@components/entrepreneur-flow/EntrepreneurFlowSetupPayment.vue'
 import { EventBus } from '@plugins/event-bus.js'
 
 export default {
   name: 'Entrepreneur',
   components: {
-    EntrepreneurFlowIntro,
-    EntrepreneurFlowTermsAndConditions,
-    FormField,
+    EntrepreneurFlowPersonName,
+    EntrepreneurFlowBusinessInfo,
+    EntrepreneurFlowSetupPayment,
+    EntrepreneurFlowFinish,
   },
   data: () => {
     return {
-      step: 0,
+      step: 1,
       steps: {
-        intro: 0,
+        personName: 0,
         companyName: 1,
-        kvkNumber: 2,
-        personName: 3,
-        address: 4,
-        termsAndCondition: 5,
-        finished: 6,
+        setupPayment: 2,
+        finish: 3,
       },
-      addressLoaded: false,
       isWaitingForApiResponse: false,
-      errorMessage: '',
-      texts: [
-        'Geweldig! Top dat je erbij bent. Laten we eerst je account personaliseren. Dan kunnen we je makkelijker helpen.',
-        'Om te beginnen: hoe heet je bedrijf?',
-        'We willen graag weten wat je Kamer van Koophandel nummer is. Zo kunnen we misbruik tegengaan.',
-        'Hoe heet je?',
-        'Leuk je te leren kennen, FIRSTNAME! Waar zit je bedrijf?',
-        'Top! Je bent klaar.',
-      ],
-      houseNumber: '',
-      zipCode: '',
-      customer: {
+      entrepreneur: {
         companyName: '',
         cocNumber: '',
         contactFirstName: '',
@@ -165,123 +62,19 @@ export default {
       },
     }
   },
-  computed: {
-    buttonText: function() {
-      if (this.addressLoaded) {
-        return 'Ja! Dit adres klopt.'
-      }
-
-      switch (this.step) {
-        case this.steps.intro:
-          return 'Ga verder'
-        case this.steps.address:
-          return 'Check postcode'
-        case this.steps.finished:
-          return 'Fijn. En nu door!'
-        default:
-          return 'Volgende'
-      }
-    },
-    questionText: function() {
-      var text = this.texts[this.step] ? this.texts[this.step] : ''
-      return text.replace('FIRSTNAME', this.customer.contactFirstName)
-    },
-  },
   mounted() {
-    const self = this
-    EventBus.$on('valueChange', function() {
-      self.removeError()
-      if (self.step === self.steps.address) {
-        self.resetAddress()
-      }
-    })
-
-    EventBus.$on('goBack', () => {
-      if (this.step === this.steps.intro) {
-        this.$router.go(-1)
-      } else {
-        this.step--
-      }
-    })
-
     EventBus.$on('EntrepreneurFlow.next', () => {
-      this.buttonClicked()
+      this.step++
     })
   },
   methods: {
-    goBack() {
-      if (this.step === this.steps.intro) {
-        this.$router.go(-1)
-      } else {
-        this.step--
-      }
-    },
-    buttonClicked() {
-      if (this.checkInput()) {
-        this.removeError()
-
-        if (this.step === this.steps.termsAndCondition) {
-          this.postData()
-        } else {
-          this.step += 1
-        }
-      }
-    },
-    checkInput() {
-      switch (this.step) {
-        case this.steps.intro:
-          return true
-        case this.steps.termsAndCondition:
-          return true
-        case this.steps.companyName:
-          if (this.isStringEmpty(this.customer.companyName)) {
-            this.showError('Wil je je bedrijfsnaam alsjeblieft invullen?')
-            return false
-          }
-          return true
-        case this.steps.kvkNumber:
-          if (!this.isValidCocNumber(this.customer.cocNumber)) {
-            this.showError('Wil je een geldig KvK nummer invullen?')
-            return false
-          }
-          return true
-        case this.steps.personName:
-          if (
-            this.isStringEmpty(this.customer.contactFirstName) ||
-            this.isStringEmpty(this.customer.contactLastName)
-          ) {
-            this.showError('We willen graag weten hoe je heet! Ah toe?')
-            return false
-          }
-          return true
-        case this.steps.address:
-          if (!this.isValidZipCode(this.zipCode)) {
-            this.showError(
-              'Je postcode bestaat niet uit 4 letters en 2 cijfers.'
-            )
-            return false
-          }
-          if (
-            this.isStringEmpty(this.zipCode) ||
-            this.isStringEmpty(this.houseNumber)
-          ) {
-            this.showError(
-              'Met je postcode en huisnummer zoeken we je locatie op.'
-            )
-            return false
-          }
-          if (this.addressLoaded) {
-            this.addressLoaded = false
-            return true
-          }
-          this.loadAddress()
-          return false
-      }
-    },
     postData() {
       this.isWaitingForApiResponse = true
       axios
-        .post(`${process.env.VUE_APP_BACKEND_URL}/api/companies`, this.customer)
+        .post(
+          `${process.env.VUE_APP_BACKEND_URL}/api/companies`,
+          this.entrepreneur
+        )
         .then((response) => {
           this.step += 1
         })
@@ -297,45 +90,6 @@ export default {
           this.isWaitingForApiResponse = false
         })
     },
-    loadAddress() {
-      this.isWaitingForApiResponse = true
-      axios
-        .get(
-          `${process.env.VUE_APP_BACKEND_URL}/api/address/${this.zipCode}/${this.houseNumber}`
-        )
-        .then((response) => {
-          this.customer.address = response.data
-          this.addressLoaded = true
-        })
-        .catch((e) => {
-          var message = e.reponse ? e.response.data : e.message
-          this.showError(
-            'Je adresgegevens kunnen niet gevonden worden. (' + message + ')'
-          )
-        })
-        .finally(() => {
-          this.isWaitingForApiResponse = false
-        })
-    },
-    resetAddress() {
-      this.addressLoaded = false
-    },
-    isStringEmpty(s) {
-      return !s || s.length === 0
-    },
-    isValidCocNumber(s) {
-      return s.length === 8
-    },
-    isValidZipCode(z) {
-      var ze = /^[1-9][0-9]{3} ?(?!sa|sd|ss)[a-z]{2}$/i
-      return ze.test(z)
-    },
-    showError(errorMessage) {
-      this.errorMessage = errorMessage
-    },
-    removeError() {
-      this.errorMessage = null
-    },
   },
 }
 </script>
@@ -348,44 +102,9 @@ export default {
   min-height: 100vh;
   background-color: $color-blue-light;
 
-  #backbtn {
-    position: absolute;
-    top: 60px;
-    left: 46px;
-
-    &:hover {
-      cursor: pointer;
-
-      &::after {
-        position: absolute;
-        bottom: 1.35em;
-        left: 1em;
-        z-index: 98;
-        display: block;
-        padding: 0.3em 1em;
-        font-size: 12px;
-        color: $color-button-text;
-        white-space: nowrap;
-        content: attr(title);
-        border-radius: 0.5em;
-      }
-    }
-  }
-
   #tegoedje {
     width: 30%;
     margin: 3em 0 3em;
-  }
-
-  h1 {
-    max-width: 260px;
-    margin: 1em auto 2em;
-  }
-
-  h2 {
-    @include responsive-in-small-screens();
-
-    margin: auto;
   }
 
   #spinner {
@@ -393,43 +112,8 @@ export default {
     animation: rotation 2s infinite linear;
   }
 
-  #address {
-    @include responsive-in-small-screens();
-
-    margin: 3em auto;
-
-    p {
-      @include font-size(1.9);
-
-      padding: 0 1em;
-      line-height: 1.2;
-    }
-  }
-
-  p.error {
-    max-width: 328px;
-    padding: 12px 24px;
-    margin: 0 auto;
-    line-height: 1.6;
-    color: white;
-    background-color: $color-blue-dark;
-    border-radius: 6px;
-  }
-
   button {
-    @include buttonstyle();
-
     margin: 1rem 0;
-  }
-
-  .success {
-    padding: 0 2rem;
-    font-weight: bold;
-    line-height: 1.2;
-  }
-
-  #appLinks a {
-    padding: 1rem;
   }
 }
 

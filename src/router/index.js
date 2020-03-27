@@ -2,27 +2,35 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@views/Home.vue'
 
+import { routes } from './routes'
+
 Vue.use(VueRouter)
 
-const routes = [
+const vueRoutes = [
   {
-    path: '/',
+    path: routes.home,
     name: 'Home',
     component: Home,
   },
   {
-    path: '/about',
-    name: 'about',
-    component: () => import(/* webpackChunkName: "about" */ '@views/About.vue'),
+    path: routes.signup,
+    name: 'SignUp',
+    component: () =>
+      import(/* webpackChunkName: "SignUp" */ '@views/SignUp.vue'),
   },
   {
-    path: '/voor-de-ondernemer',
+    path: routes.about,
+    name: 'About',
+    component: () => import(/* webpackChunkName: "About" */ '@views/About.vue'),
+  },
+  {
+    path: routes.entrepreneur,
     name: 'Entrepreneur',
     component: () =>
       import(/* webpackChunkName: "Entrepreneur" */ '@views/Entrepreneur.vue'),
   },
   {
-    path: '/ik-wil-helpen',
+    path: routes.letMeHelp,
     name: 'LetMeHelp',
     component: () =>
       import(/* webpackChunkName: "LetMeHelp" */ '@views/LetMeHelp.vue'),
@@ -32,7 +40,7 @@ const routes = [
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes,
+  routes: vueRoutes,
   scrollBehavior() {
     return { x: 0, y: 0 }
   },

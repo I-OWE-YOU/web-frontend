@@ -23,7 +23,7 @@
       aligndigit="left"
     />
     <ButtonLink
-      link="/voor-de-ondernemer"
+      :link="routes.signup"
       class="start_btn"
       linktext="Ja, dit wil ik ook"
     />
@@ -35,12 +35,19 @@ import TwoLadies from '@components/TwoLadies.vue'
 import NumberedInfo from '@components/NumberedInfo.vue'
 import ButtonLink from '@components/ButtonLink.vue'
 
+import { routes } from '@router/routes'
+
 export default {
   name: 'Home',
   components: {
     TwoLadies,
     NumberedInfo,
     ButtonLink,
+  },
+  data: () => {
+    return {
+      routes,
+    }
   },
 }
 </script>

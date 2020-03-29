@@ -40,7 +40,7 @@ const vueRoutes = [
     name: 'TermsAndConditions',
     component: () =>
       import(
-        /* webpackChunkName: "LetMeHelp" */ '@views/TermsAndConditions.vue'
+        /* webpackChunkName: "TermsAndConditions" */ '@views/TermsAndConditions.vue'
       ),
   },
 ]

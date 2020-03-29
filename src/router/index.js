@@ -35,6 +35,14 @@ const vueRoutes = [
     component: () =>
       import(/* webpackChunkName: "LetMeHelp" */ '@views/LetMeHelp.vue'),
   },
+  {
+    path: routes.termsAndConditions,
+    name: 'TermsAndConditions',
+    component: () =>
+      import(
+        /* webpackChunkName: "LetMeHelp" */ '@views/TermsAndConditions.vue'
+      ),
+  },
 ]
 
 const router = new VueRouter({

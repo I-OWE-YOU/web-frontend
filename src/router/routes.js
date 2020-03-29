@@ -4,4 +4,5 @@ export const routes = {
   about: '/about',
   entrepreneur: '/entrepreneur',
   letMeHelp: '/ik-wil-helpen',
+  termsAndConditions: '/algemene-voorwaarden',
 }

@@ -6,7 +6,7 @@ $color-blue-darker: #14043f;
 $color-grey-light: #cecece;
 
 /* Signal Orange */
-$color-accent: #ff5334;
+$color-accent: #f9395e;
 
 // CONTENT
 $color-body-bg: #f9f7f5;
@@ -17,11 +17,11 @@ $color-heading-text: #35495e;
 $color-link-text: #fff;
 
 // INPUTS
-$color-input: black;
+$color-input: #fff;
 $color-input-border: white;
-$color-input-bg: white;
+$color-input-bg: #637bde;
 $color-input-hover-bg: darken($color-input-bg, 10%);
-$color-input-border: lighten($color-heading-text, 50%);
+$color-input-border: transparent;
 $color-input-disabled: $color-grey-light;
 
 $color-input-cb: black;

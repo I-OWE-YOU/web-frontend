@@ -1,8 +1,18 @@
 <template>
   <div id="app">
+    <logoT />
     <RouterView :key="$route.fullPath" />
   </div>
 </template>
+
+<script>
+import logoT from '@components/logoT.vue'
+
+export default {
+  name: 'App',
+  components: { logoT },
+}
+</script>
 
 <!-- This should generally be the only global CSS in the app. -->
 <style lang="scss">
@@ -40,7 +50,7 @@ body {
   @extend %typography-small;
 
   position: relative;
-  max-width: 768px;
+  min-height: 100vh;
   margin: 0 auto;
   font-family: 'Work Sans', sans-serif;
   color: $color-text;

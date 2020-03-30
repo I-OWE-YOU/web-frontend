@@ -5,7 +5,7 @@
       :id="fieldName"
       v-model="modelValue"
       :inputmode="inputmode"
-      type="text"
+      :type="fieldType"
       :name="fieldName"
       :aria-describedby="description ? fieldName + 'Desc' : ''"
       :required="required"
@@ -26,6 +26,10 @@ export default {
     value: {
       type: String,
       default: '',
+    },
+    fieldType: {
+      type: String,
+      default: 'text',
     },
     fieldName: {
       type: String,
@@ -91,9 +95,11 @@ export default {
   outline: none;
 
   label,
-  input[type='text'] {
+  input[type='text'],
+  input[type='password'] {
     display: block;
     margin: 0;
+    border-radius: 0;
   }
 
   label {
@@ -106,7 +112,7 @@ export default {
     overflow: hidden;
     font-size: $size-input-font;
     line-height: 1.5;
-    color: $color_blue_dark;
+    color: $color-input;
     white-space: nowrap;
     pointer-events: none;
     background-color: transparent;
@@ -120,7 +126,8 @@ export default {
     transition: all 0.2s linear;
   }
 
-  input[type='text'] {
+  input[type='text'],
+  input[type='password'] {
     @include inputtextstyle();
   }
 }

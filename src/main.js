@@ -4,6 +4,7 @@ import Amplify, * as AmplifyModules from 'aws-amplify'
 import { I18n } from '@aws-amplify/core'
 import { AmplifyPlugin, AmplifyEventBus } from 'aws-amplify-vue'
 
+import { BootstrapVue } from 'bootstrap-vue'
 import router from './router'
 import { routes } from './router/routes'
 import { dictAwsAmplifyNl } from './i18n/aws_amplify.nl'
@@ -37,7 +38,7 @@ AmplifyEventBus.$on('authState', async (state) => {
       break
   }
 })
-Vue.use(AmplifyPlugin, AmplifyModules)
+Vue.use(AmplifyPlugin, AmplifyModules, BootstrapVue)
 // It's important to instantiate the Vue instance after calling Vue.use!
 
 Vue.config.productionTip = false

@@ -23,9 +23,14 @@
       aligndigit="left"
     />
     <ButtonLink
+      :link="routes.letMeHelp"
+      class="start_btn"
+      linktext="Steun een ondernemer"
+    />
+    <ButtonLink
       :link="routes.signup"
       class="start_btn"
-      linktext="Ja, dit wil ik ook"
+      linktext="Schrijf je in als ondernemer"
     />
   </div>
 </template>

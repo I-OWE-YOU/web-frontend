@@ -3,6 +3,6 @@ export const routes = {
   signup: '/signup',
   about: '/about',
   entrepreneur: '/entrepreneur',
-  letMeHelp: '/ik-wil-helpen',
+  letMeHelp: '/let-me-help',
   termsAndConditions: '/algemene-voorwaarden',
 }

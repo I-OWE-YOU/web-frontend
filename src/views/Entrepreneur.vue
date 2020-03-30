@@ -100,7 +100,7 @@ export default {
 #questions {
   position: relative;
   min-height: 100vh;
-  background-color: $color-blue-light;
+  background-color: $color-blue-dark;
 
   #tegoedje {
     width: 30%;

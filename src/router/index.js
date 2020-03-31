@@ -43,6 +43,12 @@ const vueRoutes = [
         /* webpackChunkName: "TermsAndConditions" */ '@views/TermsAndConditions.vue'
       ),
   },
+  {
+    path: routes.coupons + '/:companyId',
+    name: 'Coupons',
+    component: () =>
+      import(/* webpackChunkName: "TermsAndConditions" */ '@views/Coupons.vue'),
+  },
 ]
 
 const router = new VueRouter({

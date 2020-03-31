@@ -3,6 +3,7 @@ import { ApplicationInsights } from '@microsoft/applicationinsights-web'
 import Amplify, * as AmplifyModules from 'aws-amplify'
 import { I18n } from '@aws-amplify/core'
 import { AmplifyPlugin, AmplifyEventBus } from 'aws-amplify-vue'
+import { Auth } from 'aws-amplify'
 
 import { BootstrapVue } from 'bootstrap-vue'
 import router from './router'
@@ -28,6 +29,13 @@ Amplify.configure({
     {
       name: 'BackendAPIDev',
       endpoint: process.env.VUE_APP_BACKEND_URL,
+      custom_header: async () => {
+        return {
+          Authorization: `Bearer ${(await Auth.currentSession())
+            .getIdToken()
+            .getJwtToken()}`,
+        }
+      },
     },
     {
       name: 'ServerlessOffline',

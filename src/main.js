@@ -24,6 +24,16 @@ Amplify.configure({
     identityPoolId: process.env.VUE_APP_IDENTITY_POOL_ID,
     userPoolWebClientId: process.env.VUE_APP_CLIENT_ID,
   },
+  endpoints: [
+    {
+      name: 'BackendAPIDev',
+      endpoint: process.env.VUE_APP_BACKEND_URL,
+    },
+    {
+      name: 'ServerlessOffline',
+      endpoint: 'http://localhost:3000/dev',
+    },
+  ],
 })
 AmplifyEventBus.$on('authState', async (state) => {
   switch (state) {

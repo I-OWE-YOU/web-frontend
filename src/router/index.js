@@ -55,6 +55,14 @@ const vueRoutes = [
     component: () =>
       import(/* webpackChunkName: "TermsAndConditions" */ '@views/Coupons.vue'),
   },
+  {
+    path: routes.client,
+    name: 'ClientLandingPage',
+    component: () =>
+      import(
+        /* webpackChunkName: "ClientLandingPage" */ '@views/ClientLandingPage.vue'
+      ),
+  },
 ]
 
 const router = new VueRouter({

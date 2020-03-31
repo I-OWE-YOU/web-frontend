@@ -1,8 +1,6 @@
 <template>
   <div class="buttonlink">
-    <router-link :to="link">
-      {{ linktext }}
-    </router-link>
+    <router-link :to="link">{{ linktext }}</router-link>
   </div>
 </template>
 
@@ -26,7 +24,7 @@ export default {
 @import '@design';
 .buttonlink {
   padding: 0 0 $size-button-padding-vertical;
-  background-color: $color-blue-darker;
+  background-color: $color-blue-dark;
 
   a {
     @include buttonstyle();

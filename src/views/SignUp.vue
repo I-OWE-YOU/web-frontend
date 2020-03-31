@@ -1,5 +1,5 @@
 <template>
-  <div class="signUp__wrapper">
+  <div>
     <form novalidate="true" @submit.prevent>
       <h1 class="p-3">Schrijf je in</h1>
       <FormField

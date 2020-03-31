@@ -71,10 +71,7 @@ export default {
     postData() {
       this.isWaitingForApiResponse = true
       axios
-        .post(
-          `${process.env.VUE_APP_BACKEND_URL}/api/companies`,
-          this.entrepreneur
-        )
+        .post(`${process.env.VUE_APP_BACKEND_URL}/companies`, this.entrepreneur)
         .then((response) => {
           this.step += 1
         })

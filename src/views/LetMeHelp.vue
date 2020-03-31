@@ -9,24 +9,58 @@
       />
     </form>
 
-    <div ref="googleMap" class="google-map"></div>
+    <div
+      ref="googleMap"
+      class="google-map"
+      :class="{ 'google-map--short': !!selectedCompany }"
+    ></div>
+
+    <div v-if="selectedCompany" ref="markerInfo" class="text-left pl-4 pt-5">
+      <h2 v-text="selectedCompany.companyName"></h2>
+      <div>
+        <p
+          >{{ selectedCompany.contactLastName }}
+          {{ selectedCompany.contactFirstName }}</p
+        >
+        <p>{{ selectedCompany.street }} {{ selectedCompany.houseNumber }}</p>
+        <p>{{ selectedCompany.zipCode }} {{ selectedCompany.city }}</p>
+      </div>
+
+      <ButtonLink
+        :link="routes.coupons + '/' + selectedCompany.id"
+        linktext="Kies deze ondernemer"
+      />
+    </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 import GoogleMapsApiLoader from 'google-maps-api-loader'
+
+import { routes } from '@router/routes'
 import FormField from '@components/FormField.vue'
+import ButtonLink from '@components/ButtonLink.vue'
+// eslint-disable-next-line import/no-relative-parent-imports
+import { companies } from '../test-data/companies'
+
+// eslint-disable-next-line import/no-relative-parent-imports, no-unused-vars
+import typings from '../typings/company'
 
 export default {
   name: 'LetMeHelp',
   components: {
     FormField,
+    ButtonLink,
   },
   data: () => {
     return {
       google: null,
       map: null,
+      /** @type {typings.CompanyFlatten} */
+      selectedCompany: null,
       search: '',
+      routes: routes,
       mapConfig: {
         // Amsterdam central station
         center: { lat: 52.379189, lng: 4.899431 },
@@ -48,7 +82,10 @@ export default {
     initializeMap() {
       const mapContainer = this.$refs.googleMap
       this.map = new this.google.maps.Map(mapContainer, this.mapConfig)
+      this.map.addListener('click', () => (this.selectedCompany = null))
       this.navigateMapToTheCurrentLocation()
+
+      this.loadCompanies()
     },
     navigateMapToTheCurrentLocation() {
       if (navigator.geolocation) {
@@ -72,6 +109,38 @@ export default {
         }
       })
     },
+    loadCompanies() {
+      companies.forEach((c) => this.placeCompanyMarker(c))
+      axios
+        .get(`${process.env.VUE_APP_BACKEND_URL}/companies`)
+        .then((response) => {
+          /** @type {Array<typings.CompanyFlatten>} */
+          const companies = response.data
+          companies.forEach((c) => this.placeCompanyMarker(c))
+        })
+        .catch((e) => {
+          const message = e.reponse ? e.response.data : e.message
+          alert(
+            `Er is iets misgegaan bij het opslaan van je gegevens: '${message}'`
+          )
+        })
+    },
+    placeCompanyMarker(company) {
+      const requiredFields = ['latitude', 'longitude', 'companyName', 'id']
+      if (requiredFields.some((field) => !company[field])) {
+        console.warn(
+          'Marker for the company was not placed due to incomplete data',
+          company
+        )
+        return
+      }
+      const marker = new this.google.maps.Marker({
+        // label: `${company.contactLastName} ${company.contactFirstName}`,
+        map: this.map,
+        position: { lat: company.latitude, lng: company.longitude },
+      })
+      marker.addListener('click', () => (this.selectedCompany = company))
+    },
   },
 }
 </script>
@@ -85,5 +154,9 @@ $size-distance-from-margin: 2rem;
   // TODO review markup with https://github.com/I-OWE-YOU/web-frontend/issues/78
   height: calc(100vh - #{$size-header-height + $size-distance-from-margin});
   margin-top: $size-distance-from-margin;
+
+  &--short {
+    height: 18rem;
+  }
 }
 </style>

@@ -13,6 +13,6 @@ export const companies = [
     zipCode: '1212AA',
     houseNumber: 10,
     street: 'Proletariyev',
-    id: 'some-id',
+    companyId: 'some-id',
   },
 ]

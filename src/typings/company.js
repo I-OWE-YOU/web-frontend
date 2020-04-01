@@ -24,6 +24,7 @@
 /**
  * @typedef {object} CompanyFlatten
  * @property {boolean} acceptedTerms
+ * @property {string} companyId
  * @property {string} companyName
  * @property {boolean} copyAcceptedTerms
  * @property {string} email

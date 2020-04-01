@@ -18,16 +18,16 @@
     <div v-if="selectedCompany" ref="markerInfo" class="text-left pl-4 pt-5">
       <h2 v-text="selectedCompany.companyName"></h2>
       <div>
-        <p
-          >{{ selectedCompany.contactLastName }}
-          {{ selectedCompany.contactFirstName }}</p
-        >
+        <p>
+          {{ selectedCompany.contactLastName }}
+          {{ selectedCompany.contactFirstName }}
+        </p>
         <p>{{ selectedCompany.street }} {{ selectedCompany.houseNumber }}</p>
         <p>{{ selectedCompany.zipCode }} {{ selectedCompany.city }}</p>
       </div>
 
       <ButtonLink
-        :link="routes.coupons + '/' + selectedCompany.id"
+        :link="routes.coupons + '/' + selectedCompany.companyId"
         linktext="Kies deze ondernemer"
       />
     </div>
@@ -126,20 +126,48 @@ export default {
         })
     },
     placeCompanyMarker(company) {
-      const requiredFields = ['latitude', 'longitude', 'companyName', 'id']
-      if (requiredFields.some((field) => !company[field])) {
-        console.warn(
-          'Marker for the company was not placed due to incomplete data',
-          company
-        )
+      if (!this.isValidCompany(company)) {
         return
       }
       const marker = new this.google.maps.Marker({
         // label: `${company.contactLastName} ${company.contactFirstName}`,
         map: this.map,
-        position: { lat: company.latitude, lng: company.longitude },
+        position: {
+          lat: Number(company.latitude),
+          lng: Number(company.longitude),
+        },
       })
       marker.addListener('click', () => (this.selectedCompany = company))
+    },
+    isValidCompany(company) {
+      const requiredFields = [
+        'latitude',
+        'longitude',
+        'companyName',
+        'companyId',
+      ]
+      if (requiredFields.some((field) => !company[field])) {
+        console.warn(
+          'Marker for the company was not placed due to incomplete data',
+          company
+        )
+        return false
+      }
+      if (isNaN(Number(company.latitude))) {
+        console.warn(
+          'Marker for the company was not placed due to incorrecct latitude',
+          company
+        )
+        return false
+      }
+      if (isNaN(Number(company.longitude))) {
+        console.warn(
+          'Marker for the company was not placed due to incorrecct longitude',
+          company
+        )
+        return false
+      }
+      return true
     },
   },
 }

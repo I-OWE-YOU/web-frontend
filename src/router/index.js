@@ -63,6 +63,14 @@ const vueRoutes = [
         /* webpackChunkName: "CustomerLandingPage" */ '@views/CustomerLandingPage.vue'
       ),
   },
+  {
+    path: routes.couponConfirm + '/:companyId',
+    name: 'Coupons',
+    component: () =>
+      import(
+        /* webpackChunkName: "TermsAndConditions" */ '@views/CouponConfirm.vue'
+      ),
+  },
 ]
 
 const router = new VueRouter({

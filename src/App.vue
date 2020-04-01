@@ -49,12 +49,9 @@ body {
 }
 
 #app {
-  @extend %typography-small;
-
   position: relative;
   min-height: 100vh;
   margin: 0 auto;
-  font-family: 'Work Sans', sans-serif;
   color: $color-text;
   text-align: center;
   background: $color-body-bg;

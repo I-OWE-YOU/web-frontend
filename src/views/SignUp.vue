@@ -35,7 +35,7 @@
         >Invalid password. Minimum length is 8 characters.</span
       >
 
-      <CheckBoxTermsAndConditionsVue v-model="termsAndConditionsAccepted" />
+      <CheckBoxTermsAndConditions v-model="termsAndConditionsAccepted" />
       <span
         v-if="errors.includes(ErrorType.TERMS_REQUIRED)"
         class="p-3 d-block text-danger"
@@ -55,14 +55,16 @@
 
 <script>
 import { Auth } from 'aws-amplify'
-import CheckBoxTermsAndConditionsVue from '@components/CheckBoxTermsAndConditions.vue'
+import CheckBoxTermsAndConditions from '@components/CheckBoxTermsAndConditions.vue'
 import FormField from '@components/FormField.vue'
 import { routes } from '@router/routes'
+import { isValidEmail } from '@utils/validation'
+
 import { ErrorType } from './constants'
 
 export default {
   name: 'SignUp',
-  components: { CheckBoxTermsAndConditionsVue, FormField },
+  components: { CheckBoxTermsAndConditions, FormField },
   data() {
     return {
       ErrorType: ErrorType,
@@ -108,7 +110,7 @@ export default {
 
       if (!this.email) {
         this.errors.push(ErrorType.EMAIL_REQUIRED)
-      } else if (!this.isEmailValid(this.email)) {
+      } else if (!isValidEmail(this.email)) {
         this.errors.push(ErrorType.EMAIL_INVALID)
       }
 
@@ -125,10 +127,6 @@ export default {
       if (!this.errors.length) {
         return this.signUpAndSignIn()
       }
-    },
-    isEmailValid(email) {
-      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      return re.test(email)
     },
     isPasswordValid(password) {
       return password.length > 7

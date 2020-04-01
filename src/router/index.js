@@ -63,6 +63,14 @@ const vueRoutes = [
         /* webpackChunkName: "StripeConnect" */ '@views/StripeConnect.vue'
       ),
   },
+  {
+    path: routes.customer,
+    name: 'CustomerLandingPage',
+    component: () =>
+      import(
+        /* webpackChunkName: "CustomerLandingPage" */ '@views/CustomerLandingPage.vue'
+      ),
+  },
 ]
 
 const router = new VueRouter({

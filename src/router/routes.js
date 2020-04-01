@@ -8,4 +8,5 @@ export const routes = {
   coupons: '/coupons',
   termsAndConditions: '/algemene-voorwaarden',
   stripeConnect: '/stripe-connect',
+  customer: '/customer',
 }

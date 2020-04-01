@@ -1,5 +1,10 @@
 /** @type import('@vue/cli-service').ProjectOptions */
 module.exports = {
+  configureWebpack: {
+    externals: {
+      vue: 'Vue',
+    },
+  },
   // https://github.com/neutrinojs/webpack-chain/tree/v4#getting-started
   chainWebpack(config) {
     // Set up all the aliases we use in our app.

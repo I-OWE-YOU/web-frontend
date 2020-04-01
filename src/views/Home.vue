@@ -23,7 +23,7 @@
       aligndigit="left"
     />
     <ButtonLink
-      :link="routes.client"
+      :link="routes.customer"
       class="start_btn"
       linktext="Steun een ondernemer"
     />

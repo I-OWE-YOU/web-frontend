@@ -56,11 +56,11 @@ const vueRoutes = [
       import(/* webpackChunkName: "TermsAndConditions" */ '@views/Coupons.vue'),
   },
   {
-    path: routes.client,
-    name: 'ClientLandingPage',
+    path: routes.customer,
+    name: 'CustomerLandingPage',
     component: () =>
       import(
-        /* webpackChunkName: "ClientLandingPage" */ '@views/ClientLandingPage.vue'
+        /* webpackChunkName: "CustomerLandingPage" */ '@views/CustomerLandingPage.vue'
       ),
   },
 ]

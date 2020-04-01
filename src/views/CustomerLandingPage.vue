@@ -53,7 +53,7 @@ import ButtonLink from '@components/ButtonLink.vue'
 import { routes } from '@router/routes'
 
 export default {
-  name: 'ClientLandingPage',
+  name: 'CustomerLandingPage',
   components: {
     ButtonLink,
   },

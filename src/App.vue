@@ -1,18 +1,15 @@
 <template>
   <div id="app">
-    <router-link to="/">
-      <logoT />
-    </router-link>
+    <Header />
     <RouterView :key="$route.fullPath" />
   </div>
 </template>
 
 <script>
-import logoT from '@components/logoT.vue'
-
+import Header from '@views/Header.vue'
 export default {
   name: 'App',
-  components: { logoT },
+  components: { Header },
 }
 </script>
 

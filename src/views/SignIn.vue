@@ -19,7 +19,7 @@
         :required="true"
       />
 
-      <button class="m-4" @click="signIn">Sign In</button>
+      <button class="m-4 big-red-button" @click="signIn">Sign In</button>
     </form>
   </div>
 </template>

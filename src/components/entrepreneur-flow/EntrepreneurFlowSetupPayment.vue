@@ -2,12 +2,12 @@
   <div>
     <h1>Voeg een betaalmethode toe</h1>
 
-    <p
-      >Op het mogelijk te maken om een Tegoedje te kunnen afnemen van jou moet
-      er een betaalmethode worden geactiveerd</p
-    >
+    <p>
+      Op het mogelijk te maken om een Tegoedje te kunnen afnemen van jou moet er
+      een betaalmethode worden geactiveerd
+    </p>
 
-    <button type="button" @click="emitFlowNavigate"
+    <button class="big-red-button" type="button" @click="emitFlowNavigate"
       >Selecteer betaalmethode</button
     >
   </div>

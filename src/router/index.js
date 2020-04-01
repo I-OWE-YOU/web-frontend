@@ -56,6 +56,14 @@ const vueRoutes = [
       import(/* webpackChunkName: "TermsAndConditions" */ '@views/Coupons.vue'),
   },
   {
+    path: routes.stripeConnect,
+    name: 'StripeConnect',
+    component: () =>
+      import(
+        /* webpackChunkName: "StripeConnect" */ '@views/StripeConnect.vue'
+      ),
+  },
+  {
     path: routes.customer,
     name: 'CustomerLandingPage',
     component: () =>

@@ -14,14 +14,23 @@
             rel="stylesheet" />
       <link type="text/css"
             rel="stylesheet"
-            href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+            href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
       <link type="text/css"
             rel="stylesheet"
-            href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
-      <!-- Load Vue followed by BootstrapVue, and BootstrapVueIcons -->
-      <script src="//unpkg.com/vue@latest/dist/vue.min.js"></script>
-      <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
-      <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue-icons.min.js"></script>
+            href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
+      <link type="text/css"
+            rel="stylesheet"
+            href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue-icons.min.css" />
+
+
+      <!-- Load polyfills to support older browsers -->
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver"></script>
+
+      <!-- Required scripts -->
+      <script src="https://unpkg.com/vue@latest/dist/vue.js"></script>
+      <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+      <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue-icons.min.js"></script>
+
 </head>
 
 <body>

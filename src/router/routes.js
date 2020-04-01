@@ -6,5 +6,5 @@ export const routes = {
   letMeHelp: '/let-me-help',
   coupons: '/coupons',
   termsAndConditions: '/algemene-voorwaarden',
-  client: '/client',
+  customer: '/customer',
 }

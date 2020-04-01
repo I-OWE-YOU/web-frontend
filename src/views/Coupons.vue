@@ -1,11 +1,11 @@
 <template>
   <div>
     <h2>Kies een bedrag</h2>
-    <p
-      >Kies een van de voorgeselecteerde bedragen of vul zelf een bedrag in.
+    <p>
+      Kies een van de voorgeselecteerde bedragen of vul zelf een bedrag in.
       Hierna kan je het tegoedje afrekenen en sturen wij je een QR code via de
-      mail</p
-    >
+      mail
+    </p>
     <form class="d-flex m-auto flex-wrap coupons">
       <div v-for="val in couponValues" :key="val" class="coupon">
         <input
@@ -31,11 +31,6 @@
           :value="customCoupon"
           @input="setFocusInInputIfCustomIsSelected"
         />
-        <label
-          for="coupon-custom"
-          :class="{ 'd-none': selectedCoupon === customCoupon }"
-          >Anders</label
-        >
         <template v-if="selectedCoupon === customCoupon">
           <span class="coupon__currency">€</span>
           <input
@@ -46,6 +41,12 @@
             inputmode="numeric"
           />
         </template>
+        <label v-else for="coupon-custom">Anders</label>
+      </div>
+      <div class="w-100 px-3 coupon__validation-message">
+        <p v-if="isFinalAmountTouched && isAmountInvalid"
+          >Een tegoedje kan minimaal 1 euro en maximaal 250 euro waard zijn.</p
+        >
       </div>
 
       <div class="w-100">
@@ -86,7 +87,15 @@ export default {
         : this.selectedCoupon
     },
     isAmountInvalid() {
-      return !this.finalAmount || this.finalAmount < 5 || this.finalAmount > 250
+      return (
+        !this.finalAmount ||
+        !new RegExp('[\\d]{1,3}$').test(this.finalAmount) ||
+        this.finalAmount < 1 ||
+        this.finalAmount > 250
+      )
+    },
+    isFinalAmountTouched() {
+      return this.finalAmount !== null
     },
   },
   mounted() {},
@@ -143,6 +152,11 @@ export default {
     &:focus {
       outline: none;
     }
+  }
+
+  &__validation-message {
+    min-height: 6rem;
+    color: $color-accent;
   }
 }
 </style>

@@ -41,7 +41,6 @@ Vue.use(AmplifyPlugin, AmplifyModules)
 // It's important to instantiate the Vue instance after calling Vue.use!
 
 Vue.config.productionTip = false
-Vue.config.silent = true
 
 const appInsights = new ApplicationInsights({
   config: {

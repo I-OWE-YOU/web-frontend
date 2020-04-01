@@ -24,12 +24,12 @@
     />
     <ButtonLink
       :link="routes.customer"
-      class="start_btn"
+      class="big-red-button mb-5"
       linktext="Steun een ondernemer"
     />
     <ButtonLink
       :link="routes.signup"
-      class="start_btn"
+      class="big-red-button mb-5"
       linktext="Schrijf je in als ondernemer"
     />
   </div>
@@ -58,11 +58,11 @@ export default {
 </script>
 
 <style lang="scss">
-#app > div > div.buttonlink.start_btn {
-  padding-bottom: 6em;
+// #app > div > div.buttonlink.start_btn {
+//   padding-bottom: 6em;
 
-  > a {
-    padding: 0.75em 1em !important;
-  }
-}
+//   > a {
+//     padding: 0.75em 1em !important;
+//   }
+// }
 </style>

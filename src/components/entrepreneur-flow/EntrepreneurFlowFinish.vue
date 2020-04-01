@@ -4,7 +4,7 @@
 
     <p>Vanaf nu kan je aan de slag en officieel je Tegoedjes delen</p>
 
-    <button type="button" @click="emitFlowNavigate"
+    <button class="big-red-button" type="button" @click="emitFlowNavigate"
       >Share jouw Tegoedjes</button
     >
   </div>

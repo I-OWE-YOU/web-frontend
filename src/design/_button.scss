@@ -1,3 +1,32 @@
-button {
-  @include buttonstyle();
+button:focus {
+  outline: 0 !important;
+}
+
+.big-red-button {
+  @include responsive-in-small-screens();
+
+  display: inline-block;
+  padding: $size-button-padding;
+  margin: $size-button-padding;
+  font-weight: bold;
+  line-height: 2.6rem;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  background-color: $color-accent;
+  border: $size-button-border solid transparent;
+  border-radius: $size-button-border-radius;
+  @include font-size(2.6);
+
+  &:focus {
+    border-color: $color-blue-dark;
+  }
+
+  &:hover {
+    background-color: $color-blue-medium;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+  }
 }

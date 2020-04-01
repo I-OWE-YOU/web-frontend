@@ -21,7 +21,11 @@
       field-label="Achternaam"
     />
 
-    <button :disabled="isFormInvalid" type="button" @click="emitFlowNavigate"
+    <button
+      class="big-red-button"
+      :disabled="isFormInvalid"
+      type="button"
+      @click="emitFlowNavigate"
       >Volgende</button
     >
   </form>

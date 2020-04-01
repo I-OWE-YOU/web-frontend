@@ -1,5 +1,5 @@
 <template>
-  <div class="buttonlink">
+  <div class="buttonlink big-red-button">
     <router-link :to="link">{{ linktext }}</router-link>
   </div>
 </template>
@@ -22,12 +22,4 @@ export default {
 
 <style scoped lang="scss">
 @import '@design';
-.buttonlink {
-  padding: 0 0 $size-button-padding-vertical;
-  background-color: $color-blue-dark;
-
-  a {
-    @include buttonstyle();
-  }
-}
 </style>

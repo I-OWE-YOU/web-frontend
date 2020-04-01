@@ -48,7 +48,7 @@
         >An account with the given email already exists.</span
       >
 
-      <button class="m-4" @click="checkForm">Sign up</button>
+      <button class="m-4 big-red-button" @click="checkForm">Sign up</button>
     </form>
   </div>
 </template>

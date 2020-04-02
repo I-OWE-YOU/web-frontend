@@ -87,6 +87,22 @@ const vueRoutes = [
         /* webpackChunkName: "PrivacyStatement" */ '@views/PrivacyStatement.vue'
       ),
   },
+  {
+    path: routes.successfulPayment,
+    name: 'SuccessfulPayment',
+    component: () =>
+      import(
+        /* webpackChunkName: "SuccessfulPayment */ '@views/SuccessfullyPayment.vue'
+      ),
+  },
+  {
+    path: routes.canceledPayment,
+    name: 'CanceledPayment',
+    component: () =>
+      import(
+        /* webpackChunkName: "CanceledPayment */ '@views/CanceledPayment.vue'
+      ),
+  },
 ]
 
 const router = new VueRouter({

@@ -8,6 +8,7 @@ import { Auth } from 'aws-amplify'
 import router from './router'
 import { routes } from './router/routes'
 import { dictAwsAmplifyNl } from './i18n/aws_amplify.nl'
+import { AuthStateValue } from './views/constants'
 
 import App from './App.vue'
 // Globally register all `_base`-prefixed components
@@ -44,10 +45,10 @@ Amplify.configure({
 })
 AmplifyEventBus.$on('authState', async (state) => {
   switch (state) {
-    case 'confirmSignUp':
-      router.push({ path: routes.entrepreneur })
+    case AuthStateValue.SIGNED_OUT:
+      router.push({ path: routes.home })
       break
-    case 'signedIn':
+    case AuthStateValue.SIGNED_IN:
       router.push({ path: routes.entrepreneur })
       break
 

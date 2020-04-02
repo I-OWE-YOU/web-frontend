@@ -17,6 +17,7 @@
             v-if="showNav"
             class="dropdown__menu bg-white w-100"
             :class="{ active: showNav }"
+            @click="showNav = false"
           >
             <ul class="dropdown__menu-nav pt-4">
               <li class="dropdown__menu-item py-3">
@@ -25,7 +26,7 @@
                     font-scale="2"
                     class="dropdown__menu-link-icon"
                   ></b-icon-house>
-                  <span class="dropdown__menu-link-text">Home page</span>
+                  <span class="dropdown__menu-link-text">Tegoedje.nu</span>
                 </router-link>
               </li>
               <li class="dropdown__menu-item py-3">
@@ -52,13 +53,25 @@
                 </router-link>
               </li>
 
-              <li class="dropdown__menu-item pb-3 py-3">
+              <li
+                v-if="signedIn"
+                class="dropdown__menu-item pb-3 py-3"
+                @click="signOut"
+              >
+                <b-icon-box-arrow-right
+                  font-scale="2"
+                  class="dropdown__menu-link-icon"
+                ></b-icon-box-arrow-right>
+                <span class="dropdown__menu-link-text">Uitloggen</span>
+              </li>
+
+              <li v-else class="dropdown__menu-item pb-3 py-3">
                 <router-link :to="routes.signin">
                   <b-icon-box-arrow-right
                     font-scale="2"
                     class="dropdown__menu-link-icon"
                   ></b-icon-box-arrow-right>
-                  <span class="dropdown__menu-link-text">Log in</span>
+                  <span class="dropdown__menu-link-text">Inloggen</span>
                 </router-link>
               </li>
 
@@ -69,7 +82,7 @@
                   >
                 </div>
               </li>
-              <li class="dropdown__menu-item py-3 ml-5">
+              <li class="dropdown__menu-item pt-3 pb-5 ml-5">
                 <div class="dropdown__menu-link-text--small text-left">
                   <router-link :to="routes.termsAndConditions"
                     >Privacy statement</router-link
@@ -85,15 +98,56 @@
 </template>
 
 <script>
+import { Auth } from 'aws-amplify'
+import { AmplifyEventBus } from 'aws-amplify-vue'
 import { routes } from '@router/routes'
+import { AuthStateValue } from '@views/constants'
 
 export default {
   name: 'Nav',
   data: () => {
     return {
-      showNav: false,
       routes: routes,
+      showNav: false,
+      signedIn: false,
     }
+  },
+  watch: {
+    $route() {
+      this.showNav = false
+      this.isUserLoggedIn()
+    },
+  },
+  created() {
+    this.isUserLoggedIn()
+
+    AmplifyEventBus.$on('authState', (state) => {
+      if (state === AuthStateValue.SIGNED_IN) {
+        this.isUserLoggedIn()
+      } else {
+        this.signedIn = false
+      }
+    })
+  },
+  methods: {
+    async isUserLoggedIn() {
+      try {
+        await Auth.currentAuthenticatedUser()
+        this.signedIn = true
+      } catch (e) {
+        this.signedIn = false
+      }
+    },
+    async signOut() {
+      this.showNav = false
+      try {
+        await Auth.signOut()
+        this.signedIn = false
+        AmplifyEventBus.$emit('authState', AuthStateValue.SIGNED_OUT)
+      } catch (e) {
+        console.error(e)
+      }
+    },
   },
 }
 </script>
@@ -113,11 +167,13 @@ export default {
   background-color: transparent;
   border: 0;
 }
+.dropdown__menu-item,
 .dropdown__menu-item > a {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   color: red !important;
+  cursor: pointer;
 }
 .dropdown__menu-link-text {
   margin-left: 1.5rem;
@@ -147,10 +203,10 @@ export default {
 }
 .slide-fade-enter,
 .slide-fade-leave-to {
-  transform: translateX(100px);
+  transform: translateY(-100px);
 }
 .slide-fade-leave-active {
-  transform: translateX(100px);
+  transform: translateY(-100px);
 }
 
 // Dropdown Menu Animation

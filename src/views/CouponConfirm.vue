@@ -32,13 +32,14 @@
 </template>
 
 <script>
+import { API } from 'aws-amplify'
+import axios from 'axios'
+import { loadStripe } from '@stripe/stripe-js'
 import { isValidEmail } from '@utils/validation'
 import FormField from '@components/FormField.vue'
 import CheckBoxTermsAndConditions from '@components/CheckBoxTermsAndConditions.vue'
 
 import { ErrorType } from './constants'
-import { API } from 'aws-amplify'
-import { loadStripe } from '@stripe/stripe-js'
 
 export default {
   name: 'CouponConfirm',
@@ -48,51 +49,44 @@ export default {
   },
   data: () => {
     return {
+      amount: null,
+      companyId: null,
+      company: null,
+      stripe: null,
+      processing: false,
+      stripeSession: null,
       email: '',
       errors: [],
       ErrorType: ErrorType,
       termsAndConditionsAccepted: false,
-
-      amount: null,
-      stripe: null,
-      processing: false,
-      stripeSession: null,
     }
   },
+  async mounted() {
+    // Convert the amount in cents
+    this.amount = this.$route.query.amount * 100
+    this.companyId = this.$route.params.companyId
+
+    await this.getCompany()
+    await this.configureStripe()
+    await this.setupIntent()
+  },
   methods: {
-    checkForm(e) {
-      this.errors = []
+    async getCompany() {
+      try {
+        const response = await axios.get(
+          `${process.env.VUE_APP_BACKEND_URL}/company/${this.companyId}`
+        )
 
-      if (!this.email) {
-        this.errors.push(ErrorType.EMAIL_REQUIRED)
-      } else if (!isValidEmail(this.email)) {
-        this.errors.push(ErrorType.EMAIL_INVALID)
+        this.company = response.data
+      } catch (e) {
+        alert('There has been an error')
       }
-
-      if (!this.termsAndConditionsAccepted) {
-        this.errors.push(ErrorType.TERMS_REQUIRED)
-      }
-
-      if (!this.errors.length) {
-        // TODO - process to payment
-        return null
-      }
-    },
-    async mounted() {
-      // Convert the amount in cents
-      this.amount = this.$route.query.amount * 100
-      await this.configureStripe()
-
-      await this.setupIntent()
     },
     async configureStripe() {
       // eslint-disable-next-line no-undef
-      this.stripe = await loadStripe(
-        `pk_test_rQgjhRnE9aSh237X1KqkIz4L00NmAKb5gf`,
-        {
-          stripeAccount: 'acct_1039oG2g4wtK4bmi',
-        }
-      )
+      this.stripe = await loadStripe(process.env.VUE_APP_STRIPE_PUBLIC_KEY, {
+        stripeAccount: this.company.stripeUserId,
+      })
     },
     async setupIntent() {
       const response = await API.post(
@@ -101,7 +95,7 @@ export default {
         {
           body: {
             amount: this.amount,
-            companyId: 'f5a24ad0-7360-11ea-a3f7-5d7cd1978569',
+            companyId: this.companyId,
           },
         }
       )
@@ -118,9 +112,26 @@ export default {
       this.processing = false
 
       if (result.error) {
-        console.error(result.error.message)
-      } else {
-        console.log(result)
+        alert('There has been an error')
+        // console.error(result.error.message)
+      }
+    },
+    checkForm(e) {
+      this.errors = []
+
+      if (!this.email) {
+        this.errors.push(ErrorType.EMAIL_REQUIRED)
+      } else if (!isValidEmail(this.email)) {
+        this.errors.push(ErrorType.EMAIL_INVALID)
+      }
+
+      if (!this.termsAndConditionsAccepted) {
+        this.errors.push(ErrorType.TERMS_REQUIRED)
+      }
+
+      if (!this.errors.length) {
+        this.submitPayment()
+        return null
       }
     },
   },
@@ -129,21 +140,18 @@ export default {
 
 <style lang="scss">
 @import '@design';
+
 /**
 * The CSS shown here will not be introduced in the Quickstart guide, but shows
 * how you can use CSS to style your Element's container.
 */
 .StripeElement {
   box-sizing: border-box;
-
   height: 40px;
-
   padding: 10px 12px;
-
+  background-color: white;
   border: 1px solid transparent;
   border-radius: 4px;
-  background-color: white;
-
   box-shadow: 0 1px 3px 0 #e6ebf1;
   -webkit-transition: box-shadow 150ms ease;
   transition: box-shadow 150ms ease;

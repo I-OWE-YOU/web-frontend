@@ -53,7 +53,15 @@ const vueRoutes = [
     path: routes.coupons + '/:companyId',
     name: 'Coupons',
     component: () =>
-      import(/* webpackChunkName: "TermsAndConditions" */ '@views/Coupons.vue'),
+      import(/* webpackChunkName: "Coupons" */ '@views/Coupons.vue'),
+  },
+  {
+    path: routes.couponConfirm + '/:companyId',
+    name: 'CouponsConfirm',
+    component: () =>
+      import(
+        /* webpackChunkName: "CouponConfirm" */ '@views/CouponConfirm.vue'
+      ),
   },
   {
     path: routes.stripeConnect,
@@ -69,14 +77,6 @@ const vueRoutes = [
     component: () =>
       import(
         /* webpackChunkName: "CustomerLandingPage" */ '@views/CustomerLandingPage.vue'
-      ),
-  },
-  {
-    path: routes.couponConfirm + '/:companyId',
-    name: 'Coupons',
-    component: () =>
-      import(
-        /* webpackChunkName: "TermsAndConditions" */ '@views/CouponConfirm.vue'
       ),
   },
 ]

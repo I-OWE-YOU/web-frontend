@@ -53,16 +53,12 @@
                 </router-link>
               </li>
 
-              <li
-                v-if="signedIn"
-                class="dropdown__menu-item pb-3 py-3"
-                @click="signOut"
-              >
+              <li v-if="signedIn" class="dropdown__menu-item pb-3 py-3">
                 <b-icon-box-arrow-right
                   font-scale="2"
                   class="dropdown__menu-link-icon"
                 ></b-icon-box-arrow-right>
-                <span class="dropdown__menu-link-text">Uitloggen</span>
+                <SignOut class="dropdown__menu-link-text" />
               </li>
 
               <li v-else class="dropdown__menu-item pb-3 py-3">
@@ -102,9 +98,13 @@ import { Auth } from 'aws-amplify'
 import { AmplifyEventBus } from 'aws-amplify-vue'
 import { routes } from '@router/routes'
 import { AuthStateValue } from '@views/constants'
+import SignOut from '@components/SignOut.vue'
 
 export default {
   name: 'Nav',
+  components: {
+    SignOut,
+  },
   data: () => {
     return {
       routes: routes,
@@ -136,16 +136,6 @@ export default {
         this.signedIn = true
       } catch (e) {
         this.signedIn = false
-      }
-    },
-    async signOut() {
-      this.showNav = false
-      try {
-        await Auth.signOut()
-        this.signedIn = false
-        AmplifyEventBus.$emit('authState', AuthStateValue.SIGNED_OUT)
-      } catch (e) {
-        console.error(e)
       }
     },
   },

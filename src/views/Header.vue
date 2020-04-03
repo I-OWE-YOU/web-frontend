@@ -2,7 +2,7 @@
   <header>
     <Nav />
     <router-link to="/">
-      <logoT class="my-4" />
+      <logoT class="py-4" />
     </router-link>
   </header>
 </template>
@@ -16,3 +16,11 @@ export default {
   components: { Nav, logoT },
 }
 </script>
+
+<style scoped lang="scss">
+@import '@design';
+
+header {
+  height: $size-header-height;
+}
+</style>

@@ -5,10 +5,10 @@
         <transition name="slide-fade">
           <!-- Header nav menu icons -->
           <button v-if="showNav" key="on" @click="showNav = false">
-            <b-icon-x class="text-danger" font-scale="3"></b-icon-x>
+            <b-icon-x class="text-danger" font-scale="2"></b-icon-x>
           </button>
           <button v-else key="off" @click="showNav = true">
-            <b-icon-justify class="text-white" font-scale="3"></b-icon-justify>
+            <b-icon-justify class="text-white" font-scale="2"></b-icon-justify>
           </button>
         </transition>
         <!-- Dropdown Menu -->

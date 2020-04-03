@@ -42,7 +42,7 @@ body {
   @include font-size($size-content-font);
 
   font-weight: 600;
-  background-color: $color-blue-light;
+  background-color: $color-blue-dark;
 }
 
 #app {

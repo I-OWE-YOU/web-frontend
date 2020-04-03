@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+import { loadStripe } from '@stripe/stripe-js'
 import { isValidEmail } from '@utils/validation'
 import FormField from '@components/FormField.vue'
 import CheckBoxTermsAndConditions from '@components/CheckBoxTermsAndConditions.vue'
@@ -46,14 +48,67 @@ export default {
   },
   data: () => {
     return {
+      amount: null,
+      companyId: null,
+      company: null,
+      stripe: null,
+      stripeSession: null,
       email: '',
       errors: [],
       ErrorType: ErrorType,
       termsAndConditionsAccepted: false,
     }
   },
+  async mounted() {
+    // Convert the amount in cents
+    this.amount = this.$route.query.amount * 100
+    this.companyId = this.$route.params.companyId
+
+    await this.loadCompany()
+    await this.configureStripe()
+  },
   methods: {
-    checkForm(e) {
+    async loadCompany() {
+      try {
+        const response = await axios.get(
+          `${process.env.VUE_APP_BACKEND_URL}/company/${this.companyId}`
+        )
+
+        this.company = response.data
+      } catch (e) {
+        alert('There has been an error')
+      }
+    },
+    async configureStripe() {
+      this.stripe = await loadStripe(process.env.VUE_APP_STRIPE_PUBLIC_KEY, {
+        stripeAccount: this.company.stripeUserId,
+      })
+    },
+    async createCheckoutSession() {
+      const response = await axios.get(
+        `${process.env.VUE_APP_BACKEND_URL}/stripe/checkout-session`,
+        {
+          params: {
+            amount: this.amount,
+            companyId: this.companyId,
+            customerEmail: this.email,
+          },
+        }
+      )
+
+      this.stripeSession = response.data
+    },
+    async submitPayment() {
+      const result = await this.stripe.redirectToCheckout({
+        sessionId: this.stripeSession.id,
+      })
+
+      if (result.error) {
+        console.error(result.error)
+        alert('There has been an error')
+      }
+    },
+    async checkForm(e) {
       this.errors = []
 
       if (!this.email) {
@@ -67,7 +122,8 @@ export default {
       }
 
       if (!this.errors.length) {
-        // TODO - process to payment
+        await this.createCheckoutSession()
+        this.submitPayment()
         return null
       }
     },

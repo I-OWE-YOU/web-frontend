@@ -11,4 +11,6 @@ export const routes = {
   stripeConnect: '/stripe-connect',
   customer: '/customer',
   privacyStatement: '/privacyverklaring',
+  successfulPayment: '/successful-payment',
+  canceledPayment: '/canceled-payment',
 }

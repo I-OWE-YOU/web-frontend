@@ -32,7 +32,6 @@
 </template>
 
 <script>
-import { API } from 'aws-amplify'
 import axios from 'axios'
 import { loadStripe } from '@stripe/stripe-js'
 import { isValidEmail } from '@utils/validation'
@@ -86,11 +85,10 @@ export default {
       })
     },
     async createCheckoutSession() {
-      const response = await API.post(
-        'BackendAPIDev',
-        `/stripe/checkout-session`,
+      const response = await axios.get(
+        `${process.env.VUE_APP_BACKEND_URL}/stripe/checkout-session`,
         {
-          body: {
+          params: {
             amount: this.amount,
             companyId: this.companyId,
             customerEmail: this.email,
@@ -98,7 +96,7 @@ export default {
         }
       )
 
-      this.stripeSession = response
+      this.stripeSession = response.data
     },
     async submitPayment() {
       const result = await this.stripe.redirectToCheckout({

@@ -15,24 +15,27 @@
       field-label="Huis nummer"
       :required="true"
     />
-    <div v-if="isAddressChecked" class="pt-5">
-      <p
-        >{{ this.entrepreneur.streetName }}
-        {{ this.entrepreneur.address.houseNumber }}</p
-      >
-      <p
-        >{{ this.entrepreneur.city }} {{ this.entrepreneur.address.zipCode }}</p
-      >
+    <div v-if="isAddressChecked && !errors.length" class="pt-5">
+      <p>
+        {{ entrepreneur.streetName }}
+        {{ entrepreneur.address.houseNumber }}
+      </p>
+      <p>{{ entrepreneur.city }} {{ entrepreneur.address.zipCode }}</p>
+    </div>
+    <div
+      v-if="isAddressChecked && errors.includes(ErrorType.CANT_FETCH_ADDRESS)"
+      class="pt-5"
+    >
+      <p class="text-danger">We can't fetch this address. Please try again</p>
     </div>
 
     <div class="company-details__buttons">
       <button class="big-red-button" type="button" @click="checkAddress"
         >Adres controleren</button
       >
-
       <button
         class="big-red-button"
-        :disabled="!isAddressChecked"
+        :disabled="!isAddressChecked || errors.length !== 0"
         type="button"
         @click="emitFlowNavigate"
         >Volgende</button
@@ -45,6 +48,7 @@
 import { EventBus } from '@plugins/event-bus.js'
 import FormField from '@components/FormField.vue'
 import { API } from 'aws-amplify'
+import { ErrorType } from '@views/constants'
 
 export default {
   name: 'EntrepreneurFlowBusinessInfo',
@@ -60,6 +64,8 @@ export default {
   data() {
     return {
       isAddressChecked: false,
+      ErrorType: ErrorType,
+      errors: [],
     }
   },
   computed: {
@@ -89,6 +95,7 @@ export default {
         return
       }
 
+      this.errors = []
       this.isAddressChecked = true
 
       try {
@@ -102,6 +109,7 @@ export default {
         this.entrepreneur.longitude = res.longitude
         this.entrepreneur.latitude = res.latitude
       } catch (e) {
+        this.errors.push(ErrorType.CANT_FETCH_ADDRESS)
         console.error(e)
       }
     },

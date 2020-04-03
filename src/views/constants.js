@@ -8,6 +8,7 @@ export const ErrorType = {
   TERMS_REQUIRED: 'terms_required',
   USER_NAME_EXISTS_EXCEPTION: 'UsernameExistsException',
   USER_NOT_FOUND_EXCEPTION: 'UserNotFoundException',
+  CANT_FETCH_ADDRESS: 'CantFetchAddress',
 }
 
 export const AuthStateValue = {

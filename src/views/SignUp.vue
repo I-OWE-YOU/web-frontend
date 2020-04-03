@@ -5,7 +5,7 @@
       <FormField
         v-model="email"
         field-name="email"
-        field-label="Email"
+        field-label="Email adres"
         filed-type="email"
         inputmode="email"
         :required="true"
@@ -15,6 +15,20 @@
       >
       <span v-if="errors.includes(ErrorType.EMAIL_INVALID)" class="text-danger"
         >Email is invalid. (example@email.com)</span
+      >
+
+      <FormField
+        v-model="emailConfirm"
+        field-name="emailConfirm"
+        field-label="E-mail adres bevestigen"
+        filed-type="email"
+        inputmode="email"
+        :required="true"
+      />
+      <span
+        v-if="errors.includes(ErrorType.EMAIL_DOESNT_MATCH)"
+        class="text-danger"
+        >Email doesn't match.</span
       >
 
       <FormField
@@ -33,6 +47,20 @@
         v-if="errors.includes(ErrorType.PASSWORD_INVALID)"
         class="text-danger"
         >Invalid password. Minimum length is 8 characters.</span
+      >
+
+      <FormField
+        v-model="passwordConfirm"
+        field-name="passwordConfirm"
+        field-label="Wachtwoord"
+        field-type="password"
+        :required="true"
+      />
+
+      <span
+        v-if="errors.includes(ErrorType.PASSWORD_DOESNT_MATCH)"
+        class="text-danger"
+        >Password doesn't match</span
       >
 
       <CheckBoxTermsAndConditions v-model="termsAndConditionsAccepted" />
@@ -70,7 +98,9 @@ export default {
       ErrorType: ErrorType,
       termsAndConditionsAccepted: false,
       email: '',
+      emailConfirm: '',
       password: '',
+      passwordConfirm: '',
       errors: [],
     }
   },
@@ -78,7 +108,9 @@ export default {
     isFormInvalid: function() {
       return (
         !this.isEmailValid(this.email) ||
+        !(this.email === this.emailConfirm) ||
         !this.isPasswordValid(this.password) ||
+        !(this.password === this.passwordConfirm) ||
         !this.termsAndConditionsAccepted
       )
     },
@@ -112,12 +144,16 @@ export default {
         this.errors.push(ErrorType.EMAIL_REQUIRED)
       } else if (!isValidEmail(this.email)) {
         this.errors.push(ErrorType.EMAIL_INVALID)
+      } else if (this.email !== this.emailConfirm) {
+        this.errors.push(ErrorType.EMAIL_DOESNT_MATCH)
       }
 
       if (!this.password) {
         this.errors.push(ErrorType.PASSWORD_REQUIRED)
       } else if (!this.isPasswordValid(this.password)) {
         this.errors.push(ErrorType.PASSWORD_INVALID)
+      } else if (this.password !== this.passwordConfirm) {
+        this.errors.push(ErrorType.PASSWORD_DOESNT_MATCH)
       }
 
       if (!this.termsAndConditionsAccepted) {

@@ -96,7 +96,7 @@ export default {
 
 #questions {
   position: relative;
-  min-height: 100vh;
+  height: calc(100vh - #{$size-header-height});
   background-color: $color-blue-dark;
 
   #tegoedje {

@@ -104,6 +104,7 @@ export default {
       })
 
       if (result.error) {
+        console.error(result.error)
         alert('There has been an error')
       }
     },

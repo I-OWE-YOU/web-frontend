@@ -180,7 +180,10 @@ $size-distance-from-margin: 2rem;
 .google-map {
   width: 100%;
   // TODO review markup with https://github.com/I-OWE-YOU/web-frontend/issues/78
-  height: calc(100vh - #{$size-header-height + $size-distance-from-margin});
+  height: calc(
+    100vh - #{$size-header-height + $size-distance-from-margin +
+      $size-logo-margin}
+  );
   margin-top: $size-distance-from-margin;
 
   &--short {

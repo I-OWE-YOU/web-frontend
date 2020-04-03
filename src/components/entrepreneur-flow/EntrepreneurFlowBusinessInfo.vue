@@ -22,24 +22,18 @@
       </p>
       <p>{{ entrepreneur.city }} {{ entrepreneur.address.zipCode }}</p>
     </div>
-    <div
-      v-if="isAddressChecked && errors.includes(ErrorType.CANT_FETCH_ADDRESS)"
-      class="pt-5"
-    >
+    <div v-if="isAddressChecked && errors.includes(ErrorType.CANT_FETCH_ADDRESS)" class="pt-5">
       <p class="text-danger">We can't fetch this address. Please try again</p>
     </div>
 
     <div class="company-details__buttons">
-      <button class="big-red-button" type="button" @click="checkAddress"
-        >Adres controleren</button
-      >
+      <button class="big-red-button" type="button" @click="checkAddress">Adres controleren</button>
       <button
         class="big-red-button"
         :disabled="!isAddressChecked || errors.length !== 0"
         type="button"
         @click="emitFlowNavigate"
-        >Volgende</button
-      >
+      >Volgende</button>
     </div>
   </form>
 </template>
@@ -122,5 +116,7 @@ export default {
 .company-details__buttons {
   position: absolute;
   bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
 </style>

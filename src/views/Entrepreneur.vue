@@ -1,19 +1,12 @@
 <template>
   <div id="questions">
-    <EntrepreneurFlowPersonName
-      v-if="step === steps.personName"
-      :entrepreneur="entrepreneur"
-    ></EntrepreneurFlowPersonName>
+    <EntrepreneurFlowPersonName v-if="step === steps.personName" :entrepreneur="entrepreneur"></EntrepreneurFlowPersonName>
     <EntrepreneurFlowBusinessInfo
       v-else-if="step === steps.companyName"
       :entrepreneur="entrepreneur"
     ></EntrepreneurFlowBusinessInfo>
-    <EntrepreneurFlowSetupPayment
-      v-else-if="step === steps.setupPayment"
-    ></EntrepreneurFlowSetupPayment>
-    <EntrepreneurFlowFinish
-      v-else-if="step === steps.finish"
-    ></EntrepreneurFlowFinish>
+    <EntrepreneurFlowSetupPayment v-else-if="step === steps.setupPayment"></EntrepreneurFlowSetupPayment>
+    <EntrepreneurFlowFinish v-else-if="step === steps.finish"></EntrepreneurFlowFinish>
 
     <div v-show="isWaitingForApiResponse" id="spinner" role="presentation">
       <img src="../assets/img/timer.svg" />
@@ -96,7 +89,7 @@ export default {
 
 #questions {
   position: relative;
-  height: calc(100vh - #{$size-header-height});
+  height: calc(100vh - #{$size-header-height + $size-logo-margin});
   background-color: $color-blue-dark;
 
   #tegoedje {

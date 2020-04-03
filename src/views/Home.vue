@@ -1,27 +1,30 @@
 <template>
   <div class="home">
-    <TwoLadies />
-    <NumberedInfo
-      digit="1"
-      color="light"
-      title="Begin"
-      text="en meld je aan met je shop"
-      aligndigit="left"
-    />
-    <NumberedInfo
-      digit="2"
-      color="medium"
-      title="Daarna"
-      text="maak jij je vouchers aan"
-      aligndigit="right"
-    />
-    <NumberedInfo
-      digit="3"
-      color="dark"
-      title="Tenslotte"
-      text="zetten wij jou op de kaart"
-      aligndigit="left"
-    />
+    <h1>Verlicht de lasten van ondernemers</h1>
+    <VideoSvg />
+    <p class="text-danger m-1">bekijk de video</p>
+    <ul class="p-0 m-4">
+      <li class="py-4 d-flex">
+        <span class="px-3">
+          <b-icon-search variant="danger" font-scale="3" class="pr-4"></b-icon-search>
+        </span>
+        <span class="text-left">
+          Het Coronavirus heeft een grote impact op kleine ondernemers. Velen
+          zijn nu dicht en kunnen hun producten of diensten niet aanbieden. Maar
+          de vaste lasten lopen gewoon door.
+        </span>
+      </li>
+      <li class="py-4 d-flex">
+        <span class="px-3">
+          <b-icon-tag variant="danger" font-scale="3" class="pr-4"></b-icon-tag>
+        </span>
+        <span class="text-left">
+          Via Tegoedje.nu help je mee die lasten te verlichten door een
+          tegoedbon te kopen van jouw favoriete lokale ondernemers. Die kan je
+          dan verzilveren zodra de zaken dan weer gaan lopen.
+        </span>
+      </li>
+    </ul>
     <ButtonLink
       :link="routes.customer"
       class="big-red-button mb-5"
@@ -36,18 +39,16 @@
 </template>
 
 <script>
-import TwoLadies from '@components/TwoLadies.vue'
-import NumberedInfo from '@components/NumberedInfo.vue'
 import ButtonLink from '@components/ButtonLink.vue'
+import VideoSvg from '@components/VideoSvg.vue'
 
 import { routes } from '@router/routes'
 
 export default {
   name: 'Home',
   components: {
-    TwoLadies,
-    NumberedInfo,
     ButtonLink,
+    VideoSvg,
   },
   data: () => {
     return {
@@ -56,13 +57,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss">
-// #app > div > div.buttonlink.start_btn {
-//   padding-bottom: 6em;
-
-//   > a {
-//     padding: 0.75em 1em !important;
-//   }
-// }
-</style>

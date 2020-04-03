@@ -10,4 +10,5 @@ export const routes = {
   termsAndConditions: '/algemene-voorwaarden',
   stripeConnect: '/stripe-connect',
   customer: '/customer',
+  privacyStatement: '/privacyverklaring',
 }

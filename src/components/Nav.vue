@@ -80,7 +80,7 @@
               </li>
               <li class="dropdown__menu-item pt-3 pb-5 ml-5">
                 <div class="dropdown__menu-link-text--small text-left">
-                  <router-link :to="routes.termsAndConditions"
+                  <router-link :to="routes.privacyStatement"
                     >Privacy statement</router-link
                   >
                 </div>

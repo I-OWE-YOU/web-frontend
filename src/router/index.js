@@ -79,6 +79,14 @@ const vueRoutes = [
         /* webpackChunkName: "CustomerLandingPage" */ '@views/CustomerLandingPage.vue'
       ),
   },
+  {
+    path: routes.privacyStatement,
+    name: 'PrivacyStatement',
+    component: () =>
+      import(
+        /* webpackChunkName: "PrivacyStatement" */ '@views/PrivacyStatement.vue'
+      ),
+  },
 ]
 
 const router = new VueRouter({

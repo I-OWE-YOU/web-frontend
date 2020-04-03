@@ -82,14 +82,13 @@ export default {
       }
     },
     async configureStripe() {
-      // eslint-disable-next-line no-undef
       this.stripe = await loadStripe(process.env.VUE_APP_STRIPE_PUBLIC_KEY, {
         stripeAccount: this.company.stripeUserId,
       })
     },
     async createCheckoutSession() {
       const response = await API.post(
-        'ServerlessOffline',
+        'BackendAPIDev',
         `/stripe/checkout-session`,
         {
           body: {
@@ -103,17 +102,12 @@ export default {
       this.stripeSession = response
     },
     async submitPayment() {
-      this.processing = true
-
       const result = await this.stripe.redirectToCheckout({
         sessionId: this.stripeSession.id,
       })
 
-      this.processing = false
-
       if (result.error) {
         alert('There has been an error')
-        // console.error(result.error.message)
       }
     },
     async checkForm(e) {

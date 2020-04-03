@@ -68,7 +68,6 @@ export default {
 
     await this.getCompany()
     await this.configureStripe()
-    await this.setupIntent()
   },
   methods: {
     async getCompany() {
@@ -88,7 +87,7 @@ export default {
         stripeAccount: this.company.stripeUserId,
       })
     },
-    async setupIntent() {
+    async createCheckoutSession() {
       const response = await API.post(
         'ServerlessOffline',
         `/stripe/checkout-session`,
@@ -96,6 +95,7 @@ export default {
           body: {
             amount: this.amount,
             companyId: this.companyId,
+            customerEmail: this.email,
           },
         }
       )
@@ -116,7 +116,7 @@ export default {
         // console.error(result.error.message)
       }
     },
-    checkForm(e) {
+    async checkForm(e) {
       this.errors = []
 
       if (!this.email) {
@@ -130,6 +130,7 @@ export default {
       }
 
       if (!this.errors.length) {
+        await this.createCheckoutSession()
         this.submitPayment()
         return null
       }

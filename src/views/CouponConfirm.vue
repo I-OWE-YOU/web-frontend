@@ -53,7 +53,6 @@ export default {
       companyId: null,
       company: null,
       stripe: null,
-      processing: false,
       stripeSession: null,
       email: '',
       errors: [],
@@ -66,11 +65,11 @@ export default {
     this.amount = this.$route.query.amount * 100
     this.companyId = this.$route.params.companyId
 
-    await this.getCompany()
+    await this.loadCompany()
     await this.configureStripe()
   },
   methods: {
-    async getCompany() {
+    async loadCompany() {
       try {
         const response = await axios.get(
           `${process.env.VUE_APP_BACKEND_URL}/company/${this.companyId}`

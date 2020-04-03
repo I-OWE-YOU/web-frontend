@@ -92,7 +92,7 @@ const vueRoutes = [
     name: 'SuccessfulPayment',
     component: () =>
       import(
-        /* webpackChunkName: "SuccessfulPayment */ '@views/SuccessfullyPayment.vue'
+        /* webpackChunkName: "SuccessfulPayment" */ '@views/SuccessfullyPayment.vue'
       ),
   },
   {
@@ -100,7 +100,7 @@ const vueRoutes = [
     name: 'CanceledPayment',
     component: () =>
       import(
-        /* webpackChunkName: "CanceledPayment */ '@views/CanceledPayment.vue'
+        /* webpackChunkName: "CanceledPayment" */ '@views/CanceledPayment.vue'
       ),
   },
 ]

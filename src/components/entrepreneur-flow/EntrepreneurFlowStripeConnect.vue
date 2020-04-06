@@ -15,7 +15,7 @@
       class="big-red-button"
       type="button"
       :disabled="isLoading"
-      @click="getConnectUrl"
+      @click="redirectToConnectUrl"
     >
       <Loader v-if="isLoading"></Loader>
       <span v-if="!isLoading">Ga naar Stripe</span></button
@@ -38,7 +38,7 @@ export default {
     }
   },
   methods: {
-    async getConnectUrl() {
+    async redirectToConnectUrl() {
       this.isLoading = true
 
       try {

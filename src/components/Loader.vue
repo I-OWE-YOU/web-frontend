@@ -13,43 +13,43 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .spinner {
   width: 50px;
   height: 30px;
   margin: 0 auto;
   font-size: 10px;
   text-align: center;
-}
 
-.spinner > div {
-  display: inline-block;
-  width: 6px;
-  height: 100%;
-  margin: 0 3px 0 0;
-  background-color: #fff;
-  -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
-  animation: sk-stretchdelay 1.2s infinite ease-in-out;
-}
+  > div {
+    display: inline-block;
+    width: 6px;
+    height: 100%;
+    margin: 0 3px 0 0;
+    background-color: #fff;
+    -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+    animation: sk-stretchdelay 1.2s infinite ease-in-out;
+  }
 
-.spinner .rect2 {
-  -webkit-animation-delay: -1.1s;
-  animation-delay: -1.1s;
-}
+  .rect2 {
+    -webkit-animation-delay: -1.1s;
+    animation-delay: -1.1s;
+  }
 
-.spinner .rect3 {
-  -webkit-animation-delay: -1s;
-  animation-delay: -1s;
-}
+  .rect3 {
+    -webkit-animation-delay: -1s;
+    animation-delay: -1s;
+  }
 
-.spinner .rect4 {
-  -webkit-animation-delay: -0.9s;
-  animation-delay: -0.9s;
-}
+  .rect4 {
+    -webkit-animation-delay: -0.9s;
+    animation-delay: -0.9s;
+  }
 
-.spinner .rect5 {
-  -webkit-animation-delay: -0.8s;
-  animation-delay: -0.8s;
+  .rect5 {
+    -webkit-animation-delay: -0.8s;
+    animation-delay: -0.8s;
+  }
 }
 
 @-webkit-keyframes sk-stretchdelay {

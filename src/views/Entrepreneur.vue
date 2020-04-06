@@ -34,7 +34,7 @@ export default {
   },
   data: () => {
     return {
-      step: 2,
+      step: 0,
       steps: {
         personName: 0,
         companyName: 1,

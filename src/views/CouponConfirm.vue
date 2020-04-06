@@ -5,7 +5,7 @@
       <FormField
         v-model="email"
         field-name="email"
-        field-label="Email"
+        field-label="Email adres"
         filed-type="email"
         inputmode="email"
         :required="true"
@@ -15,6 +15,20 @@
       >
       <span v-if="errors.includes(ErrorType.EMAIL_INVALID)" class="text-danger"
         >Vul een juist email adres in</span
+      >
+
+      <FormField
+        v-model="emailConfirm"
+        field-name="email"
+        field-label="Email adres bevestigen"
+        filed-type="email"
+        inputmode="email"
+        :required="true"
+      />
+      <span
+        v-if="errors.includes(ErrorType.EMAIL_DOESNT_MATCH)"
+        class="text-danger"
+        >Email doesn't match.</span
       >
 
       <CheckBoxTermsAndConditions v-model="termsAndConditionsAccepted" />
@@ -54,6 +68,7 @@ export default {
       stripe: null,
       stripeSession: null,
       email: '',
+      emailConfirm: '',
       errors: [],
       ErrorType: ErrorType,
       termsAndConditionsAccepted: false,
@@ -115,6 +130,8 @@ export default {
         this.errors.push(ErrorType.EMAIL_REQUIRED)
       } else if (!isValidEmail(this.email)) {
         this.errors.push(ErrorType.EMAIL_INVALID)
+      } else if (this.email !== this.emailConfirm) {
+        this.errors.push(ErrorType.EMAIL_DOESNT_MATCH)
       }
 
       if (!this.termsAndConditionsAccepted) {

@@ -17,31 +17,38 @@
     />
     <div v-if="isAddressChecked && !errors.length" class="pt-5">
       <p>
-        {{ entrepreneur.streetName }}
+        {{ entrepreneur.address.street }}
         {{ entrepreneur.address.houseNumber }}
       </p>
-      <p>{{ entrepreneur.city }} {{ entrepreneur.address.zipCode }}</p>
+      <p>{{ entrepreneur.address.city }} {{ entrepreneur.address.zipCode }}</p>
     </div>
-    <div v-if="isAddressChecked && errors.includes(ErrorType.CANT_FETCH_ADDRESS)" class="pt-5">
+    <div
+      v-if="isAddressChecked && errors.includes(ErrorType.CANT_FETCH_ADDRESS)"
+      class="pt-5"
+    >
       <p class="text-danger">We can't fetch this address. Please try again</p>
     </div>
 
     <div class="company-details__buttons">
-      <button class="big-red-button" type="button" @click="checkAddress">Adres controleren</button>
+      <button class="big-red-button" type="button" @click="checkAddress"
+        >Adres controleren</button
+      >
       <button
         class="big-red-button"
         :disabled="!isAddressChecked || errors.length !== 0"
         type="button"
-        @click="emitFlowNavigate"
-      >Volgende</button>
+        @click="saveDataAndNavigate"
+        >Volgende</button
+      >
     </div>
   </form>
 </template>
 
 <script>
+import axios from 'axios'
+import { Auth } from 'aws-amplify'
 import { EventBus } from '@plugins/event-bus.js'
 import FormField from '@components/FormField.vue'
-import { API } from 'aws-amplify'
 import { ErrorType } from '@views/constants'
 
 export default {
@@ -71,8 +78,25 @@ export default {
     },
   },
   methods: {
-    emitFlowNavigate: () => {
-      EventBus.$emit('EntrepreneurFlow.next')
+    async saveDataAndNavigate() {
+      try {
+        await axios.put(
+          `${process.env.VUE_APP_BACKEND_URL}/company/${(
+            await Auth.currentAuthenticatedUser()
+          ).getUsername()}`,
+          { ...this.entrepreneur },
+          {
+            headers: {
+              Authorization: (await Auth.currentSession())
+                .getIdToken()
+                .getJwtToken(),
+            },
+          }
+        )
+        EventBus.$emit('EntrepreneurFlow.next')
+      } catch (e) {
+        console.error(e)
+      }
     },
     isValidZipCode(z) {
       const ze = /^[1-9][0-9]{3} ?(?!sa|sd|ss)[a-z]{2}$/i
@@ -93,15 +117,15 @@ export default {
       this.isAddressChecked = true
 
       try {
-        const res = await API.get(
-          'BackendAPIDev',
-          `/address/${zipCode}/${houseNumber}`,
-          {}
+        const res = await axios.get(
+          `${process.env.VUE_APP_BACKEND_URL}/address/${zipCode}/${houseNumber}`
         )
-        this.entrepreneur.city = res.city
-        this.entrepreneur.streetName = res.street
-        this.entrepreneur.longitude = res.longitude
-        this.entrepreneur.latitude = res.latitude
+        const { city, street, longitude, latitude } = res.data
+
+        this.entrepreneur.address.city = city
+        this.entrepreneur.address.street = street
+        this.entrepreneur.address.longitude = longitude
+        this.entrepreneur.address.latitude = latitude
       } catch (e) {
         this.errors.push(ErrorType.CANT_FETCH_ADDRESS)
         console.error(e)

@@ -59,7 +59,7 @@ export default {
       EventBus.$emit('EntrepreneurFlow.next')
     },
     isNameValid(name) {
-      return name && name.length > 3 && name.length < 200
+      return name && name.length > 2 && name.length < 200
     },
   },
 }

@@ -6,10 +6,10 @@
       Om elke betaling veilig, transparant en snel te laten gebeuren, hebben we
       gekozen voor het betrouwbare en onafhankelijke betaalplatform Stripe
     </p>
-    <p
-      >Om verder te gaan, hoef je dus alleen een gratis account bij Stripe aan
-      te maken.</p
-    >
+    <p>
+      Om verder te gaan, hoef je dus alleen een gratis account bij Stripe aan te
+      maken.
+    </p>
 
     <button
       class="big-red-button"
@@ -18,13 +18,14 @@
       @click="redirectToConnectUrl"
     >
       <Loader v-if="isLoading"></Loader>
-      <span v-if="!isLoading">Ga naar Stripe</span></button
-    >
+      <span v-if="!isLoading">Ga naar Stripe</span>
+    </button>
   </div>
 </template>
 
 <script>
-import { API } from 'aws-amplify'
+import axios from 'axios'
+import { Auth } from 'aws-amplify'
 import Loader from '@components/Loader.vue'
 
 export default {
@@ -42,8 +43,17 @@ export default {
       this.isLoading = true
 
       try {
-        const res = await API.get('BackendAPIDev', '/stripe/connect', {})
-        window.location.href = res
+        const res = await axios.get(
+          `${process.env.VUE_APP_BACKEND_URL}/stripe/connect`,
+          {
+            headers: {
+              Authorization: (await Auth.currentSession())
+                .getIdToken()
+                .getJwtToken(),
+            },
+          }
+        )
+        window.location.href = res.data
       } catch (e) {
         this.isLoaded = false
         console.error(e)

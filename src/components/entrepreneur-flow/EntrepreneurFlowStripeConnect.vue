@@ -16,16 +16,22 @@
       type="button"
       :disabled="isLoading"
       @click="getConnectUrl"
-      >Ga naar Stripe</button
+    >
+      <Loader v-if="isLoading"></Loader>
+      <span v-if="!isLoading">Ga naar Stripe</span></button
     >
   </div>
 </template>
 
 <script>
 import { API } from 'aws-amplify'
+import Loader from '@components/Loader.vue'
 
 export default {
   name: 'EntrepreneurFlowStripeConnect',
+  components: {
+    Loader,
+  },
   data() {
     return {
       isLoading: false,
@@ -33,7 +39,7 @@ export default {
   },
   methods: {
     async getConnectUrl() {
-      this.isLoaded = true
+      this.isLoading = true
 
       try {
         const res = await API.get('BackendAPIDev', '/stripe/connect', {})

@@ -5,19 +5,17 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test": "vue-cli-service build --mode test",
     "lint": "run-s lint:all:*",
-    "lint:eslint": "eslint --fix",
-    "lint:stylelint": "stylelint --fix",
-    "lint:prettier": "prettier --write --loglevel warn",
-    "lint:markdownlint": "markdownlint",
+    "deploy": "vue-cli-service s3-deploy",
     "lint:all:eslint": "yarn lint:eslint --ext .js,.vue .",
-    "lint:all:stylelint": "yarn lint:stylelint \"src/**/*.{vue,scss}\"",
+    "lint:all:markdownlint": "yarn lint:markdownlint \"docs/*.md\" \"*.md\"",
     "lint:all:prettier": "yarn lint:prettier \"**/*.{js,json,css,scss,vue,html,md}\"",
-    "lint:all:markdownlint": "yarn lint:markdownlint \"docs/*.md\" \"*.md\""
-  },
-  "gitHooks": {
-    "pre-commit": "cross-env PRE_COMMIT=true lint-staged"
+    "lint:all:stylelint": "yarn lint:stylelint \"src/**/*.{vue,scss}\"",
+    "lint:eslint": "eslint --fix",
+    "lint:markdownlint": "markdownlint",
+    "lint:prettier": "prettier --write --loglevel warn",
+    "lint:stylelint": "stylelint --fix",
+    "test": "vue-cli-service build --mode test"
   },
   "dependencies": {
     "@microsoft/applicationinsights-web": "^2.5.2",
@@ -28,6 +26,7 @@
     "google-maps-api-loader": "^1.1.1",
     "iban": "0.0.14",
     "vue": "^2.6.11",
+    "vue-cli-plugin-s3-deploy": "^4.0.0-rc3",
     "vue-router": "^3.1.5"
   },
   "devDependencies": {
@@ -70,5 +69,8 @@
   "engines": {
     "node": ">=10.13.3",
     "yarn": ">=1.0.0"
+  },
+  "gitHooks": {
+    "pre-commit": "cross-env PRE_COMMIT=true lint-staged"
   }
 }

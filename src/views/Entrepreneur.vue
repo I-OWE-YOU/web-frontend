@@ -11,9 +11,6 @@
     <EntrepreneurFlowStripeConnect
       v-else-if="step === steps.stripeConnect"
     ></EntrepreneurFlowStripeConnect>
-    <EntrepreneurFlowFinish
-      v-else-if="step === steps.finish"
-    ></EntrepreneurFlowFinish>
 
     <div v-show="isWaitingForApiResponse" id="spinner" role="presentation">
       <img src="../assets/img/timer.svg" />
@@ -25,7 +22,6 @@
 import axios from 'axios'
 import EntrepreneurFlowPersonName from '@components/entrepreneur-flow/EntrepreneurFlowPersonName.vue'
 import EntrepreneurFlowBusinessInfo from '@components/entrepreneur-flow/EntrepreneurFlowBusinessInfo.vue'
-import EntrepreneurFlowFinish from '@components/entrepreneur-flow/EntrepreneurFlowFinish.vue'
 import EntrepreneurFlowStripeConnect from '@components/entrepreneur-flow/EntrepreneurFlowStripeConnect.vue'
 import { EventBus } from '@plugins/event-bus.js'
 
@@ -35,7 +31,6 @@ export default {
     EntrepreneurFlowPersonName,
     EntrepreneurFlowBusinessInfo,
     EntrepreneurFlowStripeConnect,
-    EntrepreneurFlowFinish,
   },
   data: () => {
     return {
@@ -44,7 +39,6 @@ export default {
         personName: 0,
         companyName: 1,
         stripeConnect: 2,
-        finish: 3,
       },
       isWaitingForApiResponse: false,
       entrepreneur: {

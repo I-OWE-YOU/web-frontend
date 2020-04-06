@@ -36,6 +36,14 @@ const vueRoutes = [
       import(/* webpackChunkName: "Entrepreneur" */ '@views/Entrepreneur.vue'),
   },
   {
+    path: routes.entrepreneurFinish,
+    name: 'Entrepreneur',
+    component: () =>
+      import(
+        /* webpackChunkName: "Entrepreneur" */ '@views/EntrepreneurFlowFinish.vue'
+      ),
+  },
+  {
     path: routes.letMeHelp,
     name: 'LetMeHelp',
     component: () =>

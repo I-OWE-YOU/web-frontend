@@ -4,6 +4,7 @@ export const routes = {
   signin: '/signin',
   about: '/about',
   entrepreneur: '/entrepreneur',
+  entrepreneurFinish: '/entrepreneur/finish',
   letMeHelp: '/let-me-help',
   coupons: '/coupons',
   couponConfirm: '/coupons-confirm',

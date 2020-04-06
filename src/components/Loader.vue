@@ -14,6 +14,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+// Reference site: https://tobiasahlin.com/spinkit/
 .spinner {
   width: 50px;
   height: 30px;

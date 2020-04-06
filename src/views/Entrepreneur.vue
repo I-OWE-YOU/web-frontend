@@ -1,12 +1,16 @@
 <template>
   <div id="questions">
-    <EntrepreneurFlowPersonName v-if="step === steps.personName" :entrepreneur="entrepreneur"></EntrepreneurFlowPersonName>
+    <EntrepreneurFlowPersonName
+      v-if="step === steps.personName"
+      :entrepreneur="entrepreneur"
+    ></EntrepreneurFlowPersonName>
     <EntrepreneurFlowBusinessInfo
       v-else-if="step === steps.companyName"
       :entrepreneur="entrepreneur"
     ></EntrepreneurFlowBusinessInfo>
-    <EntrepreneurFlowSetupPayment v-else-if="step === steps.setupPayment"></EntrepreneurFlowSetupPayment>
-    <EntrepreneurFlowFinish v-else-if="step === steps.finish"></EntrepreneurFlowFinish>
+    <EntrepreneurFlowStripeConnect
+      v-else-if="step === steps.stripeConnect"
+    ></EntrepreneurFlowStripeConnect>
 
     <div v-show="isWaitingForApiResponse" id="spinner" role="presentation">
       <img src="../assets/img/timer.svg" />
@@ -18,8 +22,7 @@
 import axios from 'axios'
 import EntrepreneurFlowPersonName from '@components/entrepreneur-flow/EntrepreneurFlowPersonName.vue'
 import EntrepreneurFlowBusinessInfo from '@components/entrepreneur-flow/EntrepreneurFlowBusinessInfo.vue'
-import EntrepreneurFlowFinish from '@components/entrepreneur-flow/EntrepreneurFlowFinish.vue'
-import EntrepreneurFlowSetupPayment from '@components/entrepreneur-flow/EntrepreneurFlowSetupPayment.vue'
+import EntrepreneurFlowStripeConnect from '@components/entrepreneur-flow/EntrepreneurFlowStripeConnect.vue'
 import { EventBus } from '@plugins/event-bus.js'
 
 export default {
@@ -27,17 +30,15 @@ export default {
   components: {
     EntrepreneurFlowPersonName,
     EntrepreneurFlowBusinessInfo,
-    EntrepreneurFlowSetupPayment,
-    EntrepreneurFlowFinish,
+    EntrepreneurFlowStripeConnect,
   },
   data: () => {
     return {
-      step: 1,
+      step: 0,
       steps: {
         personName: 0,
         companyName: 1,
-        setupPayment: 2,
-        finish: 3,
+        stripeConnect: 2,
       },
       isWaitingForApiResponse: false,
       entrepreneur: {

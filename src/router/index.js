@@ -36,6 +36,14 @@ const vueRoutes = [
       import(/* webpackChunkName: "Entrepreneur" */ '@views/Entrepreneur.vue'),
   },
   {
+    path: routes.entrepreneurFinish,
+    name: 'Entrepreneur',
+    component: () =>
+      import(
+        /* webpackChunkName: "Entrepreneur" */ '@views/EntrepreneurFlowFinish.vue'
+      ),
+  },
+  {
     path: routes.letMeHelp,
     name: 'LetMeHelp',
     component: () =>
@@ -61,14 +69,6 @@ const vueRoutes = [
     component: () =>
       import(
         /* webpackChunkName: "CouponConfirm" */ '@views/CouponConfirm.vue'
-      ),
-  },
-  {
-    path: routes.stripeConnect,
-    name: 'StripeConnect',
-    component: () =>
-      import(
-        /* webpackChunkName: "StripeConnect" */ '@views/StripeConnect.vue'
       ),
   },
   {

@@ -42,7 +42,6 @@ export default {
       },
       isWaitingForApiResponse: false,
       entrepreneur: {
-        companyName: '',
         contactFirstName: '',
         contactInsertion: '',
         contactLastName: '',

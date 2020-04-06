@@ -72,14 +72,6 @@ const vueRoutes = [
       ),
   },
   {
-    path: routes.stripeConnect,
-    name: 'StripeConnect',
-    component: () =>
-      import(
-        /* webpackChunkName: "StripeConnect" */ '@views/StripeConnect.vue'
-      ),
-  },
-  {
     path: routes.customer,
     name: 'CustomerLandingPage',
     component: () =>

@@ -5,6 +5,7 @@ module.exports = {
       vue: 'Vue',
     },
   },
+
   // https://github.com/neutrinojs/webpack-chain/tree/v4#getting-started
   chainWebpack(config) {
     // Set up all the aliases we use in our app.
@@ -22,8 +23,32 @@ module.exports = {
         'warning'
     )
   },
+
   css: {
     // Enable CSS source maps.
     sourceMap: true,
+  },
+
+  pluginOptions: {
+    s3Deploy: {
+      registry: undefined,
+      awsProfile: 'iownyou',
+      overrideEndpoint: false,
+      region: 'eu-west-1',
+      bucket: 'tegoedje-dev',
+      createBucket: true,
+      staticHosting: true,
+      staticIndexPage: 'index.html',
+      staticErrorPage: 'index.html',
+      assetPath: 'dist',
+      assetMatch: '**',
+      deployPath: '/',
+      acl: 'public-read',
+      pwa: false,
+      enableCloudfront: true,
+      cloudfrontId: 'EN0394RSWIRCB',
+      pluginVersion: '4.0.0-rc3',
+      uploadConcurrency: 5,
+    },
   },
 }

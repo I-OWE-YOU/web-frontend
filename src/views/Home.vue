@@ -4,7 +4,10 @@
 
     <main class="pl-3">
       <div class="text-center">
-        <VideoSvg />
+        <video width="320" height="240" controls class="pr-3">
+          <source src="../assets/intro.mp4" type="video/mp4" />Your browser does
+          not support the video tag.
+        </video>
         <h6 class="text-danger m-1">bekijk de video</h6>
       </div>
       <ul class="p-0">
@@ -72,7 +75,6 @@
 
 <script>
 import ButtonLink from '@components/ButtonLink.vue'
-import VideoSvg from '@components/VideoSvg.vue'
 
 import { routes } from '@router/routes'
 
@@ -80,7 +82,6 @@ export default {
   name: 'Home',
   components: {
     ButtonLink,
-    VideoSvg,
   },
   data: () => {
     return {

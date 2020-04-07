@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="d-flex flex-column">
     <Header />
-    <RouterView :key="$route.fullPath" class="mx-3" />
+    <RouterView :key="$route.fullPath" class="mx-3 flex-fill" />
     <Footer />
   </div>
 </template>

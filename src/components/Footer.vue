@@ -1,17 +1,7 @@
 <template>
-  <footer class="footer">
-    <svg
-      width="375"
-      height="45"
-      viewBox="0 0 375 45"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M24.9999 0C19.477 0 14.9999 5.02355 14.9999 11.2204L0 11.2204V45H375V11.2204H361C361 5.02355 356.523 0 351 0C345.477 0 341 5.02355 341 11.2204H334C334 5.02355 329.299 0 323.5 0C317.701 0 313 5.02355 313 11.2204H307C307 5.02355 302.299 0 296.5 0C290.701 0 286 5.02355 286 11.2204H279C279 5.02355 274.523 0 269 0C263.477 0 259 5.02355 259 11.2204H252C252 5.02355 247.523 0 242 0C236.477 0 232 5.02355 232 11.2204H225C225 5.02355 220.523 0 215 0C209.477 0 205 5.02355 205 11.2204H198C198 5.02355 193.523 0 188 0C182.477 0 178 5.02355 178 11.2204H171C171 5.02355 166.523 0 161 0C155.477 0 151 5.02355 151 11.2204H144C144 5.02355 139.523 0 134 0C128.477 0 124 5.02355 124 11.2204H117C117 5.02355 112.523 0 107 0C101.477 0 96.9999 5.02355 96.9999 11.2204H89.9999C89.9999 5.02355 85.2989 0 79.4999 0C73.7009 0 68.9999 5.02355 68.9999 11.2204H62.9999C62.9999 5.02355 58.2989 0 52.4999 0C46.7009 0 41.9999 5.02355 41.9999 11.2204H34.9999C34.9999 5.02355 30.5227 0 24.9999 0Z"
-        fill="#435EE6"
-      />
-    </svg>
+  <footer>
+    <div class="footter__circles--top"></div>
+    <div class="footter__circles--bottom w-100"></div>
   </footer>
 </template>
 
@@ -22,9 +12,28 @@ export default {
 </script>
 
 <style lang="scss">
-.footer {
-  position: absolute;
-  bottom: o;
-  left: 0;
+@import '@design';
+
+.footter__circles {
+  &--top {
+    width: calc(100% - #{2 * $footer-header-decor-circle-x-intent});
+    height: $footer-header-decor-circle-size;
+    margin-right: $footer-header-decor-circle-x-intent;
+    margin-left: $footer-header-decor-circle-x-intent;
+    background: radial-gradient(
+      ellipse at center,
+      $footer-circles-color 0%,
+      $footer-circles-color 50%,
+      transparent 30%
+    );
+    background-repeat: repeat-x;
+    background-size: $footer-header-decor-circle-size
+      $footer-header-decor-circle-size;
+  }
+  &--bottom {
+    height: $footer-header-decor-circle-size;
+    margin-top: $footer-header-decor-circle-size / -2;
+    background: $footer-circles-color;
+  }
 }
 </style>

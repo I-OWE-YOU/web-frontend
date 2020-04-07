@@ -135,8 +135,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-@import '@design';
+<style lang="scss">
 .company-details__buttons {
   position: absolute;
   bottom: 0;

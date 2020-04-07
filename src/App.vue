@@ -1,15 +1,17 @@
 <template>
-  <div id="app">
+  <div id="app" class="d-flex flex-column">
     <Header />
-    <RouterView :key="$route.fullPath" />
+    <RouterView :key="$route.fullPath" class="mx-3" />
+    <Footer />
   </div>
 </template>
 
 <script>
-import Header from '@views/Header.vue'
+import Header from '@components/Header.vue'
+import Footer from '@components/Footer.vue'
 export default {
   name: 'App',
-  components: { Header },
+  components: { Header, Footer },
 }
 </script>
 
@@ -18,9 +20,6 @@ export default {
 // Allow element/type selectors, because this is global CSS.
 // stylelint-disable selector-max-type, selector-class-pattern
 
-// Normalize default styles across browsers,
-// https://necolas.github.io/normalize.css/
-@import '~normalize.css/normalize.css';
 // Style loading bar between pages.
 // https://github.com/rstacruz/nprogress
 @import '~nprogress/nprogress.css';
@@ -28,74 +27,14 @@ export default {
 // Design variables and utilities from src/design.
 @import '@design';
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
 html {
-  font-size: 62.5%;
-}
-
-body {
-  @include font-size($size-content-font);
-
-  font-weight: 600;
-  background-color: $color-blue-dark;
+  font-size: 16px;
 }
 
 #app {
-  position: relative;
   min-height: 100vh;
-  margin: 0 auto;
-  color: $color-text;
-  text-align: center;
-  background: $color-body-bg;
-  background-color: $color-blue-dark;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-// ===
-// Base element styles
-// ===
-
-a,
-a:visited {
-  color: $color-link-text;
-}
-
-h1 {
-  @extend %typography-xxlarge;
-  @include font-size($size-content-font-xl);
-
-  line-height: 1.1;
-  color: white;
-}
-
-h2 {
-  @extend %typography-xlarge;
-  @include font-size($size-content-font-l);
-
-  color: white;
-}
-
-h3 {
-  @extend %typography-large;
-}
-
-h4 {
-  @extend %typography-medium;
-}
-
-h5,
-h6 {
-  @extend %typography-small;
-}
-
-p {
-  @include font-size($size-content-font);
 }
 
 // ===

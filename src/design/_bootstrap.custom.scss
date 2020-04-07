@@ -1,0 +1,31 @@
+$red: #f9395e !default;
+
+$theme-colors: (
+  'red': $red,
+);
+
+$primary: #fff;
+$secondary: #3c54cc;
+$secondary-light: #3855df;
+// $success     :       $green !default;
+// $info        :          $cyan !default;
+// $warning     :       $yellow !default;
+$danger: #fa6b87;
+// $light       :         $gray-100 !default;
+// $dark        :          $gray-800 !default;
+
+$body-bg: $secondary;
+$body-color: $primary;
+
+$btn-border-width: 0.13rem;
+$btn-border-radius: 0.08rem;
+$btn-padding-y: 0.625rem;
+$btn-padding-x: 1.5rem;
+
+$font-family-base: 'Nunito Sans', sans-serif;
+$roboto-font-family: 'Roboto Mono', monospace;
+$headings-font-family: $roboto-font-family;
+$btn-font-family: $roboto-font-family;
+
+$headings-line-height: 1.25;
+$headings-margin-bottom: 1rem;

@@ -66,8 +66,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@design';
-
 ul {
   list-style-type: none;
 }

@@ -1,8 +1,11 @@
 <template>
-  <header>
+  <header class="text-center header">
     <Nav />
     <router-link to="/">
-      <LogoTegoedje v-if="currentRoutePath === routes.home" class="py-2 header__logo-margin" />
+      <LogoTegoedje
+        v-if="currentRoutePath === routes.home"
+        class="py-2 header__logo-margin"
+      />
       <logoT v-else class="py-2 header__logo-margin" />
     </router-link>
   </header>
@@ -30,13 +33,14 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-@import '@design';
+<style lang="scss">
+@import '../design/sizes';
 
-header {
+.header {
   height: $size-header-height + $size-logo-margin;
-}
-.header__logo-margin {
-  margin-top: $size-logo-margin;
+
+  &__logo-margin {
+    margin-top: $size-logo-margin;
+  }
 }
 </style>

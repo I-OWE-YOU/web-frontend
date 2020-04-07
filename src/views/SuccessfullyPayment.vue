@@ -17,7 +17,3 @@ export default {
   name: 'SuccessfullyPayment',
 }
 </script>
-
-<style lang="scss">
-@import '@design';
-</style>

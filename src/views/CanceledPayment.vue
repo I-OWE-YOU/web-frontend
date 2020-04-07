@@ -9,7 +9,3 @@ export default {
   name: 'CanceledPayment',
 }
 </script>
-
-<style lang="scss">
-@import '@design';
-</style>

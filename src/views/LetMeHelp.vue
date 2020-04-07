@@ -173,7 +173,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import '@design';
 
 $size-distance-from-margin: 2rem;

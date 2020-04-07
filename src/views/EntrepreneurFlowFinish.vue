@@ -22,7 +22,3 @@ export default {
   name: 'EntrepreneurFlowFinish',
 }
 </script>
-
-<style scoped lang="scss">
-@import '@design';
-</style>

@@ -43,7 +43,7 @@
         </template>
         <label v-else for="coupon-custom">Anders</label>
       </div>
-      <div class="w-100 px-3 coupon__validation-message">
+      <div class="w-100 px-3 text-danger coupon__validation-message">
         <p v-if="isFinalAmountTouched && isAmountInvalid"
           >Een tegoedje kan minimaal 1 euro en maximaal 250 euro waard zijn.</p
         >
@@ -122,7 +122,7 @@ export default {
 @import '@design';
 .coupons {
   input[type='radio']:checked + label {
-    background-color: $color-accent;
+    background-color: $danger;
     span {
       color: $color-text-on-accent;
     }
@@ -136,16 +136,15 @@ export default {
   min-width: calc(33% - #{2 * $coupon-padding});
   max-width: calc(33% - #{2 * $coupon-padding});
   padding: $coupon-padding;
-  font-size: $size-content-font-l;
 
   &__currency {
-    color: $color-accent;
+    color: $danger;
   }
 
   &__custom-input {
     width: 4rem;
     color: $color-text;
-    background-color: $color-blue-dark;
+    background-color: $secondary;
     border: none;
     border-bottom: 0.2rem solid $color-text;
 
@@ -156,7 +155,6 @@ export default {
 
   &__validation-message {
     min-height: 6rem;
-    color: $color-accent;
   }
 }
 </style>

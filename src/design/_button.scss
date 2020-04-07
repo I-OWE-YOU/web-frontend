@@ -3,29 +3,13 @@ button:focus {
 }
 
 .big-red-button {
-  @include responsive-in-small-screens();
-
-  display: inline-block;
-  padding: $size-button-padding;
-  margin: $size-button-padding;
-  line-height: 2.6rem;
-  color: white;
-  text-decoration: none;
-  cursor: pointer;
-  background-color: $color-accent;
-  border: $size-button-border solid transparent;
-  border-radius: $size-button-border-radius;
-  @include font-size(2);
+  width: fit-content;
 
   &:focus {
-    border-color: $color-blue-dark;
+    border-color: $secondary;
   }
 
   &:hover {
-    background-color: $color-blue-medium;
-  }
-
-  &:disabled {
-    opacity: 0.6;
+    background-color: $secondary-light;
   }
 }

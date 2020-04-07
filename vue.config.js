@@ -1,9 +1,12 @@
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
+
 /** @type import('@vue/cli-service').ProjectOptions */
 module.exports = {
   configureWebpack: {
     externals: {
       vue: 'Vue',
     },
+    plugins: [new HardSourceWebpackPlugin()],
   },
 
   // https://github.com/neutrinojs/webpack-chain/tree/v4#getting-started

@@ -85,13 +85,13 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import '@design';
 
 #questions {
   position: relative;
   height: calc(100vh - #{$size-header-height + $size-logo-margin});
-  background-color: $color-blue-dark;
+  background-color: $secondary;
 
   #tegoedje {
     width: 30%;

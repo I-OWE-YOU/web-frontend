@@ -8,7 +8,20 @@
             <b-icon-x class="text-danger" font-scale="2"></b-icon-x>
           </button>
           <button v-else key="off" @click="showNav = true">
-            <b-icon-justify class="text-white" font-scale="2"></b-icon-justify>
+            <svg
+              width="26"
+              height="21"
+              viewBox="0 0 26 21"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M25.6668 2H0.333496V0H25.6668V2ZM19.0002 11.3333H0.333496V9.33333H19.0002V11.3333ZM25.6668 20.6667H0.333496V18.6667H25.6668V20.6667Z"
+                fill="white"
+              />
+            </svg>
           </button>
         </transition>
         <!-- Dropdown Menu -->
@@ -152,7 +165,7 @@ export default {
 }
 .header__icon > button {
   position: absolute;
-  top: 0;
+  top: 1rem;
   right: 0;
   z-index: 3;
   background-color: transparent;
@@ -167,12 +180,12 @@ export default {
   cursor: pointer;
 }
 .dropdown__menu-link-text {
-  margin-left: 1.5rem;
-  font-size: 2rem;
+  margin-left: 1rem;
+  font-size: 1.4rem;
   color: #000;
   &--small > a,
   &--small > a:visited {
-    font-size: 1.5rem;
+    font-size: 1rem;
     color: grey !important;
   }
 }

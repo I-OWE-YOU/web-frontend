@@ -1,5 +1,5 @@
 <template>
-  <div class="buttonlink big-red-button">
+  <div class="btn btn-red btn-link big-red-button">
     <router-link :to="link">{{ linktext }}</router-link>
   </div>
 </template>
@@ -19,7 +19,3 @@ export default {
   },
 }
 </script>
-
-<style scoped lang="scss">
-@import '@design';
-</style>

@@ -1,16 +1,8 @@
-// GRID
-$size-grid-padding: 1.3rem;
-
 // LOGO
-$size-logo-margin: 5rem;
+$size-logo-margin: 3rem;
 
 // CONTENT
-$size-content-width-max: 50rem;
-$size-content-width-min: 25rem;
-$size-content-font: 1.6;
-$size-content-font-l: 2;
-$size-content-font-xl: 2.6;
-$size-header-height: 10rem;
+$size-header-height: 6.25rem;
 
 // INPUTS
 $size-input-padding-vertical: 1rem;
@@ -21,12 +13,4 @@ $size-input-border-radius: $size-input-padding-vertical * 0.6;
 $size-input-wrapper-margin: 5rem auto 2rem;
 
 // INPUT LABELS
-$size-input-font: 1.4rem;
-
-// BUTTONS
-$size-button-padding-vertical: 1rem;
-$size-button-padding-horizontal: $size-grid-padding * 1.9;
-$size-button-padding: $size-button-padding-vertical
-  $size-button-padding-horizontal;
-$size-button-border: 0.2rem;
-$size-button-border-radius: 0.125rem;
+$size-input-font: 1rem;

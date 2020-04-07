@@ -41,7 +41,9 @@
                 </router-link>
               </li>
               <li class="dropdown__menu-item py-3">
-                <router-link :to="routes.entrepreneur">
+                <router-link
+                  :to="signedIn ? routes.entrepreneur : routes.signup"
+                >
                   <b-icon-credit-card
                     font-scale="2"
                     class="dropdown__menu-link-icon"
@@ -52,7 +54,6 @@
                   >
                 </router-link>
               </li>
-
               <li v-if="signedIn" class="dropdown__menu-item pb-3 py-3">
                 <b-icon-box-arrow-right
                   font-scale="2"

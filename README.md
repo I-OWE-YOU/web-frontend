@@ -2,19 +2,11 @@
 
 ## Project setup
 
-`npm install`
-
-or
-
 `yarn install`
 
 ### Compiles and hot-reloads for development
 
-`npm run serve`
-
-### Compiles and minifies for production
-
-`npm run build`
+`yarn serve`
 
 ### Lints and fixes files
 
@@ -29,14 +21,14 @@ if you're unable to stage your changes.
 The deployment of the application is straight forward.
 First you need to build the application with the following command
 
-`yarn build`
+`yarn build:prod`
 
 This command will build the application in production mode.
 This means it will read the `.env.production` as primary env file, and fallback to `.env`
 
 After the build is complete, run the following command
 
-`yarn deploy`
+`yarn deploy:prod`
 
 This will deploy the application to S3 and invalidate the CloudFront cache, but only
 if this is enabled

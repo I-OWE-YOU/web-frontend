@@ -5,7 +5,7 @@
       <FormField
         v-model="email"
         field-name="email"
-        field-label="Email adres"
+        placeholder="Email adres"
         filed-type="email"
         inputmode="email"
         :required="true"
@@ -20,7 +20,7 @@
       <FormField
         v-model="emailConfirm"
         field-name="email"
-        field-label="Email adres bevestigen"
+        placeholder="Email adres bevestigen"
         filed-type="email"
         inputmode="email"
         :required="true"

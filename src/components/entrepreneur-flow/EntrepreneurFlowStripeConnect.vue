@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1>Direct en veilig je geld ontvangen</h1>
+  <div class="d-flex flex-column align-items-center flex-fill">
+    <h2>Direct en veilig je geld ontvangen</h2>
 
     <p>
       Om elke betaling veilig, transparant en snel te laten gebeuren, hebben we
@@ -11,8 +11,10 @@
       maken.
     </p>
 
+    <div class="flex-fill"></div>
+
     <button
-      class="big-red-button"
+      class="btn btn-red big-red-button"
       type="button"
       :disabled="isLoading"
       @click="redirectToConnectUrl"

@@ -4,7 +4,7 @@
       <FormField
         v-model="search"
         field-name="search"
-        field-label="Zoek via postcode of plaatsnaam"
+        placeholder="Zoek via postcode of plaatsnaam"
         :required="true"
       />
     </form>

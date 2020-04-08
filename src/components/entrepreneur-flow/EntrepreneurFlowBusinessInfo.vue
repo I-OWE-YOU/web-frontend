@@ -1,46 +1,59 @@
 <template>
-  <form>
-    <h1 class="m-0">Jouw bedrijfs gegevens</h1>
+  <form class="input-group flex-column align-items-center flex-fill">
+    <h2>Jouw bedrijfs gegevens</h2>
 
     <FormField
       v-model="entrepreneur.address.zipCode"
       field-name="zipCode"
-      field-label="Postcode van je bedrijf"
+      placeholder="Postcode van je bedrijf"
       :required="true"
     />
 
     <FormField
       v-model="entrepreneur.address.houseNumber"
       field-name="houseNumber"
-      field-label="Huis nummer"
+      placeholder="Huis nummer"
       :required="true"
     />
-    <div v-if="isAddressChecked && !errors.length" class="pt-5">
+
+    <div v-if="errors.length" class="text-danger pb-2">
+      <template v-if="errors.includes(ErrorType.MANDATORY)"
+        >Please enter the address</template
+      >
+      <template v-if="errors.includes(ErrorType.ZIP_CODE_INVALID)"
+        >Please enter valid zip code</template
+      >
+      <template v-if="errors.includes(ErrorType.HOUSE_NUMBER_INVALID)"
+        >Please enter valid house number</template
+      >
+      <template v-if="errors.includes(ErrorType.CANT_FETCH_ADDRESS)"
+        >We can't fetch this address. Please try again</template
+      >
+    </div>
+    <div v-else-if="isAddressChecked" class="pb-2">
       <p>
         {{ entrepreneur.address.street }}
         {{ entrepreneur.address.houseNumber }}
       </p>
       <p>{{ entrepreneur.address.city }} {{ entrepreneur.address.zipCode }}</p>
     </div>
-    <div
-      v-if="isAddressChecked && errors.includes(ErrorType.CANT_FETCH_ADDRESS)"
-      class="pt-5"
-    >
-      <p class="text-danger">We can't fetch this address. Please try again</p>
-    </div>
 
-    <div class="company-details__buttons">
-      <button class="big-red-button" type="button" @click="checkAddress"
-        >Adres controleren</button
-      >
-      <button
-        class="big-red-button"
-        :disabled="!isAddressChecked || errors.length !== 0"
-        type="button"
-        @click="saveDataAndNavigate"
-        >Volgende</button
-      >
-    </div>
+    <div class="flex-fill"></div>
+
+    <button
+      class="btn btn-red big-red-button"
+      type="button"
+      @click="checkAddress"
+      >Adres controleren</button
+    >
+
+    <button
+      class="btn btn-red big-red-button mt-3"
+      :disabled="!isAddressChecked || errors.length !== 0"
+      type="button"
+      @click="saveDataAndNavigate"
+      >Volgende</button
+    >
   </form>
 </template>
 
@@ -69,14 +82,6 @@ export default {
       errors: [],
     }
   },
-  computed: {
-    isFormInvalid: function() {
-      return (
-        !this.isValidZipCode(this.entrepreneur.address.zipCode) ||
-        !this.isValidHouseNumber(this.entrepreneur.address.houseNumber)
-      )
-    },
-  },
   methods: {
     async saveDataAndNavigate() {
       try {
@@ -103,23 +108,35 @@ export default {
       return ze.test(z)
     },
     isValidHouseNumber(num) {
-      return !!num
+      return !!num && num.length < 10
     },
     async checkAddress() {
+      this.errors = []
+      this.isAddressChecked = false
+
       const zipCode = this.entrepreneur.address.zipCode
       const houseNumber = this.entrepreneur.address.houseNumber
 
       if (!zipCode || !houseNumber) {
+        this.errors.push(ErrorType.MANDATORY)
         return
       }
 
-      this.errors = []
-      this.isAddressChecked = true
+      if (!this.isValidZipCode(zipCode)) {
+        this.errors.push(ErrorType.ZIP_CODE_INVALID)
+        return
+      }
+
+      if (!this.isValidHouseNumber(houseNumber)) {
+        this.errors.push(ErrorType.HOUSE_NUMBER_INVALID)
+        return
+      }
 
       try {
         const res = await axios.get(
           `${process.env.VUE_APP_BACKEND_URL}/address/${zipCode}/${houseNumber}`
         )
+        this.isAddressChecked = true
         const { city, street, longitude, latitude } = res.data
 
         this.entrepreneur.address.city = city
@@ -134,12 +151,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss">
-.company-details__buttons {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-}
-</style>

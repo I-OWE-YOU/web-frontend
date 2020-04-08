@@ -1,15 +1,14 @@
 <template>
-  <div class="field-wrapper" :class="focused">
-    <label :for="fieldName">{{ fieldLabel }}</label>
+  <div class="field-wrapper w-100 position-relative" :class="focused">
     <input
-      :id="fieldName"
       v-model="modelValue"
       :inputmode="inputmode"
       :type="fieldType"
       :name="fieldName"
       :aria-describedby="description ? fieldName + 'Desc' : ''"
       :required="required"
-      class="text-field-input"
+      :placeholder="placeholder"
+      class="form-control input__text"
       @focus="fieldFocused"
       @blur="fieldBlurred"
     />
@@ -35,7 +34,7 @@ export default {
       type: String,
       default: '',
     },
-    fieldLabel: {
+    placeholder: {
       type: String,
       default: '',
     },
@@ -85,50 +84,9 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@design';
-
-.field-wrapper {
-  position: relative;
-  display: block;
-  width: 100%;
-  margin: $size-input-wrapper-margin;
-  outline: none;
-
-  label,
-  input[type='text'],
-  input[type='password'] {
-    display: block;
-    margin: 0;
-    border-radius: 0;
-  }
-
-  label {
-    @include responsive-in-small-screens();
-
-    position: absolute;
-    top: 0;
-    left: 50%;
-    padding: 1rem + 2 * $size-input-border;
-    overflow: hidden;
-    font-size: $size-input-font;
-    line-height: 1.5;
-    color: $color-input;
-    white-space: nowrap;
-    pointer-events: none;
-    background-color: transparent;
-    transition: all 0.2s linear;
-    transform: translateX(-50%);
-  }
-
-  &.focused label {
-    top: -4rem;
-    color: white;
-    transition: all 0.2s linear;
-  }
-
-  input[type='text'],
-  input[type='password'] {
-    @include inputtextstyle();
+.input__text {
+  &::placeholder {
+    opacity: 0.5 !important;
   }
 }
 </style>

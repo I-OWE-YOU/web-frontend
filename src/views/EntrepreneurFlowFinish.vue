@@ -9,7 +9,7 @@
     </p>
     <a
       href="https://dashboard.stripe.com/"
-      class="big-red-button"
+      class="btn btn-red big-red-button"
       target="_blank"
       rel="noopener"
       >Naar Stripe dashboard

@@ -5,7 +5,7 @@
       <FormField
         v-model="email"
         field-name="email"
-        field-label="Email"
+        placeholder="Email"
         filed-type="email"
         inputmode="email"
         :required="true"
@@ -14,7 +14,7 @@
       <FormField
         v-model="password"
         field-name="password"
-        field-label="Password"
+        placeholder="Password"
         field-type="password"
         :required="true"
       />

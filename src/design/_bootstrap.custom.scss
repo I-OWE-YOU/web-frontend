@@ -6,7 +6,6 @@ $theme-colors: (
 
 $primary: #fff;
 $secondary: #3c54cc;
-$secondary-light: #3855df;
 // $success     :       $green !default;
 // $info        :          $cyan !default;
 // $warning     :       $yellow !default;
@@ -33,3 +32,9 @@ $btn-font-family: $roboto-font-family;
 
 $headings-line-height: 1.25;
 $headings-margin-bottom: 1rem;
+
+$input-height: 3rem;
+$input-color: $primary;
+$input-placeholder-color: $primary;
+$input-border-color: transparent;
+$input-bg: #637bde;

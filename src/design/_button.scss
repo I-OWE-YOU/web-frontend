@@ -8,8 +8,4 @@ button:focus {
   &:focus {
     border-color: $secondary;
   }
-
-  &:hover {
-    background-color: $secondary-light;
-  }
 }

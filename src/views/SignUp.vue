@@ -1,11 +1,15 @@
 <template>
   <div>
-    <form novalidate="true" @submit.prevent>
-      <h1 class="p-3">Schrijf je in</h1>
+    <form
+      novalidate="true"
+      class="input-group  flex-column align-items-center"
+      @submit.prevent
+    >
+      <h2 class="p-3">Mijn onderneming inschrijven</h2>
       <FormField
         v-model="email"
         field-name="email"
-        field-label="Email adres"
+        placeholder="Email adres"
         filed-type="email"
         inputmode="email"
         :required="true"
@@ -20,7 +24,7 @@
       <FormField
         v-model="emailConfirm"
         field-name="emailConfirm"
-        field-label="E-mail adres bevestigen"
+        placeholder="E-mail adres bevestigen"
         filed-type="email"
         inputmode="email"
         :required="true"
@@ -34,7 +38,7 @@
       <FormField
         v-model="password"
         field-name="password"
-        field-label="Password"
+        placeholder="Password"
         field-type="password"
         :required="true"
       />
@@ -52,7 +56,7 @@
       <FormField
         v-model="passwordConfirm"
         field-name="passwordConfirm"
-        field-label="Wachtwoord"
+        placeholder="Wachtwoord"
         field-type="password"
         :required="true"
       />
@@ -76,7 +80,9 @@
         >An account with the given email already exists.</span
       >
 
-      <button class="m-4 big-red-button" @click="checkForm">Sign up</button>
+      <button class="m-4 btn btn-red big-red-button" @click="checkForm"
+        >Sign up</button
+      >
     </form>
   </div>
 </template>

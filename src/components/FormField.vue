@@ -1,5 +1,5 @@
 <template>
-  <div class="field-wrapper w-100 position-relative" :class="focused">
+  <div class="w-100" :class="focused">
     <input
       v-model="modelValue"
       :inputmode="inputmode"

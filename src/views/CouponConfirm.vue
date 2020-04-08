@@ -1,48 +1,52 @@
 <template>
-  <div>
-    <form novalidate="true" @submit.prevent>
-      <h1 class="p-3">Vul je email adres in om je Tegoedje te ontvangen</h1>
-      <FormField
-        v-model="email"
-        field-name="email"
-        placeholder="Email adres"
-        filed-type="email"
-        inputmode="email"
-        :required="true"
-      />
-      <span v-if="errors.includes(ErrorType.EMAIL_REQUIRED)" class="text-danger"
-        >Email is required</span
-      >
-      <span v-if="errors.includes(ErrorType.EMAIL_INVALID)" class="text-danger"
-        >Vul een juist email adres in</span
-      >
+  <form
+    class="input-group flex-column align-items-center flex-fill coupon-email__form"
+    novalidate="true"
+    @submit.prevent
+  >
+    <h2>Vul je email adres in om je Tegoedje te ontvangen</h2>
+    <FormField
+      v-model="email"
+      field-name="email"
+      placeholder="Email adres"
+      filed-type="email"
+      inputmode="email"
+      :required="true"
+    />
+    <span v-if="errors.includes(ErrorType.EMAIL_REQUIRED)" class="text-danger"
+      >Email is required</span
+    >
+    <span v-if="errors.includes(ErrorType.EMAIL_INVALID)" class="text-danger"
+      >Vul een juist email adres in</span
+    >
 
-      <FormField
-        v-model="emailConfirm"
-        field-name="email"
-        placeholder="Email adres bevestigen"
-        filed-type="email"
-        inputmode="email"
-        :required="true"
-      />
-      <span
-        v-if="errors.includes(ErrorType.EMAIL_DOESNT_MATCH)"
-        class="text-danger"
-        >Email doesn't match.</span
-      >
+    <FormField
+      v-model="emailConfirm"
+      field-name="email"
+      placeholder="Email adres bevestigen"
+      filed-type="email"
+      inputmode="email"
+      :required="true"
+    />
+    <span
+      v-if="errors.includes(ErrorType.EMAIL_DOESNT_MATCH)"
+      class="text-danger"
+      >Email doesn't match.</span
+    >
 
-      <CheckBoxTermsAndConditions v-model="termsAndConditionsAccepted" />
-      <span
-        v-if="errors.includes(ErrorType.TERMS_REQUIRED)"
-        class="p-3 d-block text-danger"
-        >Accepteer de algemene voorwaarde om door te kunnen gaan</span
-      >
+    <CheckBoxTermsAndConditions v-model="termsAndConditionsAccepted" />
+    <span
+      v-if="errors.includes(ErrorType.TERMS_REQUIRED)"
+      class="p-3 d-block text-danger"
+      >Accepteer de algemene voorwaarde om door te kunnen gaan</span
+    >
 
-      <button type="button" class="m-4 big-red-button" @click="checkForm"
-        >Verder naar betalen</button
-      >
-    </form>
-  </div>
+    <div class="flex-fill"></div>
+
+    <button type="button" class="btn btn-red big-red-button" @click="checkForm"
+      >Verder naar betalen</button
+    >
+  </form>
 </template>
 
 <script>
@@ -147,3 +151,10 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+.coupon-email__form {
+  // TODO I give up figuring why the form content is too wide
+  max-width: calc(100% - 2rem);
+}
+</style>

@@ -6,8 +6,13 @@
       Hierna kan je het tegoedje afrekenen en sturen wij je een QR code via de
       mail
     </p>
-    <form class="d-flex m-auto flex-wrap coupons">
-      <div v-for="val in couponValues" :key="val" class="coupon">
+    <form class="text-dark d-flex m-auto flex-wrap align-items-center">
+      <div
+        v-for="val in couponValues"
+        :key="val"
+        class="coupon text-center py-3 my-3"
+        :class="{ selected: selectedCoupon === val }"
+      >
         <input
           :id="'coupon-' + val"
           v-model="selectedCoupon"
@@ -21,7 +26,10 @@
           {{ val }}
         </label>
       </div>
-      <div class="coupon">
+      <div
+        class="coupon text-center py-3 my-3"
+        :class="{ selected: selectedCoupon === customCoupon }"
+      >
         <input
           id="coupon-custom"
           v-model="selectedCoupon"
@@ -41,7 +49,9 @@
             inputmode="numeric"
           />
         </template>
-        <label v-else for="coupon-custom">Anders</label>
+        <label v-else for="coupon-custom" class="coupon__custom-label"
+          >Anders</label
+        >
       </div>
       <div class="w-100 px-3 text-danger coupon__validation-message">
         <p v-if="isFinalAmountTouched && isAmountInvalid"
@@ -49,13 +59,18 @@
         >
       </div>
 
-      <div class="w-100">
+      <div class="w-100 d-flex justify-content-center">
         <router-link
           :to="toConfirmLink"
           :class="{ disabled: isAmountInvalid }"
           @click="preventNavigateIfFormInvalid"
         >
-          <button type="button" :disabled="isAmountInvalid">Verder</button>
+          <button
+            type="button"
+            class="btn btn-red big-red-button"
+            :disabled="isAmountInvalid"
+            >Verder</button
+          >
         </router-link>
       </div>
     </form>
@@ -89,7 +104,7 @@ export default {
     isAmountInvalid() {
       return (
         !this.finalAmount ||
-        !new RegExp('[\\d]{1,3}$').test(this.finalAmount) ||
+        isNaN(Number(this.finalAmount)) ||
         this.finalAmount < 1 ||
         this.finalAmount > 250
       )
@@ -120,37 +135,56 @@ export default {
 
 <style lang="scss">
 @import '@design';
-.coupons {
-  input[type='radio']:checked + label {
-    background-color: $danger;
-    span {
-      color: $color-text-on-accent;
-    }
-  }
-}
 
 .coupon {
-  $coupon-padding: 1rem;
+  width: 33%;
+  min-width: 33%;
+  max-width: 33%;
+  font-size: 150%;
+  font-weight: 600;
+  color: $dark;
+  background-repeat: no-repeat;
+  background-position: center;
 
-  width: calc(33% - #{2 * $coupon-padding});
-  min-width: calc(33% - #{2 * $coupon-padding});
-  max-width: calc(33% - #{2 * $coupon-padding});
-  padding: $coupon-padding;
+  &:nth-child(odd) {
+    background-image: url('../assets/img/coupon-odd.svg');
+  }
+  &:nth-child(even) {
+    background-image: url('../assets/img/coupon-even.svg');
+  }
 
   &__currency {
-    color: $danger;
+    color: $red;
+  }
+
+  &.selected {
+    color: $primary;
+
+    &:nth-child(odd) {
+      background-image: url('../assets/img/coupon-odd.selected.svg');
+    }
+    &:nth-child(even) {
+      background-image: url('../assets/img/coupon-even.selected.svg');
+    }
+    .coupon__currency {
+      color: $dark;
+    }
   }
 
   &__custom-input {
-    width: 4rem;
-    color: $color-text;
-    background-color: $secondary;
+    width: 3 * $font-size-base;
+    color: $primary;
+    background-color: $red;
     border: none;
-    border-bottom: 0.2rem solid $color-text;
+    border-bottom: 0.2rem solid $primary;
 
     &:focus {
+      border-color: $primary !important;
       outline: none;
     }
+  }
+  &__custom-label {
+    font-size: $font-size-base;
   }
 
   &__validation-message {

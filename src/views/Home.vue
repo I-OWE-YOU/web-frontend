@@ -119,12 +119,12 @@
 
     <ButtonLink
       :link="routes.customer"
-      class="big-red-button mb-4"
+      class="btn btn-red big-red-button mb-4"
       linktext="Steun een ondernemer"
     />
     <ButtonLink
       :link="routes.signup"
-      class="big-red-button mb-4"
+      class="btn btn-red big-red-button mb-4"
       linktext="Schrijf je in als ondernemer"
     />
   </div>

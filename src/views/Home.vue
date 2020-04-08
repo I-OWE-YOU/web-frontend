@@ -4,10 +4,67 @@
 
     <main class="pl-3">
       <div class="text-center">
-        <video width="320" height="240" controls class="pr-3">
-          <source src="../assets/intro.mp4" type="video/mp4" />Your browser does
-          not support the video tag.
-        </video>
+        <div class="video position-relative" @click="playVideo">
+          <svg
+            v-if="!isPlaying"
+            class="video__play-icon position-absolute"
+            viewBox="0 0 75 75"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g filter="url(#filter0_d)">
+              <path
+                d="M47.9754 32.3726C49.3152 33.1411 49.3152 35.0738 47.9754 35.8423L27.6562 47.497C26.3229 48.2618 24.6611 47.2992 24.6611 45.7621L24.6611 22.4528C24.6611 20.9157 26.3229 19.9532 27.6562 20.7179L47.9754 32.3726Z"
+                fill="white"
+              />
+            </g>
+            <defs>
+              <filter
+                id="filter0_d"
+                x="0.661133"
+                y="0.449951"
+                width="72.3192"
+                height="75.3153"
+                filterUnits="userSpaceOnUse"
+                color-interpolation-filters="sRGB"
+              >
+                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feColorMatrix
+                  in="SourceAlpha"
+                  type="matrix"
+                  values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                />
+                <feOffset dy="4" />
+                <feGaussianBlur stdDeviation="12" />
+                <feColorMatrix
+                  type="matrix"
+                  values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.55 0"
+                />
+                <feBlend
+                  mode="normal"
+                  in2="BackgroundImageFix"
+                  result="effect1_dropShadow"
+                />
+                <feBlend
+                  mode="normal"
+                  in="SourceGraphic"
+                  in2="effect1_dropShadow"
+                  result="shape"
+                />
+              </filter>
+            </defs>
+          </svg>
+
+          <video
+            ref="videoEL"
+            class="w-100"
+            @play="setIsPlaying(true)"
+            @pause="setIsPlaying(false)"
+          >
+            <source src="../assets/intro.mp4" type="video/mp4" />Your browser
+            does not support the video tag.
+          </video>
+        </div>
         <h6 class="text-danger m-1">bekijk de video</h6>
       </div>
       <ul class="p-0">
@@ -85,8 +142,52 @@ export default {
   },
   data: () => {
     return {
+      isPlaying: false,
       routes,
     }
   },
+  methods: {
+    setIsPlaying(value) {
+      this.isPlaying = value
+    },
+    playVideo() {
+      if (this.isPlaying) {
+        return
+      }
+      /** @type {HTMLVideoElement}  */
+      const elem = this.$refs.videoEL
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen()
+      } else if (elem.mozRequestFullScreen) {
+        /* Firefox */
+        elem.mozRequestFullScreen()
+      } else if (elem.webkitRequestFullscreen) {
+        /* Chrome, Safari and Opera */
+        elem.webkitRequestFullscreen()
+      } else if (elem.msRequestFullscreen) {
+        /* IE/Edge */
+        elem.msRequestFullscreen()
+      }
+      elem.play()
+      // to give user chance to manage video playback after get back from fullscreen mode
+      elem.controls = true
+    },
+  },
 }
 </script>
+
+<style lang="scss">
+$play-button-size: 4.5rem;
+.video {
+  cursor: pointer;
+  &__play-icon {
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+    width: $play-button-size;
+    height: $play-button-size;
+    margin-top: $play-button-size / -2;
+    margin-left: $play-button-size / -2;
+  }
+}
+</style>

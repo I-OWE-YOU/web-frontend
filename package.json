@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build:prod": "vue-cli-service build --mode production",
+    "build:dev": "vue-cli-service build --mode development",
     "lint": "run-s lint:all:*",
-    "deploy": "vue-cli-service s3-deploy",
+    "deploy:prod": "vue-cli-service s3-deploy --mode production",
+    "deploy:dev": "vue-cli-service s3-deploy --mode development",
     "lint:all:eslint": "yarn lint:eslint --ext .js,.vue .",
     "lint:all:markdownlint": "yarn lint:markdownlint \"docs/*.md\" \"*.md\"",
     "lint:all:prettier": "yarn lint:prettier \"**/*.{js,json,css,scss,vue,html,md}\"",

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="p-3">Gelukt</h1>
+    <h2>Gelukt</h2>
     <p>
       wilt je ontzettend bedanken voor je hulp in deze moeilijke tijden.
     </p>

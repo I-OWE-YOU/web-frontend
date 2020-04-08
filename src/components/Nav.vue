@@ -5,7 +5,21 @@
         <transition name="slide-fade">
           <!-- Header nav menu icons -->
           <button v-if="showNav" key="on" @click="showNav = false">
-            <b-icon-x class="text-danger" font-scale="2"></b-icon-x>
+            <svg
+              class="text-danger"
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M14.5857 15.9999L5.95947 7.37369L7.37369 5.95947L15.9999 14.5857L24.6261 5.95947L26.0404 7.37369L17.4141 15.9999L26.0404 24.6261L24.6261 26.0404L15.9999 17.4141L7.37369 26.0404L5.95947 24.6261L14.5857 15.9999Z"
+                fill="#FB6B87"
+              />
+            </svg>
           </button>
           <button v-else key="off" @click="showNav = true">
             <svg

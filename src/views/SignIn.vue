@@ -1,6 +1,10 @@
 <template>
   <div>
-    <form novalidate="true" @submit.prevent>
+    <form
+      class="input-group flex-column align-items-center"
+      novalidate="true"
+      @submit.prevent
+    >
       <h1 class="p-3">Sign In</h1>
       <FormField
         v-model="email"
@@ -25,7 +29,12 @@
         >User does not exist. Please check your credentials.</span
       >
 
-      <button type="button" class="m-4 big-red-button" @click="signIn"
+      <div class="flex-fill"></div>
+
+      <button
+        type="button"
+        class="m-4 btn btn-red big-red-button"
+        @click="signIn"
         >Sign In</button
       >
     </form>

@@ -2,43 +2,38 @@
 <html lang="nl">
 
 <head>
-      <meta charset="utf-8" />
-      <meta http-equiv="X-UA-Compatible"
-            content="IE=edge" />
-      <meta name="viewport"
-            content="width=device-width,initial-scale=1.0" />
-      <link rel="icon"
-            href="<%= BASE_URL %>favicon.ico" />
-      <title><%= htmlWebpackPlugin.options.title %></title>
-      <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600&display=swap"
-            rel="stylesheet">
-      <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap"
-            rel="stylesheet">
-      <link type="text/css"
-            rel="stylesheet"
-            href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
-      <link type="text/css"
-            rel="stylesheet"
-            href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue-icons.min.css" />
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible"
+        content="IE=edge" />
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1.0" />
+  <link rel="icon"
+        href="<%= BASE_URL %>favicon.ico" />
+  <title><%= htmlWebpackPlugin.options.title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600&display=swap"
+        rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap"
+        rel="stylesheet" />
+  <link type="text/css"
+        rel="stylesheet"
+        href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
 
+  <!-- Load polyfills to support older browsers -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver"></script>
 
-      <!-- Load polyfills to support older browsers -->
-      <script src="https://polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver"></script>
-
-      <!-- Required scripts -->
-      <script src="https://unpkg.com/vue@latest/dist/vue.js"></script>
-      <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
-      <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue-icons.min.js"></script>
-
+  <!-- Required scripts -->
+  <script src="https://unpkg.com/vue@latest/dist/vue.js"></script>
+  <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+  <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue-icons.min.js"></script>
 </head>
 
 <body>
-      <noscript>
-            <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work
-                  properly without JavaScript enabled. Please enable it to
-                  continue.</strong>
-      </noscript>
-      <div id="app"></div>
+  <noscript>
+    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work
+      properly without JavaScript enabled. Please enable it to
+      continue.</strong>
+  </noscript>
+  <div id="app"></div>
 </body>
 
 </html>

@@ -1,6 +1,7 @@
 <template>
   <div>
-    <form @submit.prevent="navigateToAddress">
+    <h2 v-if="selectedCompany">Welke ondernemer wil jij steunen</h2>
+    <form v-else @submit.prevent="navigateToAddress">
       <FormField
         v-model="search"
         field-name="search"
@@ -15,15 +16,19 @@
       :class="{ 'google-map--short': !!selectedCompany }"
     ></div>
 
-    <div v-if="selectedCompany" ref="markerInfo" class="text-left pl-4 pt-5">
+    <div v-if="selectedCompany" ref="markerInfo" class="pt-2">
       <h2 v-text="selectedCompany.companyName"></h2>
       <div>
-        <p>
+        <p class="pb-0">
           {{ selectedCompany.contactLastName }}
           {{ selectedCompany.contactFirstName }}
         </p>
-        <p>{{ selectedCompany.street }} {{ selectedCompany.houseNumber }}</p>
-        <p>{{ selectedCompany.zipCode }} {{ selectedCompany.city }}</p>
+        <p class="pb-0"
+          >{{ selectedCompany.street }} {{ selectedCompany.houseNumber }}</p
+        >
+        <p class="pb-0"
+          >{{ selectedCompany.zipCode }} {{ selectedCompany.city }}</p
+        >
       </div>
 
       <ButtonLink
@@ -41,8 +46,6 @@ import GoogleMapsApiLoader from 'google-maps-api-loader'
 import { routes } from '@router/routes'
 import FormField from '@components/FormField.vue'
 import ButtonLink from '@components/ButtonLink.vue'
-// eslint-disable-next-line import/no-relative-parent-imports
-import { companies } from '../test-data/companies'
 
 // eslint-disable-next-line import/no-relative-parent-imports, no-unused-vars
 import typings from '../typings/company'
@@ -110,7 +113,6 @@ export default {
       })
     },
     loadCompanies() {
-      companies.forEach((c) => this.placeCompanyMarker(c))
       axios
         .get(`${process.env.VUE_APP_BACKEND_URL}/companies`)
         .then((response) => {
@@ -129,15 +131,19 @@ export default {
       if (!this.isValidCompany(company)) {
         return
       }
+      const pos = {
+        lat: Number(company.latitude),
+        lng: Number(company.longitude),
+      }
       const marker = new this.google.maps.Marker({
         // label: `${company.contactLastName} ${company.contactFirstName}`,
         map: this.map,
-        position: {
-          lat: Number(company.latitude),
-          lng: Number(company.longitude),
-        },
+        position: pos,
       })
-      marker.addListener('click', () => (this.selectedCompany = company))
+      marker.addListener('click', () => {
+        this.map.setCenter(pos)
+        this.selectedCompany = company
+      })
     },
     isValidCompany(company) {
       const requiredFields = [
@@ -178,16 +184,16 @@ export default {
 
 $size-distance-from-margin: 2rem;
 .google-map {
-  width: 100%;
-  // TODO review markup with https://github.com/I-OWE-YOU/web-frontend/issues/78
+  width: calc(100% + 2rem);
   height: calc(
     100vh - #{$size-header-height + $size-distance-from-margin +
       $size-logo-margin}
   );
   margin-top: $size-distance-from-margin;
+  margin-left: -1rem;
 
   &--short {
-    height: 18rem;
+    height: 10rem;
   }
 }
 </style>

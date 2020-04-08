@@ -1,5 +1,5 @@
 <template>
-  <div id="questions">
+  <div class="d-flex flex-column flex-fill">
     <EntrepreneurFlowPersonName
       v-if="step === steps.personName"
       :entrepreneur="entrepreneur"
@@ -70,11 +70,9 @@ export default {
           this.step += 1
         })
         .catch((e) => {
-          var message = e.reponse ? e.response.data : e.message
-          this.showError(
-            "Er is iets misgegaan bij het opslaan van je gegevens: '" +
-              message +
-              "'"
+          const message = e.reponse ? e.response.data : e.message
+          alert(
+            `Er is iets misgegaan bij het opslaan van je gegevens: '${message}'`
           )
         })
         .finally(() => {
@@ -88,24 +86,9 @@ export default {
 <style lang="scss">
 @import '@design';
 
-#questions {
-  position: relative;
-  height: calc(100vh - #{$size-header-height + $size-logo-margin});
-  background-color: $secondary;
-
-  #tegoedje {
-    width: 30%;
-    margin: 3em 0 3em;
-  }
-
-  #spinner {
-    margin: 3em 0;
-    animation: rotation 2s infinite linear;
-  }
-
-  button {
-    margin: 1rem 0;
-  }
+#spinner {
+  margin: 3em 0;
+  animation: rotation 2s infinite linear;
 }
 
 @keyframes rotation {

@@ -2,12 +2,11 @@
 @import 'bootstrap.custom';
 @import 'bootstrap';
 @import 'durations';
-@import 'fonts';
-@import 'layers';
 @import 'sizes';
 @import 'mixins';
 @import 'checkbox';
 @import 'button';
+@import 'input';
 
 :export {
   // Any values that need to be accessible from JavaScript

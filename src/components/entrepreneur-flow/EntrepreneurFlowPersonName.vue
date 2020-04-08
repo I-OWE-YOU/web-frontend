@@ -1,28 +1,30 @@
 <template>
-  <form>
-    <h1>Wat is je naam?</h1>
+  <form class="input-group flex-column align-items-center flex-fill">
+    <h2>Wat is je naam?</h2>
 
     <FormField
       v-model="entrepreneur.contactFirstName"
       field-name="firstName"
-      field-label="Voornaam"
+      placeholder="Voornaam"
       :required="true"
     />
 
     <FormField
       v-model="entrepreneur.contactInsertion"
       field-name="insertion"
-      field-label="Tussenvoegsel"
+      placeholder="Tussenvoegsel"
     />
 
     <FormField
       v-model="entrepreneur.contactLastName"
       field-name="lastName"
-      field-label="Achternaam"
+      placeholder="Achternaam"
     />
 
+    <div class="flex-fill"></div>
+
     <button
-      class="big-red-button"
+      class="btn btn-red big-red-button"
       :disabled="isFormInvalid"
       type="button"
       @click="emitFlowNavigate"

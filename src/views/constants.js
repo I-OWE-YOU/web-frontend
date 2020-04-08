@@ -9,6 +9,9 @@ export const ErrorType = {
   USER_NAME_EXISTS_EXCEPTION: 'UsernameExistsException',
   USER_NOT_FOUND_EXCEPTION: 'UserNotFoundException',
   CANT_FETCH_ADDRESS: 'CantFetchAddress',
+  MANDATORY: 'Mandatory',
+  ZIP_CODE_INVALID: 'zip_code_invalid',
+  HOUSE_NUMBER_INVALID: 'house_number_invalid',
 }
 
 export const AuthStateValue = {

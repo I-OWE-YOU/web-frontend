@@ -5,10 +5,10 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build:prod": "vue-cli-service build --mode production",
-    "build:dev": "vue-cli-service build --mode development",
+    "build:stage": "vue-cli-service build --mode staging",
     "lint": "run-s lint:all:*",
     "deploy:prod": "vue-cli-service s3-deploy --mode production",
-    "deploy:dev": "vue-cli-service s3-deploy --mode development",
+    "deploy:stage": "vue-cli-service s3-deploy --mode staging",
     "lint:all:eslint": "yarn lint:eslint --ext .js,.vue .",
     "lint:all:markdownlint": "yarn lint:markdownlint \"docs/*.md\" \"*.md\"",
     "lint:all:prettier": "yarn lint:prettier \"**/*.{js,json,css,scss,vue,html,md}\"",

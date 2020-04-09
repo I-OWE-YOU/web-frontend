@@ -19,10 +19,6 @@
     <div v-if="selectedCompany" ref="markerInfo" class="pt-2">
       <h2 v-text="selectedCompany.companyName"></h2>
       <div>
-        <p class="pb-0">
-          {{ selectedCompany.contactLastName }}
-          {{ selectedCompany.contactFirstName }}
-        </p>
         <p class="pb-0"
           >{{ selectedCompany.street }} {{ selectedCompany.houseNumber }}</p
         >
@@ -136,7 +132,6 @@ export default {
         lng: Number(company.longitude),
       }
       const marker = new this.google.maps.Marker({
-        // label: `${company.contactLastName} ${company.contactFirstName}`,
         map: this.map,
         position: pos,
       })

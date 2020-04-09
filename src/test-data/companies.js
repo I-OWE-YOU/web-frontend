@@ -4,8 +4,6 @@ import typings from '../typings/company'
 /** @type {Array<typings.CompanyFlatten>} */
 export const companies = [
   {
-    contactFirstName: 'Ostap',
-    contactLastName: 'Bender',
     companyName: 'Roga Y Kopyta',
     latitude: 52.379189,
     longitude: 4.899431,

@@ -1,11 +1,7 @@
 <template>
   <div class="d-flex flex-column flex-fill">
-    <EntrepreneurFlowPersonName
-      v-if="step === steps.personName"
-      :entrepreneur="entrepreneur"
-    ></EntrepreneurFlowPersonName>
     <EntrepreneurFlowBusinessInfo
-      v-else-if="step === steps.companyName"
+      v-if="step === steps.companyName"
       :entrepreneur="entrepreneur"
     ></EntrepreneurFlowBusinessInfo>
     <EntrepreneurFlowStripeConnect
@@ -20,7 +16,6 @@
 
 <script>
 import axios from 'axios'
-import EntrepreneurFlowPersonName from '@components/entrepreneur-flow/EntrepreneurFlowPersonName.vue'
 import EntrepreneurFlowBusinessInfo from '@components/entrepreneur-flow/EntrepreneurFlowBusinessInfo.vue'
 import EntrepreneurFlowStripeConnect from '@components/entrepreneur-flow/EntrepreneurFlowStripeConnect.vue'
 import { EventBus } from '@plugins/event-bus.js'
@@ -28,7 +23,6 @@ import { EventBus } from '@plugins/event-bus.js'
 export default {
   name: 'Entrepreneur',
   components: {
-    EntrepreneurFlowPersonName,
     EntrepreneurFlowBusinessInfo,
     EntrepreneurFlowStripeConnect,
   },
@@ -36,15 +30,11 @@ export default {
     return {
       step: 0,
       steps: {
-        personName: 0,
-        companyName: 1,
-        stripeConnect: 2,
+        companyName: 0,
+        stripeConnect: 1,
       },
       isWaitingForApiResponse: false,
       entrepreneur: {
-        contactFirstName: '',
-        contactInsertion: '',
-        contactLastName: '',
         address: {
           city: '',
           houseNumber: '',

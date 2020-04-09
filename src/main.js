@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import { ApplicationInsights } from '@microsoft/applicationinsights-web'
 import Amplify, * as AmplifyModules from 'aws-amplify'
 import { I18n } from '@aws-amplify/core'
 import { AmplifyPlugin, AmplifyEventBus } from 'aws-amplify-vue'
@@ -42,14 +41,6 @@ Vue.use(AmplifyPlugin, AmplifyModules)
 // It's important to instantiate the Vue instance after calling Vue.use!
 
 Vue.config.productionTip = false
-
-const appInsights = new ApplicationInsights({
-  config: {
-    instrumentationKey: '34c97fb7-5afa-4077-b608-47b0cfd02394',
-  },
-})
-appInsights.loadAppInsights()
-appInsights.trackPageView() // Manually call trackPageView to establish the current user/session/pageview
 
 new Vue({
   router,

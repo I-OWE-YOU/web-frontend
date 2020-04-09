@@ -1,6 +1,6 @@
 <template>
   <nav class="header__nav w-100 position-absolute">
-    <ul class="header__navbar px-0">
+    <ul class="header__navbar px-0 m-0">
       <li class="header__icon">
         <transition name="slide-fade">
           <!-- Header nav menu icons -->
@@ -306,6 +306,20 @@ export default {
 }
 
 .dropdown {
+  &__menu::after {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 100vw;
+    height: 2rem;
+    margin: -1px;
+    content: '';
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' style='isolation:isolate' viewBox='717 479 50 32' width='50' height='32'%3E%3Cdefs%3E%3CclipPath id='_clipPath_TA7k24bvFj3NLcPZPhqFr8BJCKgq6mSN'%3E%3Crect x='717' y='479' width='50' height='32'/%3E%3C/clipPath%3E%3C/defs%3E%3Cg clip-path='url(%23_clipPath_TA7k24bvFj3NLcPZPhqFr8BJCKgq6mSN)'%3E%3Cpath d=' M 760 511 L 767 511 L 767 479 L 717 479 L 717 511 L 724 511 C 724 501.066 732.066 493 742 493 C 751.934 493 760 501.066 760 511 Z ' fill-rule='evenodd' fill='white'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+    background-position: 0 50%;
+    background-size: 3.125rem 2rem;
+    transform: translateX(-50%);
+  }
   &__menu-item {
     text-align: left;
     > a {

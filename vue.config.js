@@ -1,12 +1,27 @@
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
 
+const cachePlugin = new HardSourceWebpackPlugin({
+  environmentHash: {
+    root: process.cwd(),
+    directories: [],
+    files: [
+      'package-lock.json',
+      'yarn.lock',
+      '.env',
+      '.env.local',
+      '.env.production',
+      '.env.staging',
+      '.env.test',
+    ],
+  },
+})
 /** @type import('@vue/cli-service').ProjectOptions */
 module.exports = {
   configureWebpack: {
     externals: {
       vue: 'Vue',
     },
-    plugins: [new HardSourceWebpackPlugin()],
+    plugins: [cachePlugin],
   },
 
   // https://github.com/neutrinojs/webpack-chain/tree/v4#getting-started

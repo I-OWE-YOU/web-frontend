@@ -5,7 +5,7 @@
       novalidate="true"
       @submit.prevent
     >
-      <h1 class="p-3">Sign In</h1>
+      <h1 class="p-3">Log in als ondernemer</h1>
       <FormField
         v-model="email"
         field-name="email"
@@ -26,7 +26,8 @@
       <span
         v-if="errors.includes(ErrorType.USER_NOT_FOUND_EXCEPTION)"
         class="p-3 d-block text-danger"
-        >User does not exist. Please check your credentials.</span
+        >Een van de bovenstaande gegevns kloppen niet. Vul het juiste email
+        adres of wachtwoord in.</span
       >
 
       <div class="flex-fill"></div>
@@ -35,7 +36,7 @@
         type="button"
         class="m-4 btn btn-red big-red-button"
         @click="signIn"
-        >Sign In</button
+        >Log in</button
       >
     </form>
   </div>

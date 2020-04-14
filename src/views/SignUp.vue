@@ -15,10 +15,10 @@
         :required="true"
       />
       <span v-if="errors.includes(ErrorType.EMAIL_REQUIRED)" class="text-danger"
-        >Email is required</span
+        >We hebben een juist e-mail adres nodig</span
       >
       <span v-if="errors.includes(ErrorType.EMAIL_INVALID)" class="text-danger"
-        >Email is invalid. (example@email.com)</span
+        >Het e-mailadres of wachtwoord klopt niet. probeer het nog eens.</span
       >
 
       <FormField
@@ -32,7 +32,7 @@
       <span
         v-if="errors.includes(ErrorType.EMAIL_DOESNT_MATCH)"
         class="text-danger"
-        >Email doesn't match.</span
+        >Het e-mailadres komt niet overeen.</span
       >
 
       <FormField
@@ -45,12 +45,12 @@
       <span
         v-if="errors.includes(ErrorType.PASSWORD_REQUIRED)"
         class="text-danger"
-        >Password required</span
+        >Er is geen wachtwoord ingevoerd.</span
       >
       <span
         v-if="errors.includes(ErrorType.PASSWORD_INVALID)"
         class="text-danger"
-        >Invalid password. Minimum length is 8 characters.</span
+        >Ongeldig wachtwoord. Minimale lengte is 8 tekens.</span
       >
 
       <FormField
@@ -64,24 +64,24 @@
       <span
         v-if="errors.includes(ErrorType.PASSWORD_DOESNT_MATCH)"
         class="text-danger"
-        >Password doesn't match</span
+        >Het wachtwoord komt niet overeen</span
       >
 
       <CheckBoxTermsAndConditions v-model="termsAndConditionsAccepted" />
       <span
         v-if="errors.includes(ErrorType.TERMS_REQUIRED)"
         class="p-3 d-block text-danger"
-        >You must accept terms and conditions</span
+        >Accepteer de algemene voorwaarde om door te kunnen gaan.</span
       >
 
       <span
         v-if="errors.includes(ErrorType.USER_NAME_EXISTS_EXCEPTION)"
         class="m-5 d-block text-danger"
-        >An account with the given email already exists.</span
+        >Er bestaat al een account met dit e-mailadres.</span
       >
 
       <button class="m-4 btn btn-red big-red-button" @click="checkForm"
-        >Sign up</button
+        >Verder</button
       >
     </form>
   </div>

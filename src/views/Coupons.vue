@@ -1,10 +1,9 @@
 <template>
   <div>
-    <h2>Kies een bedrag</h2>
+    <h2>Voor welk bedrag wil je een Tegoedje?</h2>
     <p>
-      Kies een van de voorgeselecteerde bedragen of vul zelf een bedrag in.
-      Hierna kan je het tegoedje afrekenen en sturen wij je een QR code via de
-      mail
+      Kies een van de onderstaande bedragen of vul zelf een bedrag in. Hierna
+      reken je het Tegoedje af en ontvang je de QR code via de mail.
     </p>
     <form class="text-dark d-flex m-auto flex-wrap align-items-center">
       <div

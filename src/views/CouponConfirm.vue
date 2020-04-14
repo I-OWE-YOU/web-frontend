@@ -14,7 +14,7 @@
       :required="true"
     />
     <span v-if="errors.includes(ErrorType.EMAIL_REQUIRED)" class="text-danger"
-      >Email is required</span
+      >We hebben een juist e-mail adres nodig</span
     >
     <span v-if="errors.includes(ErrorType.EMAIL_INVALID)" class="text-danger"
       >Vul een juist email adres in</span
@@ -31,14 +31,14 @@
     <span
       v-if="errors.includes(ErrorType.EMAIL_DOESNT_MATCH)"
       class="text-danger"
-      >Email doesn't match.</span
+      >Het e-mailadres komt niet overeen.</span
     >
 
     <CheckBoxTermsAndConditions v-model="termsAndConditionsAccepted" />
     <span
       v-if="errors.includes(ErrorType.TERMS_REQUIRED)"
       class="p-3 d-block text-danger"
-      >Accepteer de algemene voorwaarde om door te kunnen gaan</span
+      >Accepteer de algemene voorwaarde om door te kunnen gaan.</span
     >
 
     <div class="flex-fill"></div>

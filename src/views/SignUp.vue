@@ -50,7 +50,7 @@
       <span
         v-if="errors.includes(ErrorType.PASSWORD_INVALID)"
         class="text-danger"
-        >Ongeldig wachtwoord. Minimale lengte is 8 tekens.</span
+        >Ongeldig wachtwoord. Minimale lengte is 12 tekens.</span
       >
 
       <FormField
@@ -166,7 +166,7 @@ export default {
       }
     },
     isPasswordValid(password) {
-      return password.length > 7
+      return password.length >= 12
     },
   },
 }

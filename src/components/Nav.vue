@@ -289,7 +289,7 @@ export default {
 
 .header {
   &__nav {
-    z-index: 2;
+    z-index: 3;
     font-family: $roboto-font-family;
   }
   &__navbar {
@@ -299,7 +299,7 @@ export default {
     position: absolute;
     top: 1rem;
     right: 0;
-    z-index: 3;
+    z-index: 4;
     background-color: transparent;
     border: 0;
   }

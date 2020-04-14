@@ -2,7 +2,7 @@
   <div>
     <form
       novalidate="true"
-      class="input-group  flex-column align-items-center"
+      class="input-group flex-column align-items-center"
       @submit.prevent
     >
       <h2 class="p-3">Mijn onderneming inschrijven</h2>
@@ -89,9 +89,10 @@
 
 <script>
 import { Auth } from 'aws-amplify'
+import { AmplifyEventBus } from 'aws-amplify-vue'
+import { AuthStateValue } from '@views/constants'
 import CheckBoxTermsAndConditions from '@components/CheckBoxTermsAndConditions.vue'
 import FormField from '@components/FormField.vue'
-import { routes } from '@router/routes'
 import { isValidEmail } from '@utils/validation'
 
 import { ErrorType } from './constants'
@@ -130,17 +131,11 @@ export default {
         })
 
         await Auth.signIn(this.email, this.password)
-        this.navigateToEntrepreneur()
+        AmplifyEventBus.$emit('authState', AuthStateValue.SIGNED_IN)
       } catch (e) {
         if (e.code === ErrorType.USER_NAME_EXISTS_EXCEPTION) {
           this.errors.push(ErrorType.USER_NAME_EXISTS_EXCEPTION)
         }
-      }
-    },
-    async navigateToEntrepreneur() {
-      const user = await Auth.currentAuthenticatedUser()
-      if (user) {
-        this.$router.push(routes.entrepreneur)
       }
     },
     checkForm: function(e) {

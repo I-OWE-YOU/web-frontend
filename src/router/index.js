@@ -2,7 +2,18 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@views/Home.vue'
 
+import { Auth } from 'aws-amplify'
 import { routes } from './routes'
+
+const checkIfUserLoggedIn = async function() {
+  try {
+    await Auth.currentAuthenticatedUser()
+    return true
+  } catch (e) {
+    console.error(e)
+    return false
+  }
+}
 
 Vue.use(VueRouter)
 
@@ -34,6 +45,14 @@ const vueRoutes = [
     name: 'Entrepreneur',
     component: () =>
       import(/* webpackChunkName: "Entrepreneur" */ '@views/Entrepreneur.vue'),
+    beforeEnter: async (to, from, next) => {
+      const isAuthenicated = await checkIfUserLoggedIn()
+      if (!isAuthenicated) {
+        next({ path: routes.signup })
+      } else {
+        next()
+      }
+    },
   },
   {
     path: routes.entrepreneurFinish,

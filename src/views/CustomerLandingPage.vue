@@ -1,10 +1,10 @@
 <template>
   <div class="d-flex flex-column align-items-center">
     <h2>Een ondernemer uit de buurt steunen</h2>
-    <p>
-      En draag je een steuntje bij voor de kleinste bedrijven in jou buurt in
-      deze moeilijke tijden. Het werkt zo:
-    </p>
+    <p
+      >En draag je een steuntje bij voor de kleinste bedrijven in jou buurt in
+      deze moeilijke tijden. Het werkt zo:</p
+    >
     <ul class="p-0 mt-4 customer__list">
       <li class="py-2 d-flex">
         <span class="px-3">
@@ -29,10 +29,10 @@
           </svg>
         </span>
 
-        <span>
-          Zoek de ondernemen in jou buurt door midden van het zoeken op naam of
-          poscode.
-        </span>
+        <span
+          >In deze moeilijke tijden kun je helpen de lasten te verlichten van
+          jouw favoriete lokale ondernemers.</span
+        >
       </li>
 
       <li class="py-2 d-flex">
@@ -64,10 +64,7 @@
           </svg>
         </span>
 
-        <span>
-          Kies een bedrag waarmee jij die ondernemen wil steunen. We hebben een
-          voorselectie gemaakt maar je mag het ook helemaal zelf bepalen.
-        </span>
+        <span>Kies een bedrag waarmee jij die ondernemen wil steunen.</span>
       </li>
 
       <li class="py-2 d-flex">
@@ -92,10 +89,10 @@
             />
           </svg>
         </span>
-        <span>
-          Als je het bedrag betaald hebt stuurd de ondernemen jou een email met
-          het Tegoedje inclusief QR code.
-        </span>
+        <span
+          >Zodra het bedrag is betaald, ontvang je een e-mail met QR code. Die
+          kan je vervolgens verzilveren als de zaken weer gaan lopen.</span
+        >
       </li>
     </ul>
 

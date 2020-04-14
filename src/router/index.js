@@ -49,7 +49,9 @@ const vueRoutes = [
       const isAuthenicated = await checkIfUserLoggedIn()
       if (!isAuthenicated) {
         next({ path: routes.signup })
-      } else next()
+      } else {
+        next()
+      }
     },
   },
   {

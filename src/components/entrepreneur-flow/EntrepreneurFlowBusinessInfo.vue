@@ -18,16 +18,16 @@
 
     <div v-if="errors.length" class="text-danger pb-2">
       <template v-if="errors.includes(ErrorType.MANDATORY)"
-        >Please enter the address</template
+        >Vergeet niet je adres in te vullen.</template
       >
       <template v-if="errors.includes(ErrorType.ZIP_CODE_INVALID)"
-        >Please enter valid zip code</template
+        >Vul even een geldige postcode in.</template
       >
       <template v-if="errors.includes(ErrorType.HOUSE_NUMBER_INVALID)"
-        >Please enter valid house number</template
+        >Welk huisnummer hoort bij je adres?</template
       >
       <template v-if="errors.includes(ErrorType.CANT_FETCH_ADDRESS)"
-        >We can't fetch this address. Please try again</template
+        >Dit adres lijkt niet te bestaan. Probeer het nog eens.</template
       >
     </div>
     <div v-else-if="isAddressChecked" class="pb-2">
